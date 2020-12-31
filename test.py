@@ -27,6 +27,7 @@ with Graph("my architecture"):
                 with Cluster("virtual network 2"):
                     with Cluster("subnet 2") as sn2:
                         two = VirtualMachine('vm')
+                        BatchAI('batch ai')
 
 
     Edge(one, two, lhead=sn2.name)

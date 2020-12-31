@@ -299,7 +299,7 @@ class Setting():
             "compound": "true", 
             "pad": "1.0",
             "splines": "ortho",
-            "nodesep": "0.5",
+            "nodesep": "1.0",
             "ranksep": "1.0",
             "fontname": "Sans-Serif",
             "fontsize": "15",
@@ -321,7 +321,7 @@ class Setting():
         }
 
         self.node_attrs = {
-            "shape": "box",
+            "shape": "invis",
             "style": "rounded",
             "fixedsize": "true",
             "width": "1.0",
