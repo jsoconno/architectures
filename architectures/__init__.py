@@ -197,7 +197,7 @@ class Node():
     _icon_dir = None
     _icon = None
 
-    _height = 1.9
+    _height = 1.5
 
     def __init__(self, label="", **attrs):
         """Node represents a system component.
@@ -215,7 +215,6 @@ class Node():
             "height": str(self._height + padding),
             "image": self._load_icon(),
             "fixedsize": "true",
-            "width": "1.0",
             "imagescale": "true"
         } if self._icon else {}
 
@@ -324,8 +323,8 @@ class Setting():
             "shape": "invis",
             "style": "rounded",
             "fixedsize": "true",
-            "width": "1.0",
-            "height": "1.8",
+            "width": "0.75",
+            "height": "1.5",
             "labelloc": "b",
             "imagescale": "true",
             "fontname": "Sans-Serif",
