@@ -1,4 +1,4 @@
-from . import _Azure
+from architectures.providers import _Azure
 
 class _AI(_Azure):
     _type = "ai"

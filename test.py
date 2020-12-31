@@ -7,9 +7,9 @@
 # want to be able to control all settings easily from a class
 # also, currently settings are not updating as implemented
 
-from architectures import Graph, Cluster, Edge, Setting
-from architectures.azure.ai import BatchAI
-from architectures.azure.compute import VirtualMachine
+from architectures.core import Graph, Cluster, Edge, Setting
+from architectures.providers.azure.ai import BatchAI
+from architectures.providers.azure.compute import VirtualMachine
 
 settings = Setting()
 
@@ -30,9 +30,7 @@ with Graph("my architecture"):
                         BatchAI('batch ai')
 
 
-    Edge(one, two, lhead=sn2.name)
-
-    print(one)
+    Edge(one, two, label='this is a longer label', lhead=sn2.name)
 
 print(one)
 
