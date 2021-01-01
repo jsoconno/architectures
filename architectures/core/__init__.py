@@ -121,13 +121,14 @@ class Graph():
 
 class Cluster():
     """
-    Creates a cluster in the architecture diagram.
+    Create a cluster.
     """
     __background_colors = ("#FFFFFF", "#FFFFFF")
 
     def __init__(self, label="cluster", background_colors=False):
-        """Cluster represents a cluster context.
-        :param label: Cluster label.
+        """
+        :param label: Label for the cluster.
+        :param background_colors: Flag for adding background colors to clusters.
         """
 
         # Set the cluster label
@@ -139,18 +140,21 @@ class Cluster():
         # Create cluster
         self.dot = Digraph(self.name)
 
+        # Update cluster label
         self.dot.graph_attr["label"] = self.label
 
-        # Node must be belong to a diagrams.
+        # Set global graph and cluster context
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("Global diagrams context not set up")
-        self._parent = get_cluster()
+            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+        self._cluster = get_cluster()
 
-        # Set cluster depth for distinguishing the background color
-        self.depth = self._parent.depth + 1 if self._parent else 0
+        # Set cluster depth to allow for logic based on the nesting of clusters
+        self.depth = self._cluster.depth + 1 if self._cluster else 0
         color_index = self.depth % len(self.__background_colors)
 
+        # Set the background colors
+        # Update this functionality to be something that is passed from a theme
         if background_colors:
             self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
 
@@ -160,14 +164,16 @@ class Cluster():
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        if self._parent:
-            self._parent.subgraph(self.dot)
+        if self._cluster:
+            self._cluster.subgraph(self.dot)
         else:
             self._graph.subgraph(self.dot)
-        set_cluster(self._parent)
+        set_cluster(self._cluster)
 
     def node(self, node_id: str, label: str, **attrs) -> None:
-        """Create a new node in the cluster."""
+        """
+        Create a node in the cluster.
+        """
         self.dot.node(node_id, label=label, **attrs)
 
     def subgraph(self, dot=Digraph):
@@ -178,38 +184,37 @@ class Group(Cluster):
     """
     Creates a special type of group used only or organizing nodes.
     """
+    # The important thing here will be to set they style to invis so that if only groups items
     pass
 
 class Node():
     """
-    Creates a node on the architecture diagram which correlates with a service.
+    Creates a node.  This can be a standard node or a node representing a service from a provider.
     """
-    """Node represents a node for a specific backend service."""
 
     _provider = None
-    _type = None
+    _service_type = None
 
     _icon_dir = None
     _icon = None
 
-    _height = 1.5
-
     def __init__(self, label="", **attrs):
-        """Node represents a system component.
-        :param label: Node label.
+        """
+        :param str label: Label for a node.
         """
         # Generate an ID used to uniquely identify a node
         self._id = self._rand_id()
 
-        # Set the label based on what the user passes to the object
+        # Set the label
         self.label = label
 
-        # Make sure that the node is part of the graph
+        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("Global diagrams context not set up")
+            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
 
+        # Set node attributes based on the theme
         self.node_attrs = self._graph.theme.node_attrs
 
         # Add appropriate padding for icon label
