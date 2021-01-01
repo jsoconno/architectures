@@ -83,10 +83,10 @@ default_node_attrs = {
     "gradientangle": "",
     "group": "",
     "height": "0.5",
-    "image": "",
+    # "image": "",
     "imagepos": "mc",
     "imagescale": "false",
-    "label": "",
+    # "label": "",
     "labelloc": "c",
     "layer": "",
     "margin": "0.11,0.055",
@@ -105,7 +105,7 @@ default_node_attrs = {
     "sortv": "0",
     "style": "",
     "width": "0.75",
-    "xlabel": "",
+    # "xlabel": "",
 }
 
 default_edge_attrs = {
@@ -118,7 +118,7 @@ default_edge_attrs = {
     "constraint": "true",
     "decorate": "false",
     "dir": "forward",
-    "fillcolor": "lightgrey",
+    "fillcolor": "black",
     "fontcolor": "black",
     "fontname": "times-roman",
     "fontsize": "14",
@@ -156,8 +156,13 @@ class _Theme():
         pass
 
 class Default(_Theme):
+
+    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}):
     
-    pass
+        self.graph_attrs = default_graph_attrs
+        self.cluster_attrs = default_cluster_attrs
+        self.edge_attrs = default_edge_attrs
+        self.node_attrs = default_node_attrs
 
 class Clean(_Theme):
 
@@ -204,7 +209,7 @@ class Clean(_Theme):
             "fontname": "Sans-Serif",
             "fontsize": "13",
             "fontcolor": "#2D3436",
-            "color": "white"
+            "color": "white",
         }
 
         self.theme_edge_attrs = {

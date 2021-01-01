@@ -122,7 +122,7 @@ class Cluster():
     """
     __background_colors = ("#FFFFFF", "#FFFFFF")
 
-    def __init__(self, label="cluster"):
+    def __init__(self, label="cluster", background_colors=False):
         """Cluster represents a cluster context.
         :param label: Cluster label.
         """
@@ -147,7 +147,9 @@ class Cluster():
         # Set cluster depth for distinguishing the background color
         self.depth = self._parent.depth + 1 if self._parent else 0
         color_index = self.depth % len(self.__background_colors)
-        self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
+
+        if background_colors:
+            self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
 
 
     def __enter__(self):
@@ -193,34 +195,36 @@ class Node():
         """Node represents a system component.
         :param label: Node label.
         """
-        # Generates an ID for identifying a node.
+        # Generate an ID used to uniquely identify a node
         self._id = self._rand_id()
+
+        # Set the label based on what the user passes to the object
         self.label = label
+
+        # Make sure that the node is part of the graph
+        self._diagram = get_diagram()
+        if self._diagram is None:
+            raise EnvironmentError("Global diagrams context not set up")
+        self._cluster = get_cluster()
+
+        self.node_attrs = self._diagram.theme.node_attrs
 
         # Add appropriate padding for icon label
         padding = 0.4 * (label.count('\n'))
 
         self._attrs = {
             #"shape": "none",
-            "height": str(self._height + padding),
+            "height": str(float(self.node_attrs['height']) + padding),
             "image": self._load_icon(),
-            "fixedsize": "true",
-            "imagescale": "true"
         } if self._icon else {}
 
-        self._attrs.update(attrs)
-
-        # Node must be belong to a diagrams.
-        self._diagram = get_diagram()
-        if self._diagram is None:
-            raise EnvironmentError("Global diagrams context not set up")
-        self._cluster = get_cluster()
+        self.node_attrs.update(self._attrs)
 
         # If a node is in the cluster context, add it to cluster.
         if self._cluster:
-            self._cluster.node(self._id, self.label, **self._attrs)
+            self._cluster.node(self._id, self.label, **self.node_attrs)
         else:
-            self._diagram.node(self._id, self.label, **self._attrs)
+            self._diagram.node(self._id, self.label, **self.node_attrs)
 
     @property
     def node_id(self):
