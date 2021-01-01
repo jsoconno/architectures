@@ -8,12 +8,13 @@
 # also, currently settings are not updating as implemented
 
 from architectures.core import Graph, Cluster, Edge, Setting
+from architectures.themes import Default
 from architectures.providers.azure.ai import BatchAI
 from architectures.providers.azure.compute import VirtualMachine
 
-settings = Setting()
+settings = Default()
 
-with Graph("my architecture"):
+with Graph("my architecture", settings=settings):
     with Cluster("azure"):
         with Cluster("subscription"):
             with Cluster("resource group"):
