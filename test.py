@@ -12,7 +12,7 @@ from architectures.themes import Default, Clean
 from architectures.providers.azure.ai import BatchAI
 from architectures.providers.azure.compute import VirtualMachine
 
-theme=Clean()
+theme = Clean()
 
 with Graph("my architecture", theme=theme):
     with Cluster("azure"):
@@ -21,7 +21,7 @@ with Graph("my architecture", theme=theme):
                 with Cluster("virtual network"):
                     with Cluster("subnet") as sn:
                         one = [BatchAI('batch ai'),
-                            BatchAI('batch ai')]
+                            BatchAI('batch ai\nmore text')]
 
         with Cluster("subscription 2") as sub2:
             with Cluster("resource group 2"):

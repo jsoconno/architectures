@@ -2,22 +2,23 @@ import contextvars
 import os
 import uuid
 from pathlib import Path
-from typing import List, Union, Dict
 
 from graphviz import Digraph
 
-__diagram = contextvars.ContextVar("diagrams")
+from architectures.themes import Default
+
+__graph = contextvars.ContextVar("graph")
 __cluster = contextvars.ContextVar("cluster")
 
-def get_diagram():
+def get_graph():
     try:
-        return __diagram.get()
+        return __graph.get()
     except LookupError:
         return None
 
 
-def set_diagram(diagram):
-    __diagram.set(diagram)
+def set_graph(graph):
+    __graph.set(graph)
 
 
 def get_cluster():
@@ -32,88 +33,90 @@ def set_cluster(cluster):
 
 class Graph():
     """
-    Creates the base graph for an architecture diagram.
+    Create and set default settings for a graph and its clusters, nodes, and edges.
     """
-    def __init__(self, name="", output_file_name="", output_file_format="png", theme=None, show=True, engine='dot'):
+    def __init__(self, name, output_file_name="", output_file_format="png", theme=None, show=True):
         """
-        :param name ...
-        :param output_file_name ...
-        :param output_file_format ...
-        :param theme ...
-        :param show ...
+        :param str name: The name of the graph.
+        :param str output_file_name: The name of the file that will be output.
+        :param str output_file_format: The format of the output file.
+        :param theme: The base theme to apply to the graph and its clusters, nodes, and edges.
+        :param bool show: Flag used to determine whether or not the graph will render.
         """
 
         # Set graph and output file name
         self.name = name
-        if not name and not output_file_name:
-          output_file_name = "architecture_diagram"
-        elif not output_file_name:
-            output_file_name = "_".join(self.name.split()).lower()
+        if not output_file_name:
+            output_file_name = "-".join(self.name.split()).lower()
         self.output_file_name = output_file_name
         self.output_file_format = output_file_format
 
-        self.dot = Digraph(name=self.name, filename=self.output_file_name, engine=engine)
+        # Create the graph
+        # Support for multiple engines can be added later by adding in the engine argument passed from the class
+        self.dot = Digraph(name=self.name, filename=self.output_file_name)
 
-        # Set theme
+        # Set the theme
         if theme is None:
-            self.theme = Setting()
+            self.theme = Default()
         else:
             self.theme = theme
 
         # Set global graph attributes
-        for k, v in self.theme.graph_attrs.items():
-            self.dot.graph_attr[k] = v
-
+        self.dot.graph_attr.update(self.theme.graph_attrs)
         self.dot.graph_attr["label"] = self.name
 
         # Set global node attributes
-        for k, v in self.theme.node_attrs.items():
-            self.dot.node_attr[k] = v
+        self.dot.node_attr.update(self.theme.node_attrs)
 
         # Set global edge attributes
-        for k, v in self.theme.edge_attrs.items():
-            self.dot.edge_attr[k] = v
+        self.dot.edge_attr.update(self.theme.edge_attrs)
 
         # Set option to show architecture diagram
         self.show = show
 
-    def __str__(self) -> str:
+    def __str__(self):
         return str(self.dot)
 
     def __enter__(self):
-        set_diagram(self)
+        set_graph(self)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.render()
         # Remove the graphviz file leaving only the image.
         os.remove(self.output_file_name)
-        set_diagram(None)
+        set_graph(None)
 
-    def node(self, node_id, label, **attrs) -> None:
-        """Create a new node."""
+    def node(self, node_id, label, **attrs):
+        """
+        Create a node.
+        """
         self.dot.node(node_id, label=label, **attrs)
 
-    def connect(self, node: "Node", node2: "Node", **attrs) -> None:
-        """Connect the two Nodes."""
-        if isinstance(node, list) and isinstance(node2, list):
-            for n in node:
-                for n2 in node2:
-                    self.dot.edge(n.node_id, n2.node_id, **attrs)
-        elif isinstance(node, list):
-            for n in node:
-                self.dot.edge(n.node_id, node2.node_id, **attrs)
-        elif isinstance(node2, list):
-            for n in node2:
-                self.dot.edge(node.node_id, n.node_id, **attrs)
+    def edge(self, tail_node, head_node, **attrs):
+        """
+        Connect individual or lists of nodes with edges.
+        """
+        # Handle conditions where both passed objects are lists
+        if isinstance(tail_node, list) and isinstance(head_node, list):
+            [self.dot.edge(tail.node._id, head.node_id, **attrs) for head in head_node for tail in tail_node]
+        elif isinstance(tail_node, list):
+            [self.dot.edge(tail.node_id, head_node.node_id, **attrs) for tail in tail_node]
+        elif isinstance(head_node, list):
+            [self.dot.edge(tail_node.node_id, head.node_id, **attrs) for head in head_node]
         else:
-            self.dot.edge(node.node_id, node2.node_id, **attrs)
+            self.dot.edge(tail_node.node_id, head_node.node_id, **attrs)
 
-    def subgraph(self, dot: Digraph) -> None:
-        """Create a subgraph for clustering"""
+    def subgraph(self, dot):
+        """
+        Create a subgraph for grouping nodes.
+        """
         self.dot.subgraph(dot)
 
-    def render(self) -> None:
+    def render(self):
+        """
+        Generate output file.
+        """
         self.dot.render(format=self.output_file_format, view=self.show, quiet=True)
 
 class Cluster():
@@ -139,8 +142,8 @@ class Cluster():
         self.dot.graph_attr["label"] = self.label
 
         # Node must be belong to a diagrams.
-        self._diagram = get_diagram()
-        if self._diagram is None:
+        self._graph = get_graph()
+        if self._graph is None:
             raise EnvironmentError("Global diagrams context not set up")
         self._parent = get_cluster()
 
@@ -160,7 +163,7 @@ class Cluster():
         if self._parent:
             self._parent.subgraph(self.dot)
         else:
-            self._diagram.subgraph(self.dot)
+            self._graph.subgraph(self.dot)
         set_cluster(self._parent)
 
     def node(self, node_id: str, label: str, **attrs) -> None:
@@ -202,12 +205,12 @@ class Node():
         self.label = label
 
         # Make sure that the node is part of the graph
-        self._diagram = get_diagram()
-        if self._diagram is None:
+        self._graph = get_graph()
+        if self._graph is None:
             raise EnvironmentError("Global diagrams context not set up")
         self._cluster = get_cluster()
 
-        self.node_attrs = self._diagram.theme.node_attrs
+        self.node_attrs = self._graph.theme.node_attrs
 
         # Add appropriate padding for icon label
         padding = 0.4 * (label.count('\n'))
@@ -224,7 +227,7 @@ class Node():
         if self._cluster:
             self._cluster.node(self._id, self.label, **self.node_attrs)
         else:
-            self._diagram.node(self._id, self.label, **self.node_attrs)
+            self._graph.node(self._id, self.label, **self.node_attrs)
 
     @property
     def node_id(self):
@@ -252,7 +255,7 @@ class Edge():
         self,
         start_node,
         end_node,
-        **attrs: Dict,
+        **attrs,
     ):
         """Edge represents an edge between two nodes.
         :param start_node
@@ -273,4 +276,4 @@ class Edge():
         else:
             self._node = start_node
 
-        self._node._diagram.connect(start_node, end_node, **attrs)
+        self._node._graph.edge(start_node, end_node, **attrs)
