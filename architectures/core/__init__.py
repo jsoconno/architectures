@@ -34,12 +34,12 @@ class Graph():
     """
     Creates the base graph for an architecture diagram.
     """
-    def __init__(self, name="", output_file_name="", output_file_format="png", settings=None, show=True, engine='dot'):
+    def __init__(self, name="", output_file_name="", output_file_format="png", theme=None, show=True, engine='dot'):
         """
         :param name ...
         :param output_file_name ...
         :param output_file_format ...
-        :param settings ...
+        :param theme ...
         :param show ...
         """
 
@@ -54,24 +54,24 @@ class Graph():
 
         self.dot = Digraph(name=self.name, filename=self.output_file_name, engine=engine)
 
-        # Set settings
-        if settings is None:
-            self.settings = Setting()
+        # Set theme
+        if theme is None:
+            self.theme = Setting()
         else:
-            self.settings = settings
+            self.theme = theme
 
         # Set global graph attributes
-        for k, v in self.settings.graph_attrs.items():
+        for k, v in self.theme.graph_attrs.items():
             self.dot.graph_attr[k] = v
 
         self.dot.graph_attr["label"] = self.name
 
         # Set global node attributes
-        for k, v in self.settings.node_attrs.items():
+        for k, v in self.theme.node_attrs.items():
             self.dot.node_attr[k] = v
 
         # Set global edge attributes
-        for k, v in self.settings.edge_attrs.items():
+        for k, v in self.theme.edge_attrs.items():
             self.dot.edge_attr[k] = v
 
         # Set option to show architecture diagram
@@ -122,10 +122,9 @@ class Cluster():
     """
     __background_colors = ("#FFFFFF", "#FFFFFF")
 
-    def __init__(self, label="cluster", settings=None):
+    def __init__(self, label="cluster", background_colors=False):
         """Cluster represents a cluster context.
         :param label: Cluster label.
-        :param settings: Data flow direction. Default is 'left to right'.
         """
 
         # Set the cluster label
@@ -137,15 +136,6 @@ class Cluster():
         # Create cluster
         self.dot = Digraph(self.name)
 
-        # Set settings
-        if settings is None:
-            self.settings = Setting()
-        else:
-            self.settings = settings
-
-        # Set cluster attributes.
-        for k, v in self.settings.cluster_attrs.items():
-            self.dot.graph_attr[k] = v
         self.dot.graph_attr["label"] = self.label
 
         # Node must be belong to a diagrams.
@@ -157,7 +147,9 @@ class Cluster():
         # Set cluster depth for distinguishing the background color
         self.depth = self._parent.depth + 1 if self._parent else 0
         color_index = self.depth % len(self.__background_colors)
-        self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
+
+        if background_colors:
+            self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
 
 
     def __enter__(self):
@@ -203,34 +195,36 @@ class Node():
         """Node represents a system component.
         :param label: Node label.
         """
-        # Generates an ID for identifying a node.
+        # Generate an ID used to uniquely identify a node
         self._id = self._rand_id()
+
+        # Set the label based on what the user passes to the object
         self.label = label
+
+        # Make sure that the node is part of the graph
+        self._diagram = get_diagram()
+        if self._diagram is None:
+            raise EnvironmentError("Global diagrams context not set up")
+        self._cluster = get_cluster()
+
+        self.node_attrs = self._diagram.theme.node_attrs
 
         # Add appropriate padding for icon label
         padding = 0.4 * (label.count('\n'))
 
         self._attrs = {
             #"shape": "none",
-            "height": str(self._height + padding),
+            "height": str(float(self.node_attrs['height']) + padding),
             "image": self._load_icon(),
-            "fixedsize": "true",
-            "imagescale": "true"
         } if self._icon else {}
 
-        self._attrs.update(attrs)
-
-        # Node must be belong to a diagrams.
-        self._diagram = get_diagram()
-        if self._diagram is None:
-            raise EnvironmentError("Global diagrams context not set up")
-        self._cluster = get_cluster()
+        self.node_attrs.update(self._attrs)
 
         # If a node is in the cluster context, add it to cluster.
         if self._cluster:
-            self._cluster.node(self._id, self.label, **self._attrs)
+            self._cluster.node(self._id, self.label, **self.node_attrs)
         else:
-            self._diagram.node(self._id, self.label, **self._attrs)
+            self._diagram.node(self._id, self.label, **self.node_attrs)
 
     @property
     def node_id(self):
@@ -280,66 +274,3 @@ class Edge():
             self._node = start_node
 
         self._node._diagram.connect(start_node, end_node, **attrs)
-
-
-class Setting():
-    """
-    Creates an objects that holds settings be be used by Graph, Cluster, Node, and Edge
-    """
-
-    def __init__(self, graph_attrs={}, cluster_attrs={}, node_attrs={}, edge_attrs={}):
-        """
-        :param graph_attr: Provide graph_attr dot config attributes.
-        :param node_attr: Provide node_attr dot config attributes.
-        :param edge_attr: Provide edge_attr dot config attributes.
-        """
-
-        self.graph_attrs = {
-            "compound": "true", 
-            "pad": "1.0",
-            "splines": "ortho",
-            "nodesep": "1.0",
-            "ranksep": "1.0",
-            "fontname": "Sans-Serif",
-            "fontsize": "15",
-            "fontcolor": "#2D3436",
-            "style": "rounded",
-            "rankdir": "LR",
-            "labeljust": "l",
-            "labelloc": 't'
-        }
-
-        # Update these to meet out standards
-        self.cluster_attrs = {
-            "shape": "box",
-            "style": "rounded",
-            "labeljust": "l",
-            "pencolor": "#AEB6BE",
-            "fontname": "Sans-Serif",
-            "fontsize": "12"
-        }
-
-        self.node_attrs = {
-            "shape": "invis",
-            "style": "rounded",
-            "fixedsize": "true",
-            "width": "0.75",
-            "height": "1.5",
-            "labelloc": "b",
-            "imagescale": "true",
-            "fontname": "Sans-Serif",
-            "fontsize": "13",
-            "fontcolor": "#2D3436",
-            "color": "white"
-        }
-
-        self.edge_attrs = {
-            "penwidth": "2",
-            "margin": "1",
-            "minlen": "1.0"
-        }
-
-        self.graph_attrs.update(graph_attrs)
-        self.cluster_attrs.update(cluster_attrs)
-        self.node_attrs.update(node_attrs)
-        self.edge_attrs.update(edge_attrs)
