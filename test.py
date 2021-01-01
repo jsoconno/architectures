@@ -7,14 +7,12 @@
 # want to be able to control all settings easily from a class
 # also, currently settings are not updating as implemented
 
-from architectures.core import Graph, Cluster, Edge, Setting
+from architectures.core import Graph, Cluster, Edge
 from architectures.themes import Default, Clean
 from architectures.providers.azure.ai import BatchAI
 from architectures.providers.azure.compute import VirtualMachine
 
-theme = Clean()
-
-with Graph("my architecture", settings=theme):
+with Graph("my architecture", theme=Clean()):
     with Cluster("azure"):
         with Cluster("subscription"):
             with Cluster("resource group"):
