@@ -155,10 +155,6 @@ class _Theme():
     def __init__(self):
         pass
 
-    def override_attrs(self, base_attrs, attr_overrides):
-        if attr_overrides is not None:
-            return base_attrs.update(attr_overrides)
-
 class Default(_Theme):
     
     pass
