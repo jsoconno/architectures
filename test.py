@@ -30,7 +30,6 @@ with Graph("my architecture", theme=theme):
                         two = VirtualMachine('vm')
                         BatchAI(label='batch ai')
 
-
     Edge(one, two, label='this is a longer label', lhead=sn2.name)
 
 print(one)

@@ -215,7 +215,7 @@ class Node():
         self._cluster = get_cluster()
 
         # Set node attributes based on the theme
-        self.node_attrs = self._graph.theme.node_attrs
+        self.node_attrs = self._graph.theme.node_attrs.copy()
 
         # Add appropriate padding for icon label
         padding = 0.4 * (label.count('\n'))
