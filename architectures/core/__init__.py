@@ -140,9 +140,6 @@ class Cluster():
         # Create cluster
         self.dot = Digraph(self.name)
 
-        # Update cluster label
-        self.dot.graph_attr["label"] = self.label
-
         # Set global graph and cluster context
         self._graph = get_graph()
         if self._graph is None:
@@ -154,6 +151,9 @@ class Cluster():
 
         # Override any values directly passed from the object
         self.dot.graph_attr.update(attrs)
+
+        # Update cluster label
+        self.dot.graph_attr["label"] = self.label
 
         # Set cluster depth to allow for logic based on the nesting of clusters
         self.depth = self._cluster.depth + 1 if self._cluster else 0
