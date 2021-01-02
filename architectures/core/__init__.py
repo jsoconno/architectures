@@ -217,16 +217,14 @@ class Node():
         # Set node attributes based on the theme using copy to ensure the objects are independent
         self.node_attrs = self._graph.theme.node_attrs.copy()
 
-        # Add appropriate padding for icon label
-        padding = 0.4 * (label.count('\n'))
+        # Override any values directly passed from the object
+        self.node_attrs.update(attrs)
 
-        self._attrs = {
-            #"shape": "none",
-            "height": str(float(self.node_attrs['height']) + padding),
-            "image": self._load_icon(),
-        } if self._icon else {}
-
-        self.node_attrs.update(self._attrs)
+        # Add attributes specific for when provider service nodes are used.
+        if self._icon:
+            padding = 0.4 * (label.count('\n'))
+            self.node_attrs["height"] = str(float(self.node_attrs['height']) + padding)
+            self.node_attrs["image"] = self._load_icon()
 
         # If a node is in the cluster context, add it to cluster.
         if self._cluster:

@@ -29,6 +29,7 @@ with Graph("my architecture", theme=theme):
                     with Cluster("subnet 2") as sn2:
                         two = VirtualMachine('vm')
                         BatchAI(label='batch ai')
+                        Node("test\nsomething\nout", shape="box", color='red')
 
     Edge(one, two, label='this is a longer label', lhead=sn2.name)
 
