@@ -246,24 +246,15 @@ class Node():
 
 class Edge():
     """
-    Creates an edge between two nodes on an architecture diagram.
+    Creates an edge between two nodes
     """
-    _default_edge_attrs = {
-        "fontcolor": "#2D3436",
-        "fontname": "Sans-Serif",
-        "fontsize": "13",
-    }
 
-    def __init__(
-        self,
-        start_node,
-        end_node,
-        **attrs,
+    def __init__(self, start_node, end_node, **attrs,
     ):
-        """Edge represents an edge between two nodes.
-        :param start_node
-        :param end_node
-        :param attrs: Other edge attributes
+        """
+        :param start_node: The is the origin node.
+        :param end_node: The is the destination node.
+        :param attrs: Other edge attributes.
         """
         if start_node is not None:
             assert isinstance(start_node, (Node, list))
@@ -274,9 +265,28 @@ class Edge():
         self.start_node = start_node
         self.end_node = end_node
 
+        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
+        self._graph = get_graph()
+        if self._graph is None:
+            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+
+        # Set edge attributes based on the theme using copy to ensure the objects are independent
+        self.edge_attrs = self._graph.theme.edge_attrs.copy()
+
+        # Override any attributes directly passed from the object
+        self.edge_attrs.update(attrs)
+
+        # Set the start_node to the first object if a list of nodes are passed
         if isinstance(start_node, list):
             self._node = start_node[0]
         else:
             self._node = start_node
 
-        self._node._graph.edge(start_node, end_node, **attrs)
+        # Set the end_node to the first object if a list of nodes are passed
+        if isinstance(end_node, list):
+            self._node = end_node[0]
+        else:
+            self._node = end_node
+
+        # Create the edge between nodes
+        self._node._graph.edge(start_node, end_node, **self.edge_attrs)
