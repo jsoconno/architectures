@@ -25,7 +25,7 @@ with Graph("my architecture", theme=theme):
                         app_gateway = ApplicationGateway("Application Gateway")
 
                     with Cluster("Firewall Subnet") as firewall_subnet:
-                        firewall = Firewall("I have created wrap functionality that works")
+                        firewall = Firewall("Azure Firewall")
 
                     with Cluster("Web Tier Subnet") as web_tier_subnet:
                         web_load_balancer = LoadBalancers("Load Balancer")

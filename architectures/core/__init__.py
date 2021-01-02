@@ -247,8 +247,6 @@ class Node():
         # Override any values directly passed from the object
         self.node_attrs.update(attrs)
 
-        print(self.node_attrs["width"])
-
         # Add attributes specific for when provider service nodes are used.
         if self._icon:
             padding = 0.4 * (self.label.count('\n'))
