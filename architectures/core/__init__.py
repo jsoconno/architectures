@@ -214,7 +214,7 @@ class Node():
             raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
 
-        # Set node attributes based on the theme
+        # Set node attributes based on the theme using copy to ensure the objects are independent
         self.node_attrs = self._graph.theme.node_attrs.copy()
 
         # Add appropriate padding for icon label
