@@ -220,15 +220,38 @@ class Node():
             raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
 
+        # Auto-wrap labels
+        # TODO: Make this better by looking at other context such as the string length exceeding image width
+        _node_label_len = len(self.label)
+        _cluster_label_len = len(self._cluster.label)
+
+        if _node_label_len > _cluster_label_len:
+            _words = self.label.split()
+            _new_label = ""
+            if len(_words) > 1:
+                _sub_label = ""
+                for _word in _words:
+                    _test_label = _sub_label + " " + _word
+                    if len(_test_label) < _cluster_label_len:
+                        _new_label = _new_label + " " + _word
+                        _sub_label = _test_label
+                    else:
+                        _new_label = _new_label + "\n" + _word
+                        _sub_label = _word
+
+            self.label = _new_label
+
         # Set node attributes based on the theme using copy to ensure the objects are independent
         self.node_attrs = self._graph.theme.node_attrs.copy()
 
         # Override any values directly passed from the object
         self.node_attrs.update(attrs)
 
+        print(self.node_attrs["width"])
+
         # Add attributes specific for when provider service nodes are used.
         if self._icon:
-            padding = 0.4 * (label.count('\n'))
+            padding = 0.4 * (self.label.count('\n'))
             self.node_attrs["height"] = str(float(self.node_attrs['height']) + padding)
             self.node_attrs["image"] = self._load_icon()
 

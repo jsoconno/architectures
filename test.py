@@ -13,11 +13,9 @@ from architectures.providers.azure.compute import VirtualMachine
 from architectures.providers.azure.devops import Devops
 from architectures.providers.azure.network import ApplicationGateway, Firewall, LoadBalancers
 
-theme = Clean(graph_attr_overrides={"splines": "false"}, cluster_attr_overrides={"bgcolor": "lightgrey"})
+theme = Clean()
 
-print(theme.edge_attrs)
-
-with Graph("my architecture", output_file_format="png", theme=theme):
+with Graph("my architecture", theme=theme):
     with Cluster("Azure"):
         with Cluster("Subscription"):
             with Cluster("Resource Group"):
@@ -27,7 +25,7 @@ with Graph("my architecture", output_file_format="png", theme=theme):
                         app_gateway = ApplicationGateway("Application Gateway")
 
                     with Cluster("Firewall Subnet") as firewall_subnet:
-                        firewall = Firewall("Azure Firewall")
+                        firewall = Firewall("I have created wrap functionality that works")
 
                     with Cluster("Web Tier Subnet") as web_tier_subnet:
                         web_load_balancer = LoadBalancers("Load Balancer")
