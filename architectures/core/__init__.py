@@ -125,7 +125,7 @@ class Cluster():
     """
     __background_colors = ("#FFFFFF", "#FFFFFF")
 
-    def __init__(self, label="cluster", background_colors=False):
+    def __init__(self, label="cluster", background_colors=False, **attrs):
         """
         :param label: Label for the cluster.
         :param background_colors: Flag for adding background colors to clusters.
@@ -148,6 +148,12 @@ class Cluster():
         if self._graph is None:
             raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
+
+        # Set cluster attributes based on the theme using copy to ensure the objects are independent
+        self.dot.graph_attr.update(self._graph.theme.cluster_attrs)
+
+        # Override any values directly passed from the object
+        self.dot.graph_attr.update(attrs)
 
         # Set cluster depth to allow for logic based on the nesting of clusters
         self.depth = self._cluster.depth + 1 if self._cluster else 0
@@ -193,7 +199,7 @@ class Node():
     """
 
     _provider = None
-    _service_type = None
+    __service_type = None
 
     _icon_dir = None
     _icon = None
