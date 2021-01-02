@@ -185,13 +185,35 @@ class Cluster():
     def subgraph(self, dot=Digraph):
         self.dot.subgraph(dot)
 
+    @staticmethod
+    def _rand_id():
+        return uuid.uuid4().hex
+
 
 class Group(Cluster):
     """
     Creates a special type of group used only or organizing nodes.
     """
-    # The important thing here will be to set they style to invis so that if only groups items
-    pass
+    def __init__(self):
+
+        # Set the cluster label
+        self.label = self._rand_id()
+
+        # Set the cluster name
+        self.name = "cluster_" + self.label
+
+        # Create cluster
+        self.dot = Digraph(self.name)
+
+        # Set global graph and cluster context
+        self._graph = get_graph()
+        if self._graph is None:
+            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+        self._cluster = get_cluster()
+
+        # Update cluster label
+        self.dot.graph_attr["style"] = "invis"
+    
 
 class Node():
     """

@@ -23,6 +23,10 @@ class DataCatalog(_Integration):
     _icon = "data-catalog.png"
 
 
+class DataFactory(_Integration):
+    _icon = "data-factory.png"
+
+
 class EventGridDomains(_Integration):
     _icon = "event-grid-domains.png"
 
