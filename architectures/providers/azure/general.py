@@ -15,6 +15,10 @@ class Azurehome(_General):
     _icon = "azurehome.png"
 
 
+class Databricks(_General):
+    _icon = "databricks.png"
+
+
 class Developertools(_General):
     _icon = "developertools.png"
 
@@ -33,6 +37,10 @@ class Managementgroups(_General):
 
 class Marketplace(_General):
     _icon = "marketplace.png"
+
+
+class PowerBI(_General):
+    _icon = "power-bi.png"
 
 
 class Quickstartcenter(_General):

@@ -51,7 +51,7 @@ with Graph("my architecture", theme=theme):
     Edge(app_gateway, firewall)
     Edge(firewall, web_load_balancer)
     Edge(web_load_balancer, web_vms)
-    Edge(web_vms[0], business_load_balancer, ltail=web_tier_subnet.name)
+    Edge(web_vms[0], business_load_balancer, ltail=web_tier_subnet.name, color='goldenrod')
     Edge(business_load_balancer, business_vms)
     Edge(business_vms[0], data_load_balancer, ltail=business_tier_subnet.name)
     Edge(data_load_balancer, data_vms)
