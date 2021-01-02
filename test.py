@@ -9,31 +9,27 @@
 
 from architectures.core import Graph, Cluster, Node, Edge
 from architectures.themes import Default, Clean
-from architectures.providers.azure.ai import BatchAI
 from architectures.providers.azure.compute import VirtualMachine
+from architectures.providers.azure.devops import Devops
 
 theme = Clean()
 
-with Graph("my architecture", theme=theme):
+with Graph("my architecture", output_file_format="png", theme=theme):
     with Cluster("azure"):
         with Cluster("subscription"):
             with Cluster("resource group"):
                 with Cluster("virtual network"):
                     with Cluster("subnet") as sn:
-                        one = [BatchAI('batch ai'),
-                            BatchAI('batch ai\nmore text')]
+                        VirtualMachine('vm')
+                        Devops('test')
+                        
 
         with Cluster("subscription 2") as sub2:
             with Cluster("resource group 2"):
                 with Cluster("virtual network 2"):
                     with Cluster("subnet 2") as sn2:
-                        two = VirtualMachine('vm')
-                        BatchAI(label='batch ai')
-                        Node("test\nsomething\nout", shape="box", color='red')
+                        VirtualMachine('vm2')
 
-    Edge(one, two, label='this is a longer label', lhead=sn2.name)
-
-print(one)
 
 # touch ~/.bash_profile; open ~/.bash_profile
 # export PYTHONPATH="/users/use/code"
