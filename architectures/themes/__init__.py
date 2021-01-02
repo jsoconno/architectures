@@ -34,7 +34,7 @@ default_graph_attrs = {
     "pad": "0.0555",
     "pagedir": "bl",
     "quantum": "0.0",
-    "rankdir": "tb",
+    "rankdir": "TB",
     "ranksep": "0.5",
     "ratio": "auto",
     "remincross": "true",
@@ -184,7 +184,7 @@ class Clean(_Theme):
             "fontsize": "15",
             "fontcolor": "#2D3436",
             "style": "rounded",
-            "rankdir": "lr",
+            "rankdir": "LR",
             "labeljust": "l",
             "labelloc": 't'
         }
