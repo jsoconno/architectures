@@ -195,7 +195,8 @@ class Clean(_Theme):
             "labeljust": "l",
             "pencolor": "#AEB6BE",
             "fontname": "Sans-Serif",
-            "fontsize": "12"
+            "fontsize": "12",
+            "margin": "30"
         }
 
         self.theme_node_attrs = {
