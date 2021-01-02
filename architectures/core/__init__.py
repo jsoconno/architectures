@@ -31,6 +31,25 @@ def get_cluster():
 def set_cluster(cluster):
     __cluster.set(cluster)
 
+
+def wrap_text(text, max_length):
+    if len(text) > max_length:
+        words = text.split()
+        new_text = ""
+        if len(words) > 1:
+            temp_text = ""
+            for word in words:
+                test_text = temp_text + " " + word
+                if len(test_text) < max_length:
+                    new_text = new_text + " " + word
+                    temp_text = test_text
+                else:
+                    new_text = new_text + "\n" + word
+                    temp_text = word
+        return new_text
+    else:
+        return text
+
 class Graph():
     """
     Create and set default settings for a graph and its clusters, nodes, and edges.
@@ -243,25 +262,7 @@ class Node():
         self._cluster = get_cluster()
 
         # Auto-wrap labels
-        # TODO: Make this better by looking at other context such as the string length exceeding image width
-        _node_label_len = len(self.label)
-        _cluster_label_len = len(self._cluster.label)
-
-        if _node_label_len > _cluster_label_len:
-            _words = self.label.split()
-            _new_label = ""
-            if len(_words) > 1:
-                _sub_label = ""
-                for _word in _words:
-                    _test_label = _sub_label + " " + _word
-                    if len(_test_label) < _cluster_label_len:
-                        _new_label = _new_label + " " + _word
-                        _sub_label = _test_label
-                    else:
-                        _new_label = _new_label + "\n" + _word
-                        _sub_label = _word
-
-            self.label = _new_label
+        self.label = wrap_text(self.label, len(self._cluster.label))
 
         # Set node attributes based on the theme using copy to ensure the objects are independent
         self.node_attrs = self._graph.theme.node_attrs.copy()
