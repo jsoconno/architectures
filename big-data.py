@@ -16,7 +16,7 @@ with Graph("my architecture", theme=theme):
             with Cluster("Resource Group") as resource_group:
                 with Cluster("Data Source") as data_source:
                     Sql_database = SqlDatabase("Sql Database")
-                    Sql_data_warehouse = SqlDataWarehouse("Sql Data Warehouse")
+                    sql_data_warehouse = SqlDataWarehouse("Sql Data Warehouse")
                     cosmos_db = AzureCosmosDb("Cosmos DB")
                 with Cluster("Virtual Network") as virtual_network:
                     data_lake = DataLake("Data Lake")
@@ -42,4 +42,4 @@ with Graph("my architecture", theme=theme):
                     with Cluster("AzureDatabricks Public Subnet") as AzureDatabricks_public_subnet:
                         public_AzureDatabricks = AzureDatabricks("Azure AzureDatabricks")
 
-    Edge(Sql_data_warehouse, private_endpoints[1])
+    Edge(sql_data_warehouse, private_endpoints[1])
