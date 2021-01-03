@@ -1,50 +1,53 @@
+# Do not modify this file directly.  It is auto-generated with Python.
 
 from architectures.providers import _Azure
 
-
 class _Iot(_Azure):
-    _service_type = "iot"
-    _icon_dir = "icons/azure/iot"
-
-
-class DeviceProvisioningServices(_Iot):
-    _icon = "device-provisioning-services.png"
-
-
-class DigitalTwins(_Iot):
-    _icon = "digital-twins.png"
-
-
-class IotCentralApplications(_Iot):
-    _icon = "iot-central-applications.png"
-
-
-class IotHubSecurity(_Iot):
-    _icon = "iot-hub-security.png"
+	_service_type = "iot"
+	_icon_dir = "icons/azure/iot"
 
 
 class IotHub(_Iot):
-    _icon = "iot-hub.png"
+	_icon = "iot-hub.png"
 
 
-class Maps(_Iot):
-    _icon = "maps.png"
+class IotEdge(_Iot):
+	_icon = "iot-edge.png"
 
 
-class Sphere(_Iot):
-    _icon = "sphere.png"
+class IotDeviceProvisioningService(_Iot):
+	_icon = "iot-device-provisioning-service.png"
 
 
-class TimeSeriesInsightsEnvironments(_Iot):
-    _icon = "time-series-insights-environments.png"
+class IotWindows10Core(_Iot):
+	_icon = "iot-windows-10-core.png"
 
 
-class TimeSeriesInsightsEventsSources(_Iot):
-    _icon = "time-series-insights-events-sources.png"
+class IotSphere(_Iot):
+	_icon = "iot-sphere.png"
 
 
-class Windows10IotCoreServices(_Iot):
-    _icon = "windows-10-iot-core-services.png"
+class IotDefender(_Iot):
+	_icon = "iot-defender.png"
 
 
-# Aliases
+class IotDigitalTwin(_Iot):
+	_icon = "iot-digital-twin.png"
+
+
+class IotHubSecurity(_Iot):
+	_icon = "iot-hub-security.png"
+
+
+class IotSolutionAccelerator(_Iot):
+	_icon = "iot-solution-accelerator.png"
+
+
+class IotEdgeDevice(_Iot):
+	_icon = "iot-edge-device.png"
+
+
+class IotCentral(_Iot):
+	_icon = "iot-central.png"
+
+
