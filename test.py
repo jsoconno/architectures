@@ -10,8 +10,9 @@
 from architectures.core import Graph, Cluster, Node, Edge
 from architectures.themes import Default, Clean
 from architectures.providers.azure.compute import VirtualMachine
-from architectures.providers.azure.devops import Devops
-from architectures.providers.azure.network import ApplicationGateway, Firewall, LoadBalancers
+from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer
+from architectures.providers.azure.security import Firewall
+from architectures.providers.azure.application import Websocket
 
 theme = Clean()
 
@@ -28,21 +29,21 @@ with Graph("my architecture", theme=theme):
                         firewall = Firewall("Azure Firewall")
 
                     with Cluster("Web Tier Subnet") as web_tier_subnet:
-                        web_load_balancer = LoadBalancers("Load Balancer")
+                        web_load_balancer = LoadBalancer("Load Balancer")
                         web_vms = [
                             VirtualMachine("VM"),
                             VirtualMachine("VM")
                         ]
 
                     with Cluster("Business Tier Subnet") as business_tier_subnet:
-                        business_load_balancer = LoadBalancers("Load Balancer")
+                        business_load_balancer = LoadBalancer("Load Balancer")
                         business_vms = [
                             VirtualMachine("VM"),
                             VirtualMachine("VM")
                         ]
 
                     with Cluster("Data Tier Subnet") as data_tier_subnet:
-                        data_load_balancer = LoadBalancers("Load Balancer")
+                        data_load_balancer = LoadBalancer("Load Balancer")
                         data_vms = [
                             VirtualMachine("VM"),
                             VirtualMachine("VM")

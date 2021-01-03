@@ -1,74 +1,101 @@
+# Do not modify this file directly.  It is auto-generated with Python.
 
 from architectures.providers import _Azure
 
-
 class _Storage(_Azure):
-    _service_type = "storage"
-    _icon_dir = "icons/azure/storage"
+	_service_type = "storage"
+	_icon_dir = "icons/azure/storage"
+
+
+class StorsimpleDataManager(_Storage):
+	_icon = "storsimple-data-manager.png"
+
+
+class StorageAccountBlob(_Storage):
+	_icon = "storage-account-blob.png"
+
+
+class ManagedDiskStandardHdd(_Storage):
+	_icon = "managed-disk-standard-hdd.png"
+
+
+class StorageSyncService(_Storage):
+	_icon = "storage-sync-service.png"
+
+
+class DiskEncryptionSet(_Storage):
+	_icon = "disk-encryption-set.png"
+
+
+class ManagedDiskUltraSsd(_Storage):
+	_icon = "managed-disk-ultra-ssd.png"
 
 
 class ArchiveStorage(_Storage):
-    _icon = "archive-storage.png"
+	_icon = "archive-storage.png"
 
 
-class Azurefxtedgefiler(_Storage):
-    _icon = "azurefxtedgefiler.png"
+class StorageAccountBlobHot(_Storage):
+	_icon = "storage-account-blob-hot.png"
 
 
-class BlobStorage(_Storage):
-    _icon = "blob-storage.png"
+class StorageAccountTable(_Storage):
+	_icon = "storage-account-table.png"
 
 
-class DataBoxEdgeDataBoxGateway(_Storage):
-    _icon = "data-box-edge---data-box-gateway.png"
+class ManagedDiskSnapshot(_Storage):
+	_icon = "managed-disk-snapshot.png"
+
+
+class DataShare(_Storage):
+	_icon = "data-share.png"
+
+
+class DataCatalog(_Storage):
+	_icon = "data-catalog.png"
+
+
+class StorageAccountBlobCool(_Storage):
+	_icon = "storage-account-blob-cool.png"
 
 
 class DataBox(_Storage):
-    _icon = "data-box.png"
-
-
-class DataLakeStorage(_Storage):
-    _icon = "data-lake-storage.png"
-
-
-class GeneralStorage(_Storage):
-    _icon = "general-storage.png"
-
-
-class NetappFiles(_Storage):
-    _icon = "netapp-files.png"
-
-
-class QueuesStorage(_Storage):
-    _icon = "queues-storage.png"
-
-
-class StorageAccountsClassic(_Storage):
-    _icon = "storage-accounts-classic.png"
-
-
-class StorageAccounts(_Storage):
-    _icon = "storage-accounts.png"
+	_icon = "data-box.png"
 
 
 class StorageExplorer(_Storage):
-    _icon = "storage-explorer.png"
+	_icon = "storage-explorer.png"
 
 
-class StorageSyncServices(_Storage):
-    _icon = "storage-sync-services.png"
+class StorageAccountContainer(_Storage):
+	_icon = "storage-account-container.png"
 
 
-class StorsimpleDataManagers(_Storage):
-    _icon = "storsimple-data-managers.png"
+class DataBoxEdgeAndGateway(_Storage):
+	_icon = "data-box-edge-and-gateway.png"
 
 
-class StorsimpleDeviceManagers(_Storage):
-    _icon = "storsimple-device-managers.png"
+class AzureNetappFiles(_Storage):
+	_icon = "azure-netapp-files.png"
 
 
-class TableStorage(_Storage):
-    _icon = "table-storage.png"
+class StorageAccountQueue(_Storage):
+	_icon = "storage-account-queue.png"
 
 
-# Aliases
+class ManagedDiskStandardSsd(_Storage):
+	_icon = "managed-disk-standard-ssd.png"
+
+
+class StorageAccount(_Storage):
+	_icon = "storage-account.png"
+
+
+class ManagedDiskPremiumSsd(_Storage):
+	_icon = "managed-disk-premium-ssd.png"
+
+
+class StorageAccountClassic(_Storage):
+	_icon = "storage-account-classic.png"
+
+
