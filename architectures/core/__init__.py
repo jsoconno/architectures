@@ -9,6 +9,7 @@ from architectures.themes import Default
 
 __graph = contextvars.ContextVar("graph")
 __cluster = contextvars.ContextVar("cluster")
+__node = contextvars.ContextVar("node")
 
 def get_graph():
     try:
@@ -24,6 +25,16 @@ def set_graph(graph):
 def get_cluster():
     try:
         return __cluster.get()
+    except LookupError:
+        return None
+
+
+def set_node(node):
+    __node.set(node)
+
+def get_node():
+    try:
+        return __node.get()
     except LookupError:
         return None
 
@@ -240,7 +251,7 @@ class Node():
     """
 
     _provider = None
-    __service_type = None
+    _service_type = None
 
     _icon_dir = None
     _icon = None
@@ -282,6 +293,19 @@ class Node():
         else:
             self._graph.node(self._id, self.label, **self.node_attrs)
 
+        # TESTING
+        node_dict = get_node()
+        if node_dict is None:
+            node_dict = {self._cluster: [self]}
+            set_node(node_dict)
+        elif self._cluster not in node_dict:
+            node_dict.update({self._cluster: [self]})
+        else:
+            node_list = node_dict[self._cluster]
+            node_list.append([self])
+            node_dict.update({self._cluster: node_list})
+            set_node(node_dict)
+
     @property
     def node_id(self):
         return self._id
@@ -307,10 +331,10 @@ class Edge():
         :param attrs: Other edge attributes.
         """
         if start_node is not None:
-            assert isinstance(start_node, (Node, list))
+            assert isinstance(start_node, (Cluster, Node, list))
 
         if end_node is not None:
-            assert isinstance(end_node, (Node, list))
+            assert isinstance(end_node, (Cluster, Node, list))
 
         self.start_node = start_node
         self.end_node = end_node
@@ -338,5 +362,14 @@ class Edge():
         else:
             self._node = end_node
 
-        # Create the edge between nodes
-        self._node._graph.edge(start_node, end_node, **self.edge_attrs)
+        if isinstance(start_node, Cluster):
+            cluster = start_node
+            node_dict = get_node()
+            center_node_index = round(len(node_dict[start_node])/2) - 1
+            start_node = node_dict[start_node][center_node_index][0]
+            print(start_node._id)
+            self.edge_attrs.update({"ltail": cluster.name})
+            self._node._graph.edge(start_node, end_node, **self.edge_attrs)
+        else:
+            # Create the edge between nodes
+            self._node._graph.edge(start_node, end_node, **self.edge_attrs)
