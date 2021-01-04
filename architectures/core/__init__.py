@@ -61,6 +61,18 @@ def wrap_text(text, max_length):
     else:
         return text
 
+def validate_node(connection):
+    """
+    Validates that the type of node passed is of the right type
+    """
+    validate_types = isinstance(connection, (Cluster, Group, Node, list))
+
+    if type(connection) == list:
+        validate_list_items = isinstance(connection, list) and all(isinstance(x, (Cluster, Group, Node)) for x in connection)
+        return validate_types and validate_list_items
+    else:
+        return validate_types
+
 class Graph():
     """
     Create and set default settings for a graph and its clusters, nodes, and edges.
@@ -129,7 +141,7 @@ class Graph():
         """
         # Handle conditions where both passed objects are lists
         if isinstance(tail_node, list) and isinstance(head_node, list):
-            [self.dot.edge(tail.node._id, head.node_id, **attrs) for head in head_node for tail in tail_node]
+            [self.dot.edge(tail.node_id, head.node_id, **attrs) for head in head_node for tail in tail_node]
         elif isinstance(tail_node, list):
             [self.dot.edge(tail.node_id, head_node.node_id, **attrs) for tail in tail_node]
         elif isinstance(head_node, list):
@@ -293,14 +305,16 @@ class Node():
         else:
             self._graph.node(self._id, self.label, **self.node_attrs)
 
-        # TESTING
         node_dict = get_node()
         if node_dict is None:
+            # Creates the initial node dictionary if one does not exist
             node_dict = {self._cluster: [self]}
             set_node(node_dict)
         elif self._cluster not in node_dict:
+            # Adds a new cluster key and value to the node dictionary
             node_dict.update({self._cluster: [self]})
         else:
+            # Updates an existing cluster value in the node dictionary
             node_list = node_dict[self._cluster]
             node_list.append([self])
             node_dict.update({self._cluster: node_list})
@@ -326,15 +340,17 @@ class Edge():
     def __init__(self, start_node, end_node, **attrs,
     ):
         """
-        :param start_node: The is the origin node.
-        :param end_node: The is the destination node.
+        :param start: The origin cluster, group, or node object.
+        :param end: The destination cluster, group, or node object.
         :param attrs: Other edge attributes.
         """
-        if start_node is not None:
-            assert isinstance(start_node, (Cluster, Node, list))
 
-        if end_node is not None:
-            assert isinstance(end_node, (Cluster, Node, list))
+        # Ensure that the object passed is the correct type
+        if start_node is not None and validate_node(start_node) is False:
+            raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
+
+        if end_node is not None and validate_node(end_node) is False:
+            raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
 
         self.start_node = start_node
         self.end_node = end_node
@@ -366,39 +382,30 @@ class Edge():
             cluster = start_node
             node_dict = get_node()
             center_node_index = round(len(node_dict[start_node])/2) - 1
-            start_node = node_dict[start_node][center_node_index][0]
+            start_node = node_dict[start_node][center_node_index]
             self.edge_attrs.update({"ltail": cluster.name})
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
+
         elif isinstance(start_node, (Node, list)) and isinstance(end_node, (Cluster, Group)):
             cluster = end_node
             node_dict = get_node()
             center_node_index = round(len(node_dict[end_node])/2) - 1
-            end_node = node_dict[end_node][center_node_index][0]
+            end_node = node_dict[end_node][center_node_index]
             self.edge_attrs.update({"lhead": cluster.name})
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
+
         elif isinstance(start_node, (Cluster, Group)) and isinstance(end_node, (Cluster, Group)):
             start_cluster = start_node
             end_cluster = end_node
             node_dict = get_node()
             start_center_node_index = round(len(node_dict[start_node])/2) - 1
             end_center_node_index = round(len(node_dict[end_node])/2) - 1
-            start_node = node_dict[start_node][start_center_node_index][0]
-            end_node = node_dict[end_node][end_center_node_index][0]
+            start_node = node_dict[start_node][start_center_node_index]
+            end_node = node_dict[end_node][end_center_node_index]
             self.edge_attrs.update({"ltail": start_cluster.name})
             self.edge_attrs.update({"lhead": end_cluster.name})
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
+
         else:
             # Create the edge between nodes
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
-
-        # if isinstance(end_node, Cluster):
-        #     cluster = end_node
-        #     print(end_node)
-        #     node_dict = get_node()
-        #     center_node_index = round(len(node_dict[end_node])/2) - 1
-        #     end_node = node_dict[end_node][center_node_index][0]
-        #     self.edge_attrs.update({"lhead": cluster.name})
-        #     self._node._graph.edge(start_node, end_node, **self.edge_attrs)
-        # else:
-        #     # Create the edge between nodes
-        #     self._node._graph.edge(end_node, end_node, **self.edge_attrs)
