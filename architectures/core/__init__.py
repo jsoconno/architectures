@@ -43,7 +43,7 @@ def set_cluster(cluster):
     __cluster.set(cluster)
 
 
-def wrap_text(text, max_length):
+def wrap_text(text, max_length=16):
     if len(text) > max_length:
         words = text.split()
         new_text = ""
@@ -285,7 +285,10 @@ class Node():
         self._cluster = get_cluster()
 
         # Auto-wrap labels
-        self.label = wrap_text(self.label, len(self._cluster.label))
+        if self._cluster is not None:
+            self.label = wrap_text(self.label, len(self._cluster.label))
+        else:
+            self.label = wrap_text(self.label)
 
         # Set node attributes based on the theme using copy to ensure the objects are independent
         self.node_attrs = self._graph.theme.node_attrs.copy()
