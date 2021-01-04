@@ -32,16 +32,13 @@ with Graph("my architecture", theme=theme, show=True):
 
                     with Cluster("Workstation Subnet") as workstation_subnet:
                         vm_1 = VirtualMachine("")
-                        pbi_1 = PowerBi("")
                         vm_2 = VirtualMachine("")
-                        pbi_2 = PowerBi("")
                         vm_3 = VirtualMachine("")
-                        pbi_3 = PowerBi("")
 
-                    with Cluster("AzureDatabricks Private Subnet") as AzureDatabricks_private_subnet:
+                    with Cluster("AzureDatabricks Private Subnet") as azure_databricks_private_subnet:
                         private_azure_databricks = AzureDatabricks("Azure AzureDatabricks")
 
-                    with Cluster("AzureDatabricks Public Subnet") as AzureDatabricks_public_subnet:
+                    with Cluster("AzureDatabricks Public Subnet") as azure_databricks_public_subnet:
                         public_azure_databricks = AzureDatabricks("Azure AzureDatabricks")
 
     Edge(data_source, private_endpoints[1])
@@ -50,6 +47,3 @@ with Graph("my architecture", theme=theme, show=True):
     Edge(private_azure_databricks, data_lake)
     Edge(public_azure_databricks, data_lake)
     Edge(workstation_subnet, private_azure_databricks)
-    Edge(vm_1, pbi_1, style="invis")
-    Edge(vm_2, pbi_2, style="invis")
-    Edge(vm_3, pbi_3, style="invis")

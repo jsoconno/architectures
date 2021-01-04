@@ -367,7 +367,6 @@ class Edge():
             node_dict = get_node()
             center_node_index = round(len(node_dict[start_node])/2) - 1
             start_node = node_dict[start_node][center_node_index][0]
-            print(start_node._id)
             self.edge_attrs.update({"ltail": cluster.name})
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
         else:
