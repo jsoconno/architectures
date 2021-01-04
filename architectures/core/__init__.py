@@ -378,6 +378,7 @@ class Edge():
         else:
             self._node = end_node
 
+        # Handles cases where the start_node is a Cluster or Group
         if isinstance(start_node, (Cluster, Group)) and isinstance(end_node, (Node, list)):
             cluster = start_node
             node_dict = get_node()
@@ -386,6 +387,7 @@ class Edge():
             self.edge_attrs.update({"ltail": cluster.name})
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
 
+        # Handles cases where the end_node is a Cluster or Group
         elif isinstance(start_node, (Node, list)) and isinstance(end_node, (Cluster, Group)):
             cluster = end_node
             node_dict = get_node()
@@ -394,6 +396,7 @@ class Edge():
             self.edge_attrs.update({"lhead": cluster.name})
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
 
+        # Handles cases where the start_node and end_node are a Cluster or Group
         elif isinstance(start_node, (Cluster, Group)) and isinstance(end_node, (Cluster, Group)):
             start_cluster = start_node
             end_cluster = end_node
@@ -406,6 +409,6 @@ class Edge():
             self.edge_attrs.update({"lhead": end_cluster.name})
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
 
+        # Handles the standard case of node to node connection
         else:
-            # Create the edge between nodes
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
