@@ -1,11 +1,11 @@
 default_graph_attrs = {
-    "bgcolor": "transparent",
+    "bgcolor": "white",
     "center": "false",
     "charset": "utf-8",
     "clusterrank": "local",
     "colorscheme": "",
     "comment": "",
-    "compound": "false",
+    "compound": "true",
     "concentrate": "false",
     "fontcolor": "black",
     "fontname": "times-roman",
