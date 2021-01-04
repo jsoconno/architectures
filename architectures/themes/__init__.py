@@ -164,6 +164,18 @@ class Default(_Theme):
         self.edge_attrs = default_edge_attrs
         self.node_attrs = default_node_attrs
 
+        if graph_attr_overrides is not None:
+            self.graph_attrs.update(graph_attr_overrides)
+
+        if cluster_attr_overrides is not None:
+            self.cluster_attrs.update(cluster_attr_overrides)
+
+        if node_attr_overrides is not None:
+            self.node_attrs.update(node_attr_overrides)
+
+        if edge_attr_overrides is not None:
+            self.edge_attrs.update(edge_attr_overrides)
+
 class Clean(_Theme):
 
     def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}):
