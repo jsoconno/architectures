@@ -236,7 +236,9 @@ class Group(Cluster):
     """
     Creates a special type of group used only or organizing nodes.
     """
-    def __init__(self):
+    __background_colors = ("#FFFFFF", "#FFFFFF")
+    
+    def __init__(self, label="group", background_colors=False, **attrs):
 
         # Set the cluster label
         self.label = self._rand_id()
@@ -255,6 +257,15 @@ class Group(Cluster):
 
         # Update cluster label
         self.dot.graph_attr["style"] = "invis"
+
+        # Set cluster depth to allow for logic based on the nesting of clusters
+        self.depth = self._cluster.depth + 1 if self._cluster else 0
+        color_index = self.depth % len(self.__background_colors)
+
+        # Set the background colors
+        # Update this functionality to be something that is passed from a theme
+        if background_colors:
+            self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
     
 
 class Node():
