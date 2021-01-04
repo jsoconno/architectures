@@ -31,9 +31,10 @@ with Graph("my architecture", theme=theme, show=True):
                         data_factory_vm = VirtualMachine("Integration Runtime")
 
                     with Cluster("Workstation Subnet") as workstation_subnet:
-                        vm_1 = VirtualMachine("")
-                        vm_2 = VirtualMachine("")
-                        vm_3 = VirtualMachine("")
+                        with Group() as group_test:
+                            vm_1 = VirtualMachine("")
+                            vm_2 = VirtualMachine("")
+                            vm_3 = VirtualMachine("")
 
                     with Cluster("AzureDatabricks Private Subnet") as azure_databricks_private_subnet:
                         private_azure_databricks = AzureDatabricks("Azure AzureDatabricks")
