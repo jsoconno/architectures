@@ -362,14 +362,14 @@ class Edge():
         else:
             self._node = end_node
 
-        if isinstance(start_node, (Cluster, Group)) and isinstance(end_node, Node):
+        if isinstance(start_node, (Cluster, Group)) and isinstance(end_node, (Node, list)):
             cluster = start_node
             node_dict = get_node()
             center_node_index = round(len(node_dict[start_node])/2) - 1
             start_node = node_dict[start_node][center_node_index][0]
             self.edge_attrs.update({"ltail": cluster.name})
             self._node._graph.edge(start_node, end_node, **self.edge_attrs)
-        elif isinstance(start_node, Node) and isinstance(end_node, (Cluster, Group)):
+        elif isinstance(start_node, (Node, list)) and isinstance(end_node, (Cluster, Group)):
             cluster = end_node
             node_dict = get_node()
             center_node_index = round(len(node_dict[end_node])/2) - 1

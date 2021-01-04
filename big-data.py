@@ -42,7 +42,7 @@ with Graph("my architecture", theme=theme, show=True):
                     with Cluster("AzureDatabricks Public Subnet") as azure_databricks_public_subnet:
                         public_azure_databricks = AzureDatabricks("Azure AzureDatabricks")
 
-    Edge(data_source, private_endpoint_subnet)
+    Edge(data_source, private_endpoints)
     Edge(private_endpoints, data_factory_vm)
     Edge(data_factory, data_lake)
     Edge(private_azure_databricks, data_lake)
