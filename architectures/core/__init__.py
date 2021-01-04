@@ -43,7 +43,7 @@ def set_cluster(cluster):
     __cluster.set(cluster)
 
 
-def wrap_text(text, max_length):
+def wrap_text(text, max_length=16):
     if len(text) > max_length:
         words = text.split()
         new_text = ""
@@ -236,7 +236,9 @@ class Group(Cluster):
     """
     Creates a special type of group used only or organizing nodes.
     """
-    def __init__(self):
+    __background_colors = ("#FFFFFF", "#FFFFFF")
+    
+    def __init__(self, label="group", background_colors=False, **attrs):
 
         # Set the cluster label
         self.label = self._rand_id()
@@ -255,6 +257,15 @@ class Group(Cluster):
 
         # Update cluster label
         self.dot.graph_attr["style"] = "invis"
+
+        # Set cluster depth to allow for logic based on the nesting of clusters
+        self.depth = self._cluster.depth + 1 if self._cluster else 0
+        color_index = self.depth % len(self.__background_colors)
+
+        # Set the background colors
+        # Update this functionality to be something that is passed from a theme
+        if background_colors:
+            self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
     
 
 class Node():
@@ -285,7 +296,10 @@ class Node():
         self._cluster = get_cluster()
 
         # Auto-wrap labels
-        self.label = wrap_text(self.label, len(self._cluster.label))
+        if self._cluster is not None:
+            self.label = wrap_text(self.label, len(self._cluster.label))
+        else:
+            self.label = wrap_text(self.label)
 
         # Set node attributes based on the theme using copy to ensure the objects are independent
         self.node_attrs = self._graph.theme.node_attrs.copy()
