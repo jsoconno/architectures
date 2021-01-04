@@ -10,12 +10,12 @@ from architectures.providers.azure.ai import PowerBi
 
 theme = Clean()
 
-with Graph("my architecture", theme=theme):
+with Graph("my architecture", theme=theme, show=True):
     with Cluster("Azure") as azure:
         with Cluster("Subscription") as subscription:
             with Cluster("Resource Group") as resource_group:
                 with Cluster("Data Source") as data_source:
-                    Sql_database = SqlDatabase("Sql Database")
+                    sql_database = SqlDatabase("Sql Database")
                     sql_data_warehouse = SqlDataWarehouse("Sql Data Warehouse")
                     cosmos_db = AzureCosmosDb("Cosmos DB")
                 with Cluster("Virtual Network") as virtual_network:
@@ -31,15 +31,19 @@ with Graph("my architecture", theme=theme):
                         data_factory_vm = VirtualMachine("Integration Runtime")
 
                     with Cluster("Workstation Subnet") as workstation_subnet:
-                        for i in range(3):
-                            with Group():
-                                VirtualMachine("")
-                                PowerBi(f"WS{i + 1}")
+                        with Group() as group_test:
+                            vm_1 = VirtualMachine("")
+                            vm_2 = VirtualMachine("")
+                            vm_3 = VirtualMachine("")
 
-                    with Cluster("AzureDatabricks Private Subnet") as AzureDatabricks_private_subnet:
-                        private_AzureDatabricks = AzureDatabricks("Azure AzureDatabricks")
+                    with Cluster("AzureDatabricks Private Subnet") as azure_databricks_private_subnet:
+                        private_azure_databricks = AzureDatabricks("Azure AzureDatabricks")
 
-                    with Cluster("AzureDatabricks Public Subnet") as AzureDatabricks_public_subnet:
-                        public_AzureDatabricks = AzureDatabricks("Azure AzureDatabricks")
+                    with Cluster("AzureDatabricks Public Subnet") as azure_databricks_public_subnet:
+                        public_azure_databricks = AzureDatabricks("Azure AzureDatabricks")
 
-    Edge(sql_data_warehouse, private_endpoints[1])
+    Edge(data_source, private_endpoint_subnet)
+    Edge(private_endpoints, data_factory_vm)
+    Edge(data_factory, data_lake)
+    Edge(private_azure_databricks, data_lake)
+    Edge(public_azure_databricks, data_lake)
