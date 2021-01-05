@@ -15,7 +15,4 @@ with Graph("my architecture", theme=theme, show=True):
     with Cluster("Cluster C") as cluster_c:
         g = Node("G")
 
-    Edge(a, g)
-    Edge(cluster_a, d)
-    Edge(f, cluster_b)
     Edge(cluster_a, cluster_b)
