@@ -14,3 +14,5 @@ with Graph("my architecture", theme=theme, show=True):
         f = Node("F")
     with Cluster("Cluster C") as cluster_c:
         g = Node("G")
+
+    Flow([a, c, cluster_b, g, f, cluster_a])

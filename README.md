@@ -11,11 +11,20 @@
 
 ## Introduction
 Architectures is a simple and powerful **python** library for rapidly developing high-quality **architecture as code**.
-## Goals
-- Make it simple and powerful
-- Enable architecture code collaboration
-- Eliminate the toil of creating diagrams
-- Support all major providers
+## Design Goals
+1. Make it simple, intuitive, and powerful
+2. Improve teamwork and collaboration
+3. Enable standard practices including pull request, code reviews, etc.
+4. Eliminate toil of diagram creation
+5. Support a wide variety of providers
+6. Allow for design templates that can be shared
 
 ## Supported Objects
-**Graphs** are used to 
+- Graphs
+- Clusters
+- Groups
+- Nodes
+- Edges
+- Flows
+
+## Examples
