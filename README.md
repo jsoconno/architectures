@@ -10,21 +10,41 @@
 <a href="https://www.buymeacoffee.com/jsoconno" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## Introduction
-Architectures is a simple and powerful **python** library for rapidly developing high-quality **architecture as code**.
+In a galaxy far, far away where everything is managed as code...
+
+Including applications, infrastructure, processes, configurations, governance, and more...
+
+Architecture diagrams were left behind requiring architects to search for files and identify the correct versions of documents stored on local servers across the organization...
+
+Architectures was designed to help technical teams work better together to build architecture as code and overcome the evil visio diagrams grip on the universe...
+
+Only you can usher in an age of renewed hope.  Let's hope all is not lost...
 ## Design Goals
-1. Make it simple, intuitive, and powerful
-2. Improve teamwork and collaboration
-3. Enable standard practices including pull request, code reviews, etc.
-4. Eliminate toil of diagram creation
-5. Support a wide variety of providers
-6. Allow for design templates that can be shared
+The overarching goal of this project is to alow for the development of architecture as code that can be stored in version control allowing teams to better collaborate and leverage standard coding practices such as pull requests, code reviews, approvals, etc to maintain architecture diagrams.
+
+Architectures has been design goal is to be simple, powerful, extendable and scalable so that anyone in the technology organization can contribute to diagram development.  It is also an attempt to eliminate the toil associated with diagram creation and support a wide variety of cloud and on-premise providers.
+
+## Dependencies
+Python version 3.6.x or later must be installed.
+
+The graphviz library is also required.  To install with Python, simply run the following command in the terminal:
+```
+pip install graphviz
+```
 
 ## Supported Objects
-- Graphs
-- Clusters
-- Groups
-- Nodes
-- Edges
-- Flows
+There are several types of supported objects in the architectures library.  These objects primarily fall into three categories:
+### Containers
+- **Graphs** allow users to create a base canvas to create their diagram on
+- **Clusters** allow users to group **Nodes** into bounded container
+- **Groups** allow users to logically group **Nodes** with no bounding container
+### Components
+- **Nodes** allow users to create an object that represents a service
+### Connections
+- **Edges** allow users to draw a line between a pair or list of **Nodes**, **Clusters**, or **Groups**
+- **Flows** allow users to create a linear flow through a list of **Nodes**, **Clusters**, or **Groups**
+
+The component objects are extended with subclasses that allow for the creation of standard service components from various providers such as Azure, GCP, and AWS.
 
 ## Examples
+Coming Soon
