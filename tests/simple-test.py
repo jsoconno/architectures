@@ -14,5 +14,3 @@ with Graph("my architecture", theme=theme, show=True):
         f = Node("F")
     with Cluster("Cluster C") as cluster_c:
         g = Node("G")
-
-    Flow([a, c, cluster_b, cluster_a, g, f, b], color="goldenrod")
