@@ -1,4 +1,4 @@
-from architectures.core import Graph, Cluster, Group, Node, Edge
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 from architectures.themes import Default, Clean
 
 theme = Default(graph_attr_overrides={"splines": "ortho"})
@@ -14,3 +14,5 @@ with Graph("my architecture", theme=theme, show=True):
         f = Node("F")
     with Cluster("Cluster C") as cluster_c:
         g = Node("G")
+
+    Flow([a, c, cluster_b, g, f, b], color="goldenrod")
