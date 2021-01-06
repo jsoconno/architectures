@@ -349,8 +349,7 @@ class Edge():
     Creates an edge between two nodes
     """
 
-    def __init__(self, start_node, end_node, **attrs,
-    ):
+    def __init__(self, start_node, end_node, **attrs,):
         """
         :param start: The origin cluster, group, or node object.
         :param end: The destination cluster, group, or node object.
@@ -358,6 +357,7 @@ class Edge():
         """
 
         # Ensure that the object passed is the correct type
+        # THIS CAN BE REMOVED WITH THE NEW ASSERT LOGIC BELOW IN PLACE
         if start_node is not None and validate_node(start_node) is False:
             raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
 
@@ -414,3 +414,53 @@ class Edge():
                     assert isinstance(self.end_node, (Cluster, Group, Node))
 
                 self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
+
+class Flow():
+    """
+    Another method of connecting nodes by allowing users to define a flow as a list
+    """
+    def __init__(self, nodes, **attrs):
+        
+        self.nodes = nodes
+        self.node_count = len(self.nodes)
+
+        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
+        self._graph = get_graph()
+        if self._graph is None:
+            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+
+        # Set edge attributes based on the theme using copy to ensure the objects are independent
+        self.edge_attrs = self._graph.theme.edge_attrs.copy()
+
+        # Override any attributes directly passed from the object
+        self.edge_attrs.update(attrs)
+
+        if self.node_count > 1:
+            for i in range(self.node_count):
+                if i < self.node_count - 1:
+                    self.start_node = self.nodes[i]
+                    self.end_node = self.nodes[i + 1]
+
+                    if isinstance(self.start_node, Node) and isinstance(self.end_node, Node):
+                        pass
+                    elif isinstance(self.start_node, Node) and isinstance(self.end_node, (Cluster, Group)):
+                        cluster = self.end_node
+                        self.end_node = get_cluster_node(self.end_node)
+                        self.edge_attrs.update({"lhead": cluster.name})
+                    elif isinstance(self.start_node, (Cluster, Group)) and isinstance(self.end_node, Node):
+                        cluster = self.start_node
+                        self.start_node = get_cluster_node(self.start_node)
+                        self.edge_attrs.update({"ltail": cluster.name})
+                    elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, (Cluster, Group)):
+                        start_cluster = self.start_node
+                        end_cluster = self.end_node
+                        self.start_node = get_cluster_node(self.start_node)
+                        self.end_node = get_cluster_node(self.end_node)
+                        self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
+                    else:
+                        assert isinstance(self.start_node, (Cluster, Group, Node))
+                        assert isinstance(self.end_node, (Cluster, Group, Node))
+                
+                    self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
+        else:
+            raise Exception('More than one node must be passed in the list to use the Flow object')
