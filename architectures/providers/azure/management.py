@@ -87,7 +87,7 @@ class AzureLighthouseProjection(_Management):
 	_icon = "azure-lighthouse-projection.png"
 
 
-class Role(Custom)(_Management):
+class RoleCustom(_Management):
 	_icon = "role-(custom).png"
 
 
@@ -151,7 +151,7 @@ class AzureWorkbook(_Management):
 	_icon = "azure-workbook.png"
 
 
-class Role(Azuread)(_Management):
+class RoleAzuread(_Management):
 	_icon = "role-(azuread).png"
 
 
