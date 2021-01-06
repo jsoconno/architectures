@@ -378,85 +378,39 @@ class Edge():
         # Override any attributes directly passed from the object
         self.edge_attrs.update(attrs)
 
-        # Handles cases where the start_node is a Cluster or Group
-        if isinstance(start_node, (Cluster, Group)) and isinstance(end_node, (Node, list)):
-            cluster = start_node
-            start_node = get_cluster_node(cluster)
-            self.edge_attrs.update({"ltail": cluster.name})
-            if isinstance(end_node, list):
-                for obj in end_node:
-                    if isinstance(obj, (Cluster, Group)):
-                        cluster = obj
-                        end_node = get_cluster_node(obj)
-                        self.edge_attrs.update({"lhead": cluster.name})
-                        self._graph.edge(start_node, end_node, **self.edge_attrs)
-                    else:
-                        end_node = obj
-                        print(start_node.label, end_node.label)
-                        self._graph.edge(start_node, end_node, **self.edge_attrs)
-            else:
-                self._graph.edge(start_node, end_node, **self.edge_attrs)
+        if type(self.start_node) is not list:
+            self.start_node = [self.start_node] 
+        
+        if type(self.end_node) is not list:
+            self.end_node = [self.end_node]
 
-        # Handles cases where the end_node is a Cluster or Group
-        elif isinstance(start_node, (Node, list)) and isinstance(end_node, (Cluster, Group)):
-            cluster = end_node
-            end_node = get_cluster_node(end_node)
-            self.edge_attrs.update({"lhead": cluster.name})
-            if isinstance(start_node, list):
-                for obj in start_node:
-                    if isinstance(obj, (Cluster, Group)):
-                        cluster = obj
-                        start_node = get_cluster_node(obj)
-                        self.edge_attrs.update({"ltail": cluster.name})
-                        self._graph.edge(start_node, end_node, **self.edge_attrs)
-                    else:
-                        start_node = obj
-                        print(start_node.label, end_node.label)
-                        self._graph.edge(start_node, end_node, **self.edge_attrs)
-            else:
-                self._graph.edge(start_node, end_node, **self.edge_attrs)
+        start_node_list = self.start_node
+        end_node_list = self.end_node
 
-        # Handles cases where the start_node and end_node are a single Cluster or Group
-        elif isinstance(start_node, (Cluster, Group, list)) and isinstance(end_node, (Cluster, Group, list)):
-            start_cluster = start_node
-            end_cluster = end_node
-            start_node = get_cluster_node(start_cluster)
-            end_node = get_cluster_node(end_cluster)
-            self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
-            # if isinstance(start_node, list) and isinstance(end_node)
-            self._graph.edge(start_node, end_node, **self.edge_attrs)
+        # Handle all cases
+        for current_start_node in start_node_list:
+            for current_end_node in end_node_list:
+                if isinstance(current_start_node, Node) and isinstance(current_end_node, Node):
+                    self.start_node = current_start_node
+                    self.end_node = current_end_node
+                elif isinstance(current_start_node, Node) and isinstance(current_end_node, (Cluster, Group)):
+                    cluster = current_end_node
+                    self.start_node = current_start_node
+                    self.end_node = get_cluster_node(current_end_node)
+                    self.edge_attrs.update({"lhead": cluster.name})
+                elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, Node):
+                    cluster = current_start_node
+                    self.start_node = get_cluster_node(current_start_node)
+                    self.end_node = current_end_node
+                    self.edge_attrs.update({"ltail": cluster.name})
+                elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, (Cluster, Group)):
+                    start_cluster = current_start_node
+                    end_cluster = current_end_node
+                    self.start_node = get_cluster_node(current_start_node)
+                    self.end_node = get_cluster_node(current_end_node)
+                    self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
+                else:
+                    assert isinstance(self.start_node, (Cluster, Group, Node))
+                    assert isinstance(self.end_node, (Cluster, Group, Node))
 
-        # Handles the standard case of node to node connection
-        else:
-            self._graph.edge(start_node, end_node, **attrs)
-
-
-        # Handle conditions where both passed objects are lists
-        # node_dict = get_node()
-        # if isinstance(tail_node, list) and isinstance(head_node, list):
-        #     for tail in tail_node:
-        #         for head in head_node:
-        #             if isinstance(tail, (Cluster, Group)) and isinstance(head, (Cluster, Group)):
-        #                 tail_node = node_dict[tail]
-        #                 head_node = node_dict[head]
-        #                 [self.dot.edge(tail.node_id, head.node_id, **attrs) for head in head_node for tail in tail_node]
-        #             elif isinstance(tail, (Cluster, Group)):
-        #                 tail_node = node_dict[tail]
-        #                 print(tail_node)
-        #                 print(head_node)
-        #                 cluster = tail
-        #                 center_node_index = round(len(node_dict[tail])/2) - 1
-        #                 tail_node = node_dict[tail][center_node_index]
-        #                 print(tail_node)
-        #                 self.dot.edge(tail.node_id, head.node_id, **attrs)
-        #             elif isinstance(head, (Cluster, Group)):
-        #                 for head in head_node:
-        #                     head_node = node_dict[head]
-        #                     [self.dot.edge(tail.node_id, head.node_id, **attrs) for head in head_node for tail in tail_node]
-        #             else:
-        #                 [self.dot.edge(tail.node_id, head.node_id, **attrs) for head in head_node for tail in tail_node]
-        # elif isinstance(tail_node, list):
-        #     [self.dot.edge(tail.node_id, head_node.node_id, **attrs) for tail in tail_node]
-        # elif isinstance(head_node, list):
-        #     [self.dot.edge(tail_node.node_id, head.node_id, **attrs) for head in head_node]
-        # else:
+                self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
