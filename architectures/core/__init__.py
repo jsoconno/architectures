@@ -44,6 +44,14 @@ def set_cluster(cluster):
 
 
 def wrap_text(text, max_length=16):
+    """
+    Wraps a labels text for a node if it exceeds a certain length
+    """
+    # Set a minimum word wrap length
+    if max_length < 12:
+        max_length = 12
+
+    # Implement word wrap
     if len(text) > max_length:
         words = text.split()
         new_text = ""
@@ -62,22 +70,14 @@ def wrap_text(text, max_length=16):
         return text
 
 def get_cluster_node(cluster):
+    """
+    Takes a cluster object and finds the most central node in the cluster for doing cluster to cluster connections.
+    """
     node_dict = get_node()
     center_node_index = round(len(node_dict[cluster])/2) - 1
     node = node_dict[cluster][center_node_index]
     return node
 
-def validate_node(connection):
-    """
-    Validates that the type of node passed is of the right type
-    """
-    validate_types = isinstance(connection, (Cluster, Group, Node, list))
-
-    if type(connection) == list:
-        validate_list_items = isinstance(connection, list) and all(isinstance(x, (Cluster, Group, Node)) for x in connection)
-        return validate_types and validate_list_items
-    else:
-        return validate_types
 
 class Graph():
     """
@@ -143,19 +143,19 @@ class Graph():
 
     def edge(self, tail_node, head_node, **attrs):
         """
-        Connect individual or lists of nodes with edges.
+        Connect nodes with edges.
         """
         self.dot.edge(tail_node.node_id, head_node.node_id, **attrs)
 
     def subgraph(self, dot):
         """
-        Create a subgraph for grouping nodes.
+        Create a subgraph.
         """
         self.dot.subgraph(dot)
 
     def render(self):
         """
-        Generate output file.
+        Generate an output file.
         """
         self.dot.render(format=self.output_file_format, view=self.show, quiet=True)
 
@@ -218,15 +218,21 @@ class Cluster():
 
     def node(self, node_id: str, label: str, **attrs) -> None:
         """
-        Create a node in the cluster.
+        Create a node.
         """
         self.dot.node(node_id, label=label, **attrs)
 
     def subgraph(self, dot=Digraph):
+        """
+        Create a subgraph
+        """
         self.dot.subgraph(dot)
 
     @staticmethod
     def _rand_id():
+        """
+        Generate a random hex number.
+        """
         return uuid.uuid4().hex
 
 
@@ -237,6 +243,10 @@ class Group(Cluster):
     __background_colors = ("#FFFFFF", "#FFFFFF")
     
     def __init__(self, label="group", background_colors=False, **attrs):
+        """
+        :param label
+        :param background_colors
+        """
 
         # Set the cluster label
         self.label = self._rand_id()
@@ -268,7 +278,7 @@ class Group(Cluster):
 
 class Node():
     """
-    Creates a node.  This can be a standard node or a node representing a service from a provider.
+    Create a node.  This can be a standard node or a node representing a service from a provider.
     """
 
     _provider = None
@@ -276,6 +286,8 @@ class Node():
 
     _icon_dir = None
     _icon = None
+    
+    _default_label = None # To be used later for all providers using automated script
 
     def __init__(self, label="", **attrs):
         """
@@ -351,19 +363,12 @@ class Edge():
 
     def __init__(self, start_node, end_node, **attrs,):
         """
-        :param start: The origin cluster, group, or node object.
-        :param end: The destination cluster, group, or node object.
+        :param start_node: The origin cluster, group, or node object.
+        :param end_node: The destination cluster, group, or node object.
         :param attrs: Other edge attributes.
         """
 
-        # Ensure that the object passed is the correct type
-        # THIS CAN BE REMOVED WITH THE NEW ASSERT LOGIC BELOW IN PLACE
-        if start_node is not None and validate_node(start_node) is False:
-            raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
-
-        if end_node is not None and validate_node(end_node) is False:
-            raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
-
+        # Set the start and end node
         self.start_node = start_node
         self.end_node = end_node
 
@@ -378,6 +383,7 @@ class Edge():
         # Override any attributes directly passed from the object
         self.edge_attrs.update(attrs)
 
+        # Add single start and end node objects to a list
         if type(self.start_node) is not list:
             self.start_node = [self.start_node] 
         
@@ -387,12 +393,17 @@ class Edge():
         start_node_list = self.start_node
         end_node_list = self.end_node
 
-        # Handle all cases
+        # For each start node passed
         for current_start_node in start_node_list:
+
+            # And For each end node passed
             for current_end_node in end_node_list:
+
+                # Make all of the connections based on whether or not the object is a node, cluster, or group
                 if isinstance(current_start_node, Node) and isinstance(current_end_node, Node):
                     self.start_node = current_start_node
                     self.end_node = current_end_node
+                    self.edge_attrs.update({"ltail": "", "lhead": ""})
                 elif isinstance(current_start_node, Node) and isinstance(current_end_node, (Cluster, Group)):
                     cluster = current_end_node
                     self.start_node = current_start_node
@@ -410,8 +421,8 @@ class Edge():
                     self.end_node = get_cluster_node(current_end_node)
                     self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
                 else:
-                    assert isinstance(self.start_node, (Cluster, Group, Node))
-                    assert isinstance(self.end_node, (Cluster, Group, Node))
+                    if not isinstance(self.start_node, (Cluster, Group, Node)) or isinstance(self.end_node, (Cluster, Group, Node)):
+                        raise TypeError("Values passed for start node and end node must be Cluster, Group, or Node objects.")
 
                 self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
 
@@ -420,8 +431,15 @@ class Flow():
     Another method of connecting nodes by allowing users to define a flow as a list
     """
     def __init__(self, nodes, **attrs):
+        """
+        :param nodes: A list of nodes to be used to create the flow.
+        """
         
         self.nodes = nodes
+
+        if not isinstance(self.nodes, list):
+            raise TypeError("Flow only accepts a single list of Cluster, Group, or Node objects.")
+
         self.node_count = len(self.nodes)
 
         # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
@@ -435,12 +453,20 @@ class Flow():
         # Override any attributes directly passed from the object
         self.edge_attrs.update(attrs)
 
+        # Ensure there is more than one node passed to the list
         if self.node_count > 1:
+
+            # For each node
             for i in range(self.node_count):
+
+                # If the node is not the last node in the list
                 if i < self.node_count - 1:
+
+                    # Set the start and end node values
                     self.start_node = self.nodes[i]
                     self.end_node = self.nodes[i + 1]
 
+                    # Make all of the connections based on whether or not the object is a node, cluster, or group
                     if isinstance(self.start_node, Node) and isinstance(self.end_node, Node):
                         self.edge_attrs.update({"ltail": "", "lhead": ""})
                     elif isinstance(self.start_node, Node) and isinstance(self.end_node, (Cluster, Group)):
@@ -458,9 +484,10 @@ class Flow():
                         self.end_node = get_cluster_node(self.end_node)
                         self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
                     else:
-                        assert isinstance(self.start_node, (Cluster, Group, Node))
-                        assert isinstance(self.end_node, (Cluster, Group, Node))
+                        if not isinstance(self.start_node, (Cluster, Group, Node)) or not isinstance(self.end_node, (Cluster, Group, Node)):
+                            raise TypeError("Values passed for start node and end node must be Cluster, Group, or Node objects.")
                 
                     self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
         else:
+            # Let the user know that the list must contain more than one item
             raise Exception('More than one node must be passed in the list to use the Flow object')

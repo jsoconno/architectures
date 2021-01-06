@@ -16,3 +16,6 @@ with Graph("my architecture", theme=theme, show=True):
         g = Node("G")
 
     Flow([a, c, cluster_b, g, f, b], color="goldenrod")
+    Edge(a, d)
+    Edge(a, cluster_c)
+    Edge(cluster_b, g)
