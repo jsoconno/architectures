@@ -15,4 +15,4 @@ with Graph("my architecture", theme=theme, show=True):
     with Cluster("Cluster C") as cluster_c:
         g = Node("G")
 
-    Flow([a, c, cluster_b, g, f, b], color="goldenrod")
+    Flow([a, c, cluster_b, cluster_a, g, f, b], color="goldenrod")
