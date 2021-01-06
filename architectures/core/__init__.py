@@ -442,7 +442,7 @@ class Flow():
                     self.end_node = self.nodes[i + 1]
 
                     if isinstance(self.start_node, Node) and isinstance(self.end_node, Node):
-                        pass
+                        self.edge_attrs.update({"ltail": "", "lhead": ""})
                     elif isinstance(self.start_node, Node) and isinstance(self.end_node, (Cluster, Group)):
                         cluster = self.end_node
                         self.end_node = get_cluster_node(self.end_node)
