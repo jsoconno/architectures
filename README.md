@@ -18,11 +18,11 @@ Architecture diagrams were left behind requiring architects to search for files 
 
 Architectures was designed to help technical teams work better together to build architecture as code and overcome the evil visio diagrams grip on the universe...
 
-Only you can usher in an age of renewed hope.  Let's hope all is not lost...
+Only you can usher in an age of new light.  Let's hope we are not too late and all is not lost...
 ## Design Goals
 The overarching goal of this project is to alow for the development of architecture as code that can be stored in version control allowing teams to better collaborate and leverage standard coding practices such as pull requests, code reviews, approvals, etc to maintain architecture diagrams.
 
-Architectures has been design goal is to be simple, powerful, extendable and scalable so that anyone in the technology organization can contribute to diagram development.  It is also an attempt to eliminate the toil associated with diagram creation and support a wide variety of cloud and on-premise providers.
+Architectures has been designed to be simple, powerful, extendable and scalable so that anyone in the technology organization can contribute to diagram development.  It is also an attempt to eliminate the toil associated with diagram creation and support a wide variety of cloud and on-premise providers.
 
 ## Dependencies
 Python version 3.6.x or later must be installed.
