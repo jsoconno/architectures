@@ -16,5 +16,3 @@ with Graph("my architecture", theme=theme, show=True):
     with Cluster("Container B") as container_b:
         c = Node("C")
         d = Node("D")
-
-    Edge(container_a, container_b)
