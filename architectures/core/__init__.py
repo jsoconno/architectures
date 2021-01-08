@@ -166,14 +166,9 @@ class Cluster():
     """
     Create a cluster.
     """
-    # __background_colors = ("#FFFFFF", "#FFFFFF")
-    # __background_colors = ("#FDDFDF", "#FCF7DE", "#DEFDE0", "#DEF3FD", "#F0DEFD")
-    __background_colors = ("#f3faff", "#e7f5fe", "#dbf0fe", "#cfebfd")
-
-    def __init__(self, label="cluster", background_colors=False, **attrs):
+    def __init__(self, label="cluster", **attrs):
         """
         :param label: Label for the cluster.
-        :param background_colors: Flag for adding background colors to clusters.
         """
 
         # Set the cluster label
@@ -191,6 +186,9 @@ class Cluster():
             raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
 
+        # Set background colors
+        self.colors = self._graph.theme.colors
+
         # Set cluster attributes based on the theme using copy to ensure the objects are independent
         self.dot.graph_attr.update(self._graph.theme.cluster_attrs)
 
@@ -202,11 +200,12 @@ class Cluster():
 
         # Set cluster depth to allow for logic based on the nesting of clusters
         self.depth = self._cluster.depth + 1 if self._cluster else 0
-        color_index = self.depth % len(self.__background_colors)
 
         # Set the background colors
         # Update this functionality to be something that is passed from a theme
-        self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
+        if self.colors:
+            color_index = self.depth % len(self.colors)
+            self.dot.graph_attr["bgcolor"] = self.colors[color_index]
 
 
     def __enter__(self):
@@ -238,11 +237,8 @@ class Group(Cluster):
     """
     Creates a special type of group used only or organizing nodes.
     """
-    #__background_colors = ("#FFFFFF", "#FFFFFF")
-    # __background_colors = ("#FDDFDF", "#FCF7DE", "#DEFDE0", "#DEF3FD", "#F0DEFD")
-    __background_colors = ("#f3faff", "#e7f5fe", "#dbf0fe", "#cfebfd")
     
-    def __init__(self, label="group", background_colors=False, **attrs):
+    def __init__(self, label="group", **attrs):
 
         # Set the cluster label
         self.label = self._rand_id()
@@ -259,18 +255,20 @@ class Group(Cluster):
             raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
 
-        # Update cluster label
+        # Update group background color
         self.dot.graph_attr["style"] = "invis"
 
-        # Set cluster depth to allow for logic based on the nesting of clusters
+         # Set cluster depth to allow for logic based on the nesting of clusters
         self.depth = self._cluster.depth + 1 if self._cluster else 0
-        print(self.depth)
-        color_index = self.depth % len(self.__background_colors)
+
+        # Set background colors
+        self.colors = self._graph.theme.colors
 
         # Set the background colors
         # Update this functionality to be something that is passed from a theme
-        self.dot.graph_attr["bgcolor"] = self.__background_colors[color_index]
-    
+        if self.colors:
+            color_index = self.depth % len(self.colors)
+            self.dot.graph_attr["bgcolor"] = self.colors[color_index]
 
 class Node():
     """
