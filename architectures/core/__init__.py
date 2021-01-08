@@ -64,11 +64,9 @@ def get_node_from_cluster(cluster):
     return node
 
 def get_cluster_from_node(node):
-    print(node)
     node_dict = get_node()
     for cluster, nodes in node_dict.items():
         for item in nodes:
-            print(item)
             if item == node:
                 return cluster
 
@@ -426,12 +424,10 @@ class Edge():
                     if start_cluster == end_cluster:
                         self.start_node = None
                         self.end_node = None
-                        print("a")
                     else:
                         self.start_node = get_node_from_cluster(current_start_node)
                         self.end_node = get_node_from_cluster(current_end_node)
                         self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
-                        print("b")
                 else:
                     assert isinstance(self.start_node, (Cluster, Group, Node))
                     assert isinstance(self.end_node, (Cluster, Group, Node))
