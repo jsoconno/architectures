@@ -6,7 +6,7 @@ from architectures.providers.azure.ai import PowerBi
 
 theme = Clean(graph_attr_overrides={"rankdir": "LR", "nodesep":"3"}, edge_attr_overrides={"minlen": "2"})
 
-with Graph("my architecture", theme=theme, show=True):
+with Graph("Modern Data Warehouse", theme=theme, show=True):
 
     unstructured_data = Node("Logs Files and Media (Unstructured)")
     structured_data = Node("Business and Custom Apps (Structured)")

@@ -188,7 +188,7 @@ class Clean(_Theme):
             "nodesep": "1.0",
             "ranksep": "1.0",
             "fontname": "Sans-Serif",
-            "fontsize": "15",
+            "fontsize": "24",
             "fontcolor": "#2D3436",
             "style": "rounded",
             "rankdir": "LR",
