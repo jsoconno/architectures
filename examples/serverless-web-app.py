@@ -10,10 +10,10 @@ from architectures.providers.azure.networking import CdnProfile
 from architectures.providers.azure.storage import StorageAccountBlobCool
 from architectures.providers.azure.deployment import AzurePipelines
 
-
 theme = Clean(
     edge_attr_overrides={"minlen": "1.5"},
-    graph_attr_overrides={"nodesep": "1"})
+    graph_attr_overrides={"nodesep": "1"}
+)
 
 with Graph('Serverless Web App', theme=theme):
 

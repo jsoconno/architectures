@@ -150,6 +150,8 @@ default_edge_attrs = {
     "xlabel": "",
 }
 
+default_colors = ["#f3faff", "#e7f5fe", "#dbf0fe", "#cfebfd"]
+
 class _Theme():
 
     def __init__(self):
@@ -157,12 +159,13 @@ class _Theme():
 
 class Default(_Theme):
 
-    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}):
+    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
     
         self.graph_attrs = default_graph_attrs
         self.cluster_attrs = default_cluster_attrs
         self.edge_attrs = default_edge_attrs
         self.node_attrs = default_node_attrs
+        self.colors = []
 
         if graph_attr_overrides is not None:
             self.graph_attrs.update(graph_attr_overrides)
@@ -176,9 +179,13 @@ class Default(_Theme):
         if edge_attr_overrides is not None:
             self.edge_attrs.update(edge_attr_overrides)
 
+        if color_overrides:
+            self.colors = color_overrides
+
+
 class Clean(_Theme):
 
-    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}):
+    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
 
         self.graph_attrs = {
             "bgcolor": "white",
@@ -208,7 +215,7 @@ class Clean(_Theme):
 
         self.node_attrs = {
             "shape": "invis",
-            "style": "rounded",
+            "style": "rounded,filled",
             "fixedsize": "true",
             "width": "1.0",
             "height": "1.8",
@@ -217,7 +224,7 @@ class Clean(_Theme):
             "fontname": "Sans-Serif",
             "fontsize": "13",
             "fontcolor": "#2D3436",
-            "color": "white"
+            "color": "invis"
         }
 
         self.edge_attrs = {
@@ -225,6 +232,8 @@ class Clean(_Theme):
             "margin": "1",
             "minlen": "1.0"
         }
+
+        self.colors = default_colors
 
         if graph_attr_overrides is not None:
             self.graph_attrs.update(graph_attr_overrides)
@@ -237,3 +246,6 @@ class Clean(_Theme):
 
         if edge_attr_overrides is not None:
             self.edge_attrs.update(edge_attr_overrides)
+
+        if color_overrides:
+            self.colors = color_overrides
