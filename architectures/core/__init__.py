@@ -419,8 +419,8 @@ class Edge():
                         self.end_node = current_end_node
                         self.edge_attrs.update({"ltail": start_cluster.name})
                 elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, (Cluster, Group)):
-                    start_cluster = get_cluster_from_node(current_start_node)
-                    end_cluster = get_cluster_from_node(current_end_node)
+                    start_cluster = current_start_node
+                    end_cluster = current_end_node
                     if start_cluster == end_cluster:
                         self.start_node = None
                         self.end_node = None

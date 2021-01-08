@@ -6,25 +6,15 @@ from architectures.providers.azure.networking import ApplicationGateway
 from architectures.providers.azure.generic import Azure
 from architectures.providers.azure.management import Subscription
 
-theme = Clean(graph_attr_overrides={"splines": "ortho"})
+theme = Default(graph_attr_overrides={"splines": "ortho"})
 
 with Graph("my architecture", theme=theme, show=True):
-    with Cluster("Azure") as azure:
-        azure = Azure("", width=".5", height=".5")
-        with Cluster("Subscription") as subscription:
-            subscription = Subscription("", width=".5", height=".5")
-            with Cluster("Resource Group") as resource_group:
-                pass
-                with Cluster("Virtual Network") as virtual_network_1:
-                    Node("", style="invis", width="0", height="0", nodesep="0.02")
-                    with Cluster("Build Subnet") as build_subnet:
-                        vm1 = VirtualMachine("Build Machine 1")
-                        vm2 = VirtualMachine("Build Machine 2")
-                        vm3 = VirtualMachine("Build Machine 3")
+    with Cluster("Container A") as container_a:
+        a = Node("A")
+        b = Node("B")
 
-                with Cluster("Virtual Network 2") as virtual_network_2:
-                    Node("", style="invis", width="0", height="0", nodesep="0.02")
-                    with Cluster("Admin Subnet") as admin_subnet:
-                        app_gateway = ApplicationGateway("test")
+    with Cluster("Container B") as container_b:
+        c = Node("C")
+        d = Node("D")
 
-    Flow([virtual_network_1, virtual_network_2])
+    Edge(container_a, container_b)
