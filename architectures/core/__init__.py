@@ -455,14 +455,13 @@ class Flow():
         # Override any attributes directly passed from the object
         self.edge_attrs.update(attrs)
 
-        start_index = 0
-
         if self.node_count > 1:
             for i in range(self.node_count):
                 if i < self.node_count - 1:
-                    self.start_node = self.nodes[start_index]
+                    self.start_node = self.nodes[i]
                     self.end_node = self.nodes[i + 1]
 
+                    # Set the start and end cluster
                     if isinstance(self.start_node, (Cluster, Group)):
                         start_cluster = self.start_node
                     else:
