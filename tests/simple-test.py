@@ -1,4 +1,4 @@
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow, Container, Connection
 from architectures.themes import Default, Clean
 
 from architectures.providers.azure.compute import VirtualMachine
@@ -16,14 +16,15 @@ with Graph("my architecture", theme=theme, show=True):
             with Cluster("Resource Group") as resource_group:
                 pass
                 with Cluster("Virtual Network") as virtual_network_1:
-                    pass
+                    Node("", style="invis", width="0", height="0", nodesep="0.02")
                     with Cluster("Build Subnet") as build_subnet:
-                        with Group():
-                            vm1 = VirtualMachine("Build Machine")
-                            vm2 = VirtualMachine("Build Machine")
-                        vm3 = VirtualMachine("Build Machine")
+                        vm1 = VirtualMachine("Build Machine 1")
+                        vm2 = VirtualMachine("Build Machine 2")
+                        vm3 = VirtualMachine("Build Machine 3")
 
                 with Cluster("Virtual Network 2") as virtual_network_2:
-                    pass
+                    Node("", style="invis", width="0", height="0", nodesep="0.02")
                     with Cluster("Admin Subnet") as admin_subnet:
                         app_gateway = ApplicationGateway("test")
+
+    Flow([virtual_network_1, virtual_network_2])
