@@ -159,7 +159,7 @@ class _Theme():
 
 class Default(_Theme):
 
-    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, background_color_overrides=[]):
+    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
     
         self.graph_attrs = default_graph_attrs
         self.cluster_attrs = default_cluster_attrs
@@ -179,13 +179,13 @@ class Default(_Theme):
         if edge_attr_overrides is not None:
             self.edge_attrs.update(edge_attr_overrides)
 
-        if background_color_overrides:
-            self.colors = background_color_overrides
+        if color_overrides:
+            self.colors = color_overrides
 
 
 class Clean(_Theme):
 
-    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, background_color_overrides=[]):
+    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
 
         self.graph_attrs = {
             "bgcolor": "white",
@@ -247,5 +247,5 @@ class Clean(_Theme):
         if edge_attr_overrides is not None:
             self.edge_attrs.update(edge_attr_overrides)
 
-        if background_color_overrides:
-            self.colors = background_color_overrides
+        if color_overrides:
+            self.colors = color_overrides
