@@ -150,7 +150,7 @@ default_edge_attrs = {
     "xlabel": "",
 }
 
-default_colors = ["#f3faff", "#e7f5fe", "#dbf0fe", "#cfebfd"]
+default_colors = ["#FFFFFF"]
 
 class _Theme():
 
@@ -233,7 +233,7 @@ class Clean(_Theme):
             "minlen": "1.0"
         }
 
-        self.colors = default_colors
+        self.colors = ["#f3faff", "#e7f5fe", "#dbf0fe", "#cfebfd"]
 
         if graph_attr_overrides is not None:
             self.graph_attrs.update(graph_attr_overrides)
