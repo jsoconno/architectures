@@ -249,3 +249,72 @@ class Clean(_Theme):
 
         if color_overrides:
             self.colors = color_overrides
+
+class DarkMode(_Theme):
+
+    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
+
+        self.graph_attrs = {
+            "bgcolor": "#17202A",
+            "compound": "true", 
+            "pad": "1.0",
+            "splines": "ortho",
+            "nodesep": "1.0",
+            "ranksep": "1.0",
+            "fontname": "Sans-Serif",
+            "fontsize": "24",
+            "fontcolor": "#EEEEEE",
+            "style": "rounded",
+            "rankdir": "LR",
+            "labeljust": "l",
+            "labelloc": 't',
+        }
+
+        self.cluster_attrs = {
+            "shape": "box",
+            "style": "rounded,dotted",
+            "labeljust": "l",
+            "pencolor": "#AEB6BE",
+            "fontname": "Sans-Serif",
+            "fontsize": "12",
+            "fontcolor": "#EEEEEE",
+            "margin": "30"
+        }
+
+        self.node_attrs = {
+            "shape": "invis",
+            "style": "rounded,filled",
+            "fixedsize": "true",
+            "width": "1.0",
+            "height": "1.8",
+            "labelloc": "b",
+            "imagescale": "true",
+            "fontname": "Sans-Serif",
+            "fontsize": "13",
+            "fontcolor": "#EEEEEE",
+            "color": "invis"
+        }
+
+        self.edge_attrs = {
+            "penwidth": "2",
+            "margin": "1",
+            "minlen": "1.0",
+            "color": "#EEEEEE"
+        }
+
+        self.colors = ["#1C2833", "#212F3D", "#273746", "#2C3E50", "#566573"]
+
+        if graph_attr_overrides is not None:
+            self.graph_attrs.update(graph_attr_overrides)
+
+        if cluster_attr_overrides is not None:
+            self.cluster_attrs.update(cluster_attr_overrides)
+
+        if node_attr_overrides is not None:
+            self.node_attrs.update(node_attr_overrides)
+
+        if edge_attr_overrides is not None:
+            self.edge_attrs.update(edge_attr_overrides)
+
+        if color_overrides:
+            self.colors = color_overrides
