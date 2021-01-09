@@ -9,7 +9,7 @@ from architectures.providers.azure.ai import PowerBi
 theme = Clean()
 
 with Graph(theme=theme):
-    with Subscription() as subscription:
+    with Subscription(color="#121212") as subscription:
         with ResourceGroup() as resource_group:
             app_gateway = ApplicationGateway()
             with Group():
