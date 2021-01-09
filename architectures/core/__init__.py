@@ -40,6 +40,8 @@ def get_node():
 
 
 def wrap_text(text, max_length=16):
+    if len(text) < 12:
+        max_length = 12
     if len(text) > max_length:
         words = text.split()
         new_text = ""
