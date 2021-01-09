@@ -165,7 +165,10 @@ class Cluster():
     """
     Create a cluster.
     """
-    def __init__(self, label="cluster", **attrs):
+
+    _default_label = None
+
+    def __init__(self, label="", **attrs):
         """
         :param label: Label for the cluster.
         """
@@ -173,8 +176,11 @@ class Cluster():
         # Set the cluster name
         self.name = "cluster_" + self._rand_id()
 
-        # Set the cluster label
-        self.label = label
+        #Set the cluster label
+        if label == "" and self._default_label:
+            self.label = self._default_label
+        else:
+            self.label = label
 
         # Create cluster
         self.dot = Digraph(self.name)
