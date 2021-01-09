@@ -10,6 +10,10 @@ class TenantStatus(_General):
 	_icon = "tenant-status.png"
 	_default_label = "Tenant Status"
 
+class Internet(_General):
+	_icon = "internet.png"
+	_default_label = "Internet"
+
 class QuickstartCenter(_General):
 	_icon = "quickstart-center.png"
 	_default_label = "Quickstart Center"
