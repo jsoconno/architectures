@@ -239,10 +239,10 @@ class Group(Cluster):
     def __init__(self, label="group", **attrs):
 
         # Set the cluster name
-        self.name = "cluster_" + self.label
+        self.name = "cluster_" + self._rand_id()
 
         # Set the cluster label
-        self.label = self._rand_id()
+        self.label = label
 
         # Create cluster
         self.dot = Digraph(self.name)
