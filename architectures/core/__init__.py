@@ -86,7 +86,7 @@ class Graph():
     """
     Create and set default settings for a graph and its clusters, nodes, and edges.
     """
-    def __init__(self, name, output_file_name="", output_file_format="png", theme=None, show=True):
+    def __init__(self, name="my-architecture", output_file_name="", output_file_format="png", theme=None, show=True):
         """
         :param str name: The name of the graph.
         :param str output_file_name: The name of the file that will be output.
@@ -239,10 +239,10 @@ class Group(Cluster):
     def __init__(self, label="group", **attrs):
 
         # Set the cluster name
-        self.name = "cluster_" + self.label
+        self.name = "cluster_" + self._rand_id()
 
         # Set the cluster label
-        self.label = self._rand_id()
+        self.label = label
 
         # Create cluster
         self.dot = Digraph(self.name)
@@ -270,6 +270,8 @@ class Node():
     _icon_dir = None
     _icon = None
 
+    _default_label = None
+
     def __init__(self, label="", **attrs):
         """
         :param str label: Label for a node.
@@ -277,8 +279,11 @@ class Node():
         # Generate an ID used to uniquely identify a node
         self._id = self._rand_id()
 
-        # Set the label
-        self.label = label
+        #Set the label
+        if self._icon and label == "":
+            self.label = self._default_label
+        else:
+            self.label = label
 
         # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
         self._graph = get_graph()
