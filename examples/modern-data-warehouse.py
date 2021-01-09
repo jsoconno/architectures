@@ -1,10 +1,10 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
-from architectures.themes import Default, Clean
+from architectures.themes import Default, Clean, DarkMode
 
 from architectures.providers.azure.data import DataFactory, DataLake, AzureDatabricks, AnalysisService, AzureSynapseAnalytics
 from architectures.providers.azure.ai import PowerBi
 
-theme = Clean(graph_attr_overrides={"rankdir": "LR", "nodesep":"3"}, edge_attr_overrides={"minlen": "2"})
+theme = DarkMode(graph_attr_overrides={"rankdir": "LR", "nodesep":"3"}, edge_attr_overrides={"minlen": "2"})
 
 with Graph("Modern Data Warehouse", theme=theme, show=True):
 
