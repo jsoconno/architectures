@@ -103,8 +103,7 @@ class Graph():
         self.output_file_format = output_file_format
 
         # Create the graph
-        # Support for multiple engines can be added later by adding in the engine argument passed from the class
-        self.dot = Digraph(name=self.name, filename=self.output_file_name)
+        self.dot = Digraph(name=self.name, filename=self.output_file_name, engine="dot")
 
         # Set the theme
         if theme is None:
@@ -144,11 +143,11 @@ class Graph():
         """
         self.dot.node(node_id, label=label, **attrs)
 
-    def edge(self, tail_node, head_node, **attrs):
+    def edge(self, start_node, end_node, **attrs):
         """
         Connect individual or lists of nodes with edges.
         """
-        self.dot.edge(tail_node.node_id, head_node.node_id, **attrs)
+        self.dot.edge(start_node.node_id, end_node.node_id, **attrs)
 
     def subgraph(self, dot):
         """
@@ -171,11 +170,11 @@ class Cluster():
         :param label: Label for the cluster.
         """
 
+        # Set the cluster name
+        self.name = "cluster_" + self._rand_id()
+
         # Set the cluster label
         self.label = label
-
-        # Set the cluster name
-        self.name = "cluster_" + self.label
 
         # Create cluster
         self.dot = Digraph(self.name)
@@ -185,9 +184,6 @@ class Cluster():
         if self._graph is None:
             raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
-
-        # Set background colors
-        self.colors = self._graph.theme.colors
 
         # Set cluster attributes based on the theme using copy to ensure the objects are independent
         self.dot.graph_attr.update(self._graph.theme.cluster_attrs)
@@ -199,13 +195,15 @@ class Cluster():
         self.dot.graph_attr["label"] = self.label
 
         # Set cluster depth to allow for logic based on the nesting of clusters
-        self.depth = self._cluster.depth + 1 if self._cluster else 0
+        self._depth = self._cluster._depth + 1 if self._cluster else 0
 
-        # Set the background colors
-        # Update this functionality to be something that is passed from a theme
-        if self.colors:
-            color_index = self.depth % len(self.colors)
-            self.dot.graph_attr["bgcolor"] = self.colors[color_index]
+        # Get background colors from theme
+        _colors = self._graph.theme.colors
+
+        # Set the cluster background color
+        if _colors:
+            color_index = self._depth % len(_colors)
+            self.dot.graph_attr["bgcolor"] = _colors[color_index]
 
 
     def __enter__(self):
@@ -219,7 +217,7 @@ class Cluster():
             self._graph.subgraph(self.dot)
         set_cluster(self._cluster)
 
-    def node(self, node_id: str, label: str, **attrs) -> None:
+    def node(self, node_id, label, **attrs):
         """
         Create a node in the cluster.
         """
@@ -240,11 +238,11 @@ class Group(Cluster):
     
     def __init__(self, label="group", **attrs):
 
-        # Set the cluster label
-        self.label = self._rand_id()
-
         # Set the cluster name
         self.name = "cluster_" + self.label
+
+        # Set the cluster label
+        self.label = self._rand_id()
 
         # Create cluster
         self.dot = Digraph(self.name)
@@ -255,20 +253,11 @@ class Group(Cluster):
             raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
 
-        # Update group background color
+        # Update group background color style
         self.dot.graph_attr["style"] = "invis"
 
-         # Set cluster depth to allow for logic based on the nesting of clusters
-        self.depth = self._cluster.depth + 1 if self._cluster else 0
-
-        # Set background colors
-        self.colors = self._graph.theme.colors
-
-        # Set the background colors
-        # Update this functionality to be something that is passed from a theme
-        if self.colors:
-            color_index = self.depth % len(self.colors)
-            self.dot.graph_attr["bgcolor"] = self.colors[color_index]
+        # Set cluster depth
+        self._depth = self._cluster._depth + 1 if self._cluster else 0
 
 class Node():
     """

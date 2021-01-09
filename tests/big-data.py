@@ -45,26 +45,26 @@ with Graph("my architecture", theme=theme, show=True):
                         public_azure_databricks = AzureDatabricks("Azure AzureDatabricks")
                         node = Node("Test")
 
-    # node to node
+    # # node to node
     # Edge(sql_database, data_lake)
 
-    # node to list of nodes
+    # # node to list of nodes
     # Edge(cosmos_db, private_endpoints)
 
-    # list of nodes to node
+    # # list of nodes to node
     # Edge(private_endpoints, cosmos_db)
 
-    # list of nodes to cluster
+    # # list of nodes to cluster
     # Edge(vms, data_factory_subnet)
 
-    # cluster to list of nodes
+    # # cluster to list of nodes
     # Edge(data_factory_subnet, private_endpoints)
 
-    # list of nodes to list of nodes
+    # # list of nodes to list of nodes
     # Edge(vms, private_endpoints)
 
-    # cluster to cluster
+    # # cluster to cluster
     # Edge(azure_databricks_private_subnet, azure_databricks_public_subnet)
     
-    # cluster to group
+    # # cluster to group
     # Edge(vms, azure_databricks_public_subnet)

@@ -13,6 +13,6 @@ with Graph("my architecture", theme=theme, show=True):
         a = Node("A")
         b = Node("B")
 
-    with Cluster("Container B") as container_b:
+    with Cluster("Container A") as container_b:
         c = Node("C")
         d = Node("D")
