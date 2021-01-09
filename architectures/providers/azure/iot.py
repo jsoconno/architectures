@@ -10,39 +10,43 @@ class IotHub(_Iot):
 	_icon = "iot-hub.png"
 	_default_label = "Iot Hub"
 
-class Sphere(_Iot):
-	_icon = "sphere.png"
-	_default_label = "Sphere"
+class IotEdge(_Iot):
+	_icon = "iot-edge.png"
+	_default_label = "Iot Edge"
 
-class TimeSeriesInsightsEnvironments(_Iot):
-	_icon = "time-series-insights-environments.png"
-	_default_label = "Time Series Insights Environments"
+class IotDeviceProvisioningService(_Iot):
+	_icon = "iot-device-provisioning-service.png"
+	_default_label = "Iot Device Provisioning Service"
 
-class IotCentralApplications(_Iot):
-	_icon = "iot-central-applications.png"
-	_default_label = "Iot Central Applications"
+class IotWindows10Core(_Iot):
+	_icon = "iot-windows-10-core.png"
+	_default_label = "Iot Windows 10 Core"
 
-class TimeSeriesInsightsEventsSources(_Iot):
-	_icon = "time-series-insights-events-sources.png"
-	_default_label = "Time Series Insights Events Sources"
+class IotSphere(_Iot):
+	_icon = "iot-sphere.png"
+	_default_label = "Iot Sphere"
 
-class Windows10IotCoreServices(_Iot):
-	_icon = "windows-10-iot-core-services.png"
-	_default_label = "Windows 10 Iot Core Services"
+class IotDefender(_Iot):
+	_icon = "iot-defender.png"
+	_default_label = "Iot Defender"
 
-class DigitalTwins(_Iot):
-	_icon = "digital-twins.png"
-	_default_label = "Digital Twins"
+class IotDigitalTwin(_Iot):
+	_icon = "iot-digital-twin.png"
+	_default_label = "Iot Digital Twin"
 
 class IotHubSecurity(_Iot):
 	_icon = "iot-hub-security.png"
 	_default_label = "Iot Hub Security"
 
-class DeviceProvisioningServices(_Iot):
-	_icon = "device-provisioning-services.png"
-	_default_label = "Device Provisioning Services"
+class IotSolutionAccelerator(_Iot):
+	_icon = "iot-solution-accelerator.png"
+	_default_label = "Iot Solution Accelerator"
 
-class Maps(_Iot):
-	_icon = "maps.png"
-	_default_label = "Maps"
+class IotEdgeDevice(_Iot):
+	_icon = "iot-edge-device.png"
+	_default_label = "Iot Edge Device"
+
+class IotCentral(_Iot):
+	_icon = "iot-central.png"
+	_default_label = "Iot Central"
 

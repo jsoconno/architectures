@@ -6,111 +6,119 @@ class _General(_Azure):
 	_service_type = "general"
 	_icon_dir = "icons/azure/general"
 
-class Resourcegroups(_General):
-	_icon = "resourcegroups.png"
-	_default_label = "Resourcegroups"
+class TenantStatus(_General):
+	_icon = "tenant-status.png"
+	_default_label = "Tenant Status"
 
-class Internet(_General):
-	_icon = "internet.png"
-	_default_label = "Internet"
+class QuickstartCenter(_General):
+	_icon = "quickstart-center.png"
+	_default_label = "Quickstart Center"
 
-class Developertools(_General):
-	_icon = "developertools.png"
-	_default_label = "Developertools"
+class ResourceExplorer(_General):
+	_icon = "resource-explorer.png"
+	_default_label = "Resource Explorer"
 
-class Subscriptions(_General):
-	_icon = "subscriptions.png"
-	_default_label = "Subscriptions"
+class HelpAndSupport(_General):
+	_icon = "help-and-support.png"
+	_default_label = "Help And Support"
 
-class Support(_General):
-	_icon = "support.png"
-	_default_label = "Support"
+class ResourceGraphExplorer(_General):
+	_icon = "resource-graph-explorer.png"
+	_default_label = "Resource Graph Explorer"
 
-class Twousericon(_General):
-	_icon = "twousericon.png"
-	_default_label = "Twousericon"
+class PreviewFeature(_General):
+	_icon = "preview-feature.png"
+	_default_label = "Preview Feature"
 
-class Templates(_General):
-	_icon = "templates.png"
-	_default_label = "Templates"
+class Ebook(_General):
+	_icon = "ebook.png"
+	_default_label = "Ebook"
 
-class Azurehome(_General):
-	_icon = "azurehome.png"
-	_default_label = "Azurehome"
+class VirtualAssistant(_General):
+	_icon = "virtual-assistant.png"
+	_default_label = "Virtual Assistant"
 
-class Userprivacy(_General):
-	_icon = "userprivacy.png"
-	_default_label = "Userprivacy"
-
-class Userhealthicon(_General):
-	_icon = "userhealthicon.png"
-	_default_label = "Userhealthicon"
+class FreeServices(_General):
+	_icon = "free-services.png"
+	_default_label = "Free Services"
 
 class Recent(_General):
 	_icon = "recent.png"
 	_default_label = "Recent"
 
-class Whatsnew(_General):
-	_icon = "whatsnew.png"
-	_default_label = "Whatsnew"
+class AzureBestPractices(_General):
+	_icon = "azure-best-practices.png"
+	_default_label = "Azure Best Practices"
 
-class Tag(_General):
-	_icon = "tag.png"
-	_default_label = "Tag"
+class ResourceGraphQuery(_General):
+	_icon = "resource-graph-query.png"
+	_default_label = "Resource Graph Query"
 
-class Supportrequests(_General):
-	_icon = "supportrequests.png"
-	_default_label = "Supportrequests"
+class Configuration(_General):
+	_icon = "configuration.png"
+	_default_label = "Configuration"
 
-class Userresource(_General):
-	_icon = "userresource.png"
-	_default_label = "Userresource"
+class MaintenanceConfiguration(_General):
+	_icon = "maintenance-configuration.png"
+	_default_label = "Maintenance Configuration"
 
-class Information(_General):
-	_icon = "information.png"
-	_default_label = "Information"
+class OperationalExcellence(_General):
+	_icon = "operational-excellence.png"
+	_default_label = "Operational Excellence"
 
-class Allresources(_General):
-	_icon = "allresources.png"
-	_default_label = "Allresources"
+class ServiceHealth(_General):
+	_icon = "service-health.png"
+	_default_label = "Service Health"
 
-class Servicehealth(_General):
-	_icon = "servicehealth.png"
-	_default_label = "Servicehealth"
+class SoftwareAsAService(_General):
+	_icon = "software-as-a-service.png"
+	_default_label = "Software As A Service"
 
-class Quickstartcenter(_General):
-	_icon = "quickstartcenter.png"
-	_default_label = "Quickstartcenter"
+class CustomerLockboxForMicrosoftAzure(_General):
+	_icon = "customer-lockbox-for-microsoft-azure.png"
+	_default_label = "Customer Lockbox For Microsoft Azure"
 
-class Usericon(_General):
-	_icon = "usericon.png"
-	_default_label = "Usericon"
+class Property(_General):
+	_icon = "property.png"
+	_default_label = "Property"
 
-class Tags(_General):
-	_icon = "tags.png"
-	_default_label = "Tags"
+class License(_General):
+	_icon = "license.png"
+	_default_label = "License"
+
+class PlatformService(_General):
+	_icon = "platform-service.png"
+	_default_label = "Platform Service"
 
 class Marketplace(_General):
 	_icon = "marketplace.png"
 	_default_label = "Marketplace"
 
-class Managementgroups(_General):
-	_icon = "managementgroups.png"
-	_default_label = "Managementgroups"
+class ResourceHealth(_General):
+	_icon = "resource-health.png"
+	_default_label = "Resource Health"
 
-class Shareddashboard(_General):
-	_icon = "shareddashboard.png"
-	_default_label = "Shareddashboard"
+class ServiceCatalogManagedApplicationDefinition(_General):
+	_icon = "service-catalog-managed-application-definition.png"
+	_default_label = "Service Catalog Managed Application Definition"
 
-class Reservations(_General):
-	_icon = "reservations.png"
-	_default_label = "Reservations"
+class AllResources(_General):
+	_icon = "all-resources.png"
+	_default_label = "All Resources"
 
-class Resource(_General):
-	_icon = "resource.png"
-	_default_label = "Resource"
+class Education(_General):
+	_icon = "education.png"
+	_default_label = "Education"
 
-class Helpsupport(_General):
-	_icon = "helpsupport.png"
-	_default_label = "Helpsupport"
+class Azure(_General):
+	_icon = "azure.png"
+	_default_label = "Azure"
+
+class UserPrivacy(_General):
+	_icon = "user-privacy.png"
+	_default_label = "User Privacy"
+
+class CompanyBranding(_General):
+	_icon = "company-branding.png"
+	_default_label = "Company Branding"
 
