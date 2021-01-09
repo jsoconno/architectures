@@ -86,7 +86,7 @@ class Graph():
     """
     Create and set default settings for a graph and its clusters, nodes, and edges.
     """
-    def __init__(self, name, output_file_name="", output_file_format="png", theme=None, show=True):
+    def __init__(self, name="my-architecture", output_file_name="", output_file_format="png", theme=None, show=True):
         """
         :param str name: The name of the graph.
         :param str output_file_name: The name of the file that will be output.

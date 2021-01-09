@@ -3,16 +3,21 @@ from architectures.themes import Default, Clean
 
 from architectures.providers.azure.compute import VirtualMachine
 from architectures.providers.azure.networking import ApplicationGateway
-from architectures.providers.azure.generic import Azure
-from architectures.providers.azure.management import Subscription
+from architectures.providers.azure.ai import PowerBi
 
-theme = Default(graph_attr_overrides={"splines": "ortho"})
+theme = Clean()
 
-with Graph("my architecture", theme=theme, show=True):
-    with Cluster("Container A") as container_a:
-        a = Node("A")
-        b = Node("B")
+with Graph(theme=theme):
+    with Cluster("Subscription") as subscription:
+        with Cluster("Resource Group") as resource_group:
+            app_gateway = ApplicationGateway()
+            with Group():
+                vms = [
+                    VirtualMachine(),
+                    VirtualMachine(),
+                    VirtualMachine(),
+                ]
+            power_bi = PowerBi()
 
-    with Cluster("Container A") as container_b:
-        c = Node("C")
-        d = Node("D")
+    Edge(app_gateway, vms)
+    Edge(vms, power_bi)
