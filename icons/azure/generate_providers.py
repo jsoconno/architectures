@@ -40,7 +40,7 @@ for service in services:
             f.write(f'from architectures.providers import _{provider_fmt}\n\n')
             f.write(f'class _{service_type_fmt}(_{provider_fmt}):\n')
             f.write(f'\t_service_type = \"{service_type}\"\n')
-            f.write(f'\t_icon_dir = \"icons/{provider}/{service_type}\"\n\n\n')
+            f.write(f'\t_icon_dir = \"icons/{provider}/{service_type}\"\n\n')
 
         for file in files:
             path = Path(os.path.join(subdir, file))
@@ -51,5 +51,6 @@ for service in services:
             with open(services_file, 'a') as f:
                 # Create service type class
                 f.write(f'class {service_fmt}(_{service_type_fmt}):\n')
-                f.write(f'\t_icon = \"{service}.png\"\n\n\n')
+                f.write(f'\t_icon = \"{service}.png\"\n')
+                f.write(f'\t_default_label = "{service.replace("-", " ").title()}"\n\n')
 

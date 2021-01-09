@@ -270,6 +270,8 @@ class Node():
     _icon_dir = None
     _icon = None
 
+    _default_label = None
+
     def __init__(self, label="", **attrs):
         """
         :param str label: Label for a node.
@@ -277,8 +279,11 @@ class Node():
         # Generate an ID used to uniquely identify a node
         self._id = self._rand_id()
 
-        # Set the label
-        self.label = label
+        #Set the label
+        if self._icon and label == "":
+            self.label = self._default_label
+        else:
+            self.label = label
 
         # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
         self._graph = get_graph()
