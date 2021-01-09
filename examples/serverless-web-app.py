@@ -1,7 +1,7 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 from architectures.themes import Clean
 
-from architectures.providers.azure.generic import User, Internet
+from architectures.providers.azure.general import Internet
 from architectures.providers.azure.identity import AzureActiveDirectoryDomainServices
 from architectures.providers.azure.management import ApiManagementService, AzureMonitor
 from architectures.providers.azure.application import FunctionApp
@@ -32,7 +32,7 @@ with Graph('Serverless Web App', theme=theme):
         monitor = AzureMonitor("Monitor")
 
     with Group():
-        user = User("")
+        user = Node("")
         azure_ad = AzureActiveDirectoryDomainServices("Azure Active Directory")
         internet = Internet("Single-Page Web Application")
 

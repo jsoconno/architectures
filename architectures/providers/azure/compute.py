@@ -6,83 +6,259 @@ class _Compute(_Azure):
 	_service_type = "compute"
 	_icon_dir = "icons/azure/compute"
 
-class VmWindows(_Compute):
-	_icon = "vm-windows.png"
-	_default_label = "Vm Windows"
+class BlockchainToken(_Compute):
+	_icon = "blockchain-token.png"
+	_default_label = "Blockchain Token"
 
-class Vm(_Compute):
-	_icon = "vm.png"
-	_default_label = "Vm"
+class CloudServiceClassic(_Compute):
+	_icon = "cloud-service-classic.png"
+	_default_label = "Cloud Service Classic"
 
-class MeshApplications(_Compute):
-	_icon = "mesh-applications.png"
-	_default_label = "Mesh Applications"
+class AzureStackHub(_Compute):
+	_icon = "azure-stack-hub.png"
+	_default_label = "Azure Stack Hub"
 
-class BatchAccounts(_Compute):
-	_icon = "batch-accounts.png"
-	_default_label = "Batch Accounts"
+class BlockchainApplication(_Compute):
+	_icon = "blockchain-application.png"
+	_default_label = "Blockchain Application"
 
-class CloudsimpleVirtualMachines(_Compute):
-	_icon = "cloudsimple-virtual-machines.png"
-	_default_label = "Cloudsimple Virtual Machines"
+class ContainerRegistry(_Compute):
+	_icon = "container-registry.png"
+	_default_label = "Container Registry"
 
-class DiskSnapshots(_Compute):
-	_icon = "disk-snapshots.png"
-	_default_label = "Disk Snapshots"
+class CloudSimpleNode(_Compute):
+	_icon = "cloud-simple-node.png"
+	_default_label = "Cloud Simple Node"
 
-class CitrixVirtualDesktopsEssentials(_Compute):
-	_icon = "citrix-virtual-desktops-essentials.png"
-	_default_label = "Citrix Virtual Desktops Essentials"
+class CitrixVirtualDesktopEssentials(_Compute):
+	_icon = "citrix-virtual-desktop-essentials.png"
+	_default_label = "Citrix Virtual Desktop Essentials"
 
-class ServiceFabricClusters(_Compute):
-	_icon = "service-fabric-clusters.png"
-	_default_label = "Service Fabric Clusters"
+class AzureStackHci(_Compute):
+	_icon = "azure-stack-hci.png"
+	_default_label = "Azure Stack Hci"
 
-class KubernetesServices(_Compute):
-	_icon = "kubernetes-services.png"
-	_default_label = "Kubernetes Services"
+class DevtestLab(_Compute):
+	_icon = "devtest-lab.png"
+	_default_label = "Devtest Lab"
 
-class SapHanaOnAzure(_Compute):
-	_icon = "sap-hana-on-azure.png"
-	_default_label = "Sap Hana On Azure"
+class AzureStackOffer(_Compute):
+	_icon = "azure-stack-offer.png"
+	_default_label = "Azure Stack Offer"
 
-class FunctionApps(_Compute):
-	_icon = "function-apps.png"
-	_default_label = "Function Apps"
+class Host(_Compute):
+	_icon = "host.png"
+	_default_label = "Host"
 
-class ContainerInstances(_Compute):
-	_icon = "container-instances.png"
-	_default_label = "Container Instances"
+class AzureStackBackup(_Compute):
+	_icon = "azure-stack-backup.png"
+	_default_label = "Azure Stack Backup"
 
-class ContainerRegistries(_Compute):
-	_icon = "container-registries.png"
-	_default_label = "Container Registries"
+class ContainerKubernetesService(_Compute):
+	_icon = "container-kubernetes-service.png"
+	_default_label = "Container Kubernetes Service"
 
-class VmClassic(_Compute):
-	_icon = "vm-classic.png"
-	_default_label = "Vm Classic"
+class ComputeAndApp(_Compute):
+	_icon = "compute-and-app.png"
+	_default_label = "Compute And App"
 
-class CloudServicesClassic(_Compute):
-	_icon = "cloud-services-classic.png"
-	_default_label = "Cloud Services Classic"
+class AzureQuantum(_Compute):
+	_icon = "azure-quantum.png"
+	_default_label = "Azure Quantum"
 
-class Disks(_Compute):
-	_icon = "disks.png"
-	_default_label = "Disks"
+class HostGroup(_Compute):
+	_icon = "host-group.png"
+	_default_label = "Host Group"
 
-class AvailabilitySets(_Compute):
-	_icon = "availability-sets.png"
-	_default_label = "Availability Sets"
+class VirtualMachineImage(_Compute):
+	_icon = "virtual-machine-image.png"
+	_default_label = "Virtual Machine Image"
 
-class VmImages(_Compute):
-	_icon = "vm-images.png"
-	_default_label = "Vm Images"
+class ContainerInstance(_Compute):
+	_icon = "container-instance.png"
+	_default_label = "Container Instance"
 
-class VmLinux(_Compute):
-	_icon = "vm-linux.png"
-	_default_label = "Vm Linux"
+class BlockchainDataManager(_Compute):
+	_icon = "blockchain-data-manager.png"
+	_default_label = "Blockchain Data Manager"
 
-class CloudServices(_Compute):
-	_icon = "cloud-services.png"
-	_default_label = "Cloud Services"
+class InstancePool(_Compute):
+	_icon = "instance-pool.png"
+	_default_label = "Instance Pool"
+
+class VirtualMachineNonAzure(_Compute):
+	_icon = "virtual-machine-non-azure.png"
+	_default_label = "Virtual Machine Non Azure"
+
+class AzureStackUpdate(_Compute):
+	_icon = "azure-stack-update.png"
+	_default_label = "Azure Stack Update"
+
+class VirtualMachineImageClassic(_Compute):
+	_icon = "virtual-machine-image-classic.png"
+	_default_label = "Virtual Machine Image Classic"
+
+class CloudtestPool(_Compute):
+	_icon = "cloudtest-pool.png"
+	_default_label = "Cloudtest Pool"
+
+class AzureStackEdgeManagement(_Compute):
+	_icon = "azure-stack-edge-management.png"
+	_default_label = "Azure Stack Edge Management"
+
+class VirtualMachineClassic(_Compute):
+	_icon = "virtual-machine-classic.png"
+	_default_label = "Virtual Machine Classic"
+
+class BlockchainConsortium(_Compute):
+	_icon = "blockchain-consortium.png"
+	_default_label = "Blockchain Consortium"
+
+class VirtualMachineAvailabilitySet(_Compute):
+	_icon = "virtual-machine-availability-set.png"
+	_default_label = "Virtual Machine Availability Set"
+
+class ProximityPlacementGroup(_Compute):
+	_icon = "proximity-placement-group.png"
+	_default_label = "Proximity Placement Group"
+
+class LabService(_Compute):
+	_icon = "lab-service.png"
+	_default_label = "Lab Service"
+
+class VirtualMachineScaleSet(_Compute):
+	_icon = "virtual-machine-scale-set.png"
+	_default_label = "Virtual Machine Scale Set"
+
+class VirtualMachineNonAzureWindows(_Compute):
+	_icon = "virtual-machine-non-azure-windows.png"
+	_default_label = "Virtual Machine Non Azure Windows"
+
+class WvdRdpProperty(_Compute):
+	_icon = "wvd-rdp-property.png"
+	_default_label = "Wvd Rdp Property"
+
+class AzureStackCapacity(_Compute):
+	_icon = "azure-stack-capacity.png"
+	_default_label = "Azure Stack Capacity"
+
+class FusionGroup(_Compute):
+	_icon = "fusion-group.png"
+	_default_label = "Fusion Group"
+
+class VirtualMachineImageVersion(_Compute):
+	_icon = "virtual-machine-image-version.png"
+	_default_label = "Virtual Machine Image Version"
+
+class Workspace(_Compute):
+	_icon = "workspace.png"
+	_default_label = "Workspace"
+
+class BlockchainStreaming(_Compute):
+	_icon = "blockchain-streaming.png"
+	_default_label = "Blockchain Streaming"
+
+class Reservation(_Compute):
+	_icon = "reservation.png"
+	_default_label = "Reservation"
+
+class VirtualMachineNonAzureLinux(_Compute):
+	_icon = "virtual-machine-non-azure-linux.png"
+	_default_label = "Virtual Machine Non Azure Linux"
+
+class VirtualMachineSql(_Compute):
+	_icon = "virtual-machine-sql.png"
+	_default_label = "Virtual Machine Sql"
+
+class BlockchainConnection(_Compute):
+	_icon = "blockchain-connection.png"
+	_default_label = "Blockchain Connection"
+
+class WindowsVirtualDesktop(_Compute):
+	_icon = "windows-virtual-desktop.png"
+	_default_label = "Windows Virtual Desktop"
+
+class VirtualMachineImageDefinition(_Compute):
+	_icon = "virtual-machine-image-definition.png"
+	_default_label = "Virtual Machine Image Definition"
+
+class WvdHostPool(_Compute):
+	_icon = "wvd-host-pool.png"
+	_default_label = "Wvd Host Pool"
+
+class VirtualMachineWindows(_Compute):
+	_icon = "virtual-machine-windows.png"
+	_default_label = "Virtual Machine Windows"
+
+class SharedImageGallery(_Compute):
+	_icon = "shared-image-gallery.png"
+	_default_label = "Shared Image Gallery"
+
+class BlockchainAbsMember(_Compute):
+	_icon = "blockchain-abs-member.png"
+	_default_label = "Blockchain Abs Member"
+
+class VirtualMachineLinux(_Compute):
+	_icon = "virtual-machine-linux.png"
+	_default_label = "Virtual Machine Linux"
+
+class AzureStackMultiTenant(_Compute):
+	_icon = "azure-stack-multi-tenant.png"
+	_default_label = "Azure Stack Multi Tenant"
+
+class AzureBlockchainService(_Compute):
+	_icon = "azure-blockchain-service.png"
+	_default_label = "Azure Blockchain Service"
+
+class ContainerBatchAccount(_Compute):
+	_icon = "container-batch-account.png"
+	_default_label = "Container Batch Account"
+
+class BlockchainDevkit(_Compute):
+	_icon = "blockchain-devkit.png"
+	_default_label = "Blockchain Devkit"
+
+class CloudSimpleVirtualMachine(_Compute):
+	_icon = "cloud-simple-virtual-machine.png"
+	_default_label = "Cloud Simple Virtual Machine"
+
+class WvdTask(_Compute):
+	_icon = "wvd-task.png"
+	_default_label = "Wvd Task"
+
+class AzureSpringCloud(_Compute):
+	_icon = "azure-spring-cloud.png"
+	_default_label = "Azure Spring Cloud"
+
+class ContainerServiceFabricCluster(_Compute):
+	_icon = "container-service-fabric-cluster.png"
+	_default_label = "Container Service Fabric Cluster"
+
+class AzureStackUserSubscription(_Compute):
+	_icon = "azure-stack-user-subscription.png"
+	_default_label = "Azure Stack User Subscription"
+
+class AzureVmwareSolution(_Compute):
+	_icon = "azure-vmware-solution.png"
+	_default_label = "Azure Vmware Solution"
+
+class HighAvailability(_Compute):
+	_icon = "high-availability.png"
+	_default_label = "High Availability"
+
+class CloudSimpleService(_Compute):
+	_icon = "cloud-simple-service.png"
+	_default_label = "Cloud Simple Service"
+
+class VirtualMachine(_Compute):
+	_icon = "virtual-machine.png"
+	_default_label = "Virtual Machine"
+
+class VirtualCluster(_Compute):
+	_icon = "virtual-cluster.png"
+	_default_label = "Virtual Cluster"
+
+class AzureStackPlan(_Compute):
+	_icon = "azure-stack-plan.png"
+	_default_label = "Azure Stack Plan"
 
