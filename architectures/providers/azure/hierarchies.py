@@ -1,5 +1,8 @@
 from architectures.core import Cluster
 
+class Azure(Cluster):
+    _default_label = "Azure"
+
 class ManagementGroup(Cluster):
     _default_label = "Management Group"
 
