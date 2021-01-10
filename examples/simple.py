@@ -3,7 +3,7 @@ from architectures.themes import DarkMode, LightMode
 
 from architectures.providers.azure.hierarchies import Subscription, ResourceGroup
 
-from architectures.providers.azure.data import DataLake
+from architectures.providers.azure.data import DataLake, SqlServer
 from architectures.providers.azure.compute import VirtualMachine
 from architectures.providers.azure.networking import ApplicationGateway
 
@@ -17,18 +17,7 @@ with Graph("Simple", theme=theme):
             VirtualMachine(),
             VirtualMachine()
         ]
+    
     database = DataLake()
 
-    with Cluster():
-        VirtualMachine()
-        with Cluster():
-            VirtualMachine()
-            with Cluster():
-                VirtualMachine()
-                with Cluster():
-                    VirtualMachine()
-                    with Cluster():
-                        VirtualMachine()
-
-    Edge(app_gateway, vms)
-    Edge(vms, database)
+    Flow([app_gateway, vms, database])
