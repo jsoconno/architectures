@@ -1,5 +1,5 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
-from architectures.themes import Default, Clean, DarkMode
+from architectures.themes import Default, LightMode, DarkMode
 
 from architectures.providers.azure.data import DataFactory, DataLake, AzureDatabricks, AnalysisService, AzureSynapseAnalytics
 from architectures.providers.azure.ai import PowerBi

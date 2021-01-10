@@ -8,13 +8,13 @@
 # also, currently settings are not updating as implemented
 
 from architectures.core import Graph, Cluster, Node, Edge
-from architectures.themes import Default, Clean
+from architectures.themes import Default, LightMode
 from architectures.providers.azure.compute import VirtualMachine
 from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer
 from architectures.providers.azure.security import Firewall
 from architectures.providers.azure.application import Websocket
 
-theme = Clean()
+theme = LightMode()
 
 with Graph("my architecture", theme=theme):
     with Cluster("Azure"):

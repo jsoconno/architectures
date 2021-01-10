@@ -183,7 +183,7 @@ class Default(_Theme):
             self.colors = color_overrides
 
 
-class Clean(_Theme):
+class LightMode(_Theme):
 
     def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
 

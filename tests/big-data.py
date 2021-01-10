@@ -1,5 +1,5 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge
-from architectures.themes import Default, Clean
+from architectures.themes import Default, LightMode
 from architectures.providers.azure.compute import VirtualMachine
 from architectures.providers.azure.deployment import AzureDevops
 from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer, PrivateEndpoint
@@ -8,7 +8,7 @@ from architectures.providers.azure.data import SqlDatabase, SqlDataWarehouse, Da
 from architectures.providers.azure.security import KeyVault
 from architectures.providers.azure.ai import PowerBi
 
-theme = Clean()
+theme = LightMode()
 
 with Graph("my architecture", theme=theme, show=True):
     with Cluster("Azure") as azure:

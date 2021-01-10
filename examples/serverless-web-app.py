@@ -1,5 +1,5 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
-from architectures.themes import Clean
+from architectures.themes import LightMode
 
 from architectures.providers.azure.general import Internet
 from architectures.providers.azure.identity import AzureActiveDirectoryDomainServices
@@ -10,7 +10,7 @@ from architectures.providers.azure.networking import CdnProfile
 from architectures.providers.azure.storage import StorageAccountBlobCool
 from architectures.providers.azure.deployment import AzurePipelines
 
-theme = Clean(
+theme = LightMode(
     edge_attr_overrides={"minlen": "1.5"},
     graph_attr_overrides={"nodesep": "1"}
 )
