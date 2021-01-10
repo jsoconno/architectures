@@ -459,40 +459,65 @@ class Flow():
         # Override any attributes directly passed from the object
         self.edge_attrs.update(attrs)
 
+        # Make sure there is more than one node
         if self.node_count > 1:
+
+            # For every node in the list
             for i in range(self.node_count):
+                
+                # Set the start and end node
                 if i < self.node_count - 1:
                     self.start_node = self.nodes[i]
                     self.end_node = self.nodes[i + 1]
 
-                    # Set the start and end cluster
-                    if isinstance(self.start_node, (Cluster, Group)):
-                        start_cluster = self.start_node
-                    else:
-                        start_cluster = get_cluster_from_node(self.start_node)
-                        
-                    if isinstance(self.end_node, (Cluster, Group)):
-                        end_cluster = self.end_node
-                    else:
-                        end_cluster = get_cluster_from_node(self.end_node)
+                    # Convert start and end nodes to a list if they are not already so they are iterable
+                    if type(self.start_node) is not list:
+                        self.start_node = [self.start_node]
+                    
+                    if type(self.end_node) is not list:
+                        self.end_node = [self.end_node]
 
-                    if isinstance(self.start_node, Node) and isinstance(self.end_node, Node):
-                        self.edge_attrs.update({"ltail": "", "lhead": ""})
-                    elif isinstance(self.start_node, Node) and isinstance(self.end_node, (Cluster, Group)):
-                        self.end_node = get_node_from_cluster(self.end_node)
-                        self.edge_attrs.update({"lhead": end_cluster.name})
-                    elif isinstance(self.start_node, (Cluster, Group)) and isinstance(self.end_node, Node):
-                        self.start_node = get_node_from_cluster(self.start_node)
-                        self.edge_attrs.update({"ltail": start_cluster.name})
-                    elif isinstance(self.start_node, (Cluster, Group)) and isinstance(self.end_node, (Cluster, Group)):
-                        self.start_node = get_node_from_cluster(self.start_node)
-                        self.end_node = get_node_from_cluster(self.end_node)
-                        self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
-                    else:
-                        assert isinstance(self.start_node, (Cluster, Group, Node))
-                        assert isinstance(self.end_node, (Cluster, Group, Node))
-                
-                    self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
+                    start_node_list = self.start_node
+                    end_node_list = self.end_node
+
+                    # Loop through all nodes
+                    for current_start_node in start_node_list:
+                        for current_end_node in end_node_list:
+
+                            # Set the start and end cluster
+                            if isinstance(current_start_node, (Cluster, Group)):
+                                start_cluster = current_start_node
+                            else:
+                                start_cluster = get_cluster_from_node(current_start_node)
+                                
+                            if isinstance(current_end_node, (Cluster, Group)):
+                                end_cluster = current_end_node
+                            else:
+                                end_cluster = get_cluster_from_node(current_end_node)
+
+                            # Apply logic regarding how to connect nodes
+                            if isinstance(current_start_node, Node) and isinstance(current_end_node, Node):
+                                self.start_node = current_start_node
+                                self.end_node = current_end_node
+                                self.edge_attrs.update({"ltail": "", "lhead": ""})
+                            elif isinstance(current_start_node, Node) and isinstance(current_end_node, (Cluster, Group)):
+                                self.start_node = current_start_node
+                                self.end_node = get_node_from_cluster(current_end_node)
+                                self.edge_attrs.update({"lhead": end_cluster.name})
+                            elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, Node):
+                                self.start_node = get_node_from_cluster(current_start_node)
+                                self.end_node = current_end_node
+                                self.edge_attrs.update({"ltail": start_cluster.name})
+                            elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, (Cluster, Group)):
+                                self.start_node = get_node_from_cluster(current_start_node)
+                                self.end_node = get_node_from_cluster(current_end_node)
+                                self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
+                            else:
+                                assert isinstance(current_start_node, (Cluster, Group, Node))
+                                assert isinstance(current_end_node, (Cluster, Group, Node))
+                        
+                            # Connect nodes with an edge
+                            self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
         else:
             raise Exception('More than one node must be passed in the list to use the Flow object')
 
