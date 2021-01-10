@@ -27,4 +27,4 @@ with Graph("Simple", theme=theme):
     
     database = DataLake()
 
-    Flow([cluster_a, cluster_b])
+    Flow([cluster_a, cluster_b, app_gateway, database])

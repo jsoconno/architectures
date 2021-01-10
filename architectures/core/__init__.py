@@ -497,12 +497,16 @@ class Flow():
 
                             # Apply logic regarding how to connect nodes
                             if isinstance(current_start_node, Node) and isinstance(current_end_node, Node):
+                                self.start_node = current_start_node
+                                self.end_node = current_end_node
                                 self.edge_attrs.update({"ltail": "", "lhead": ""})
                             elif isinstance(current_start_node, Node) and isinstance(current_end_node, (Cluster, Group)):
+                                self.start_node = current_start_node
                                 self.end_node = get_node_from_cluster(current_end_node)
                                 self.edge_attrs.update({"lhead": end_cluster.name})
                             elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, Node):
                                 self.start_node = get_node_from_cluster(current_start_node)
+                                self.end_node = current_end_node
                                 self.edge_attrs.update({"ltail": start_cluster.name})
                             elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, (Cluster, Group)):
                                 self.start_node = get_node_from_cluster(current_start_node)
