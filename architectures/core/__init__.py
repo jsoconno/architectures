@@ -356,7 +356,7 @@ class Edge():
     Creates an edge between two nodes
     """
 
-    def __init__(self, start_node, end_node, **attrs,):
+    def __init__(self, start_node, end_node, **attrs):
         """
         :param start: The origin cluster, group, or node object.
         :param end: The destination cluster, group, or node object.
