@@ -13,7 +13,6 @@ for provider in providers:
     for subdir, dirs, files in os.walk(os.path.join(icons_dir, provider)):
         if files:
             service_type = os.path.split(subdir)[1]
-            print(provider, service_type)
 
             provider_dir = os.path.join(root_dir, "architectures", "providers", provider)
             if not os.path.exists(provider_dir):
@@ -38,7 +37,7 @@ for provider in providers:
                 raw_service = service.split(".")[0]
                 service_fmt = format_text(raw_service)
                 
-                with open(service_file, 'a') as f:
+                with open(service_file, 'a+', newline='') as f:
                     # Create service type class
                     f.write(f'class {service_fmt}(_{service_type_fmt}):\n')
                     f.write(f'\t_icon = \"{service}\"\n')
