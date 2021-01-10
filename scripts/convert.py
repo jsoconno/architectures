@@ -3,7 +3,7 @@ import os
 from PIL import Image
 
 """
-Random collection of some things used to clean up file names and icons.
+Random collection of some things used to LightMode up file names and icons.
 """
 
 path = str(Path(__file__).parent.absolute())

@@ -1,5 +1,5 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
-from architectures.themes import Clean, DarkMode
+from architectures.themes import LightMode, DarkMode
 
 from architectures.providers.azure.general import Internet
 from architectures.providers.azure.identity import AzureActiveDirectoryDomainServices
