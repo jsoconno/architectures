@@ -19,5 +19,16 @@ with Graph("Simple", theme=theme):
         ]
     database = DataLake()
 
+    with Cluster():
+        VirtualMachine()
+        with Cluster():
+            VirtualMachine()
+            with Cluster():
+                VirtualMachine()
+                with Cluster():
+                    VirtualMachine()
+                    with Cluster():
+                        VirtualMachine()
+
     Edge(app_gateway, vms)
     Edge(vms, database)
