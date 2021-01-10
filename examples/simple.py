@@ -17,14 +17,7 @@ with Graph("Simple", theme=theme):
             VirtualMachine(),
             VirtualMachine()
         ]
-
-    with Cluster() as cluster_b:
-        vms_b = [
-            VirtualMachine(),
-            VirtualMachine(),
-            VirtualMachine()
-        ]
     
     database = DataLake()
 
-    Flow([cluster_a, cluster_b, app_gateway, database])
+    Flow([app_gateway, vms_a, database])
