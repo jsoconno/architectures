@@ -150,8 +150,26 @@ default_edge_attrs = {
     "xlabel": "",
 }
 
-default_colors = ["#FFFFFF"]
-
+def get_color_pallet(hue):
+    """
+    Pre-defined hues for LightMode
+    """
+    if hue == "white":
+        return ["#FDFEFE", "#F7F9F9", "#F4F6F7", "#ECF0F1"]
+    elif hue == "red":
+        return ["#FAEAEA", "#F6D6D5", "#F1C1C0", "#ECADAB"]
+    elif hue == "orange":
+        return ["#FFF0E6", "#FFE0CC", "#FFD1B3", "#FFC299"]
+    elif hue == "yellow":
+        return ["#FFF9E6", "#FFF3CC", "#FFEDB3", "#FFE799"]
+    elif hue == "green":
+        return ["#EBF7F1", "#D7F0E2", "#C3E8D4", "#AFE1C5"]
+    elif hue == "blue":
+        return ["#EBF4FA" "#D7E9F5", "#C3DEEF", "#AFD3EA"]
+    elif hue == "purple":
+        return ["#EEEAF2", "#DCD6E5", "#CBC1D8", "#BAACCB"]
+    else:
+        ["#FFFFFF"]
 class _Theme():
 
     def __init__(self):
@@ -185,7 +203,7 @@ class Default(_Theme):
 
 class LightMode(_Theme):
 
-    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
+    def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[], hue="white"):
 
         self.graph_attrs = {
             "bgcolor": "white",
@@ -234,7 +252,7 @@ class LightMode(_Theme):
             "fontname": "Calibri"
         }
 
-        self.colors = ["#FDFEFE", "#F7F9F9", "#F4F6F7", "#ECF0F1"]
+        self.colors = get_color_pallet(hue)
 
         if graph_attr_overrides is not None:
             self.graph_attrs.update(graph_attr_overrides)
