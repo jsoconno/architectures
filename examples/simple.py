@@ -7,7 +7,7 @@ from architectures.providers.azure.data import DataLake, SqlServer
 from architectures.providers.azure.compute import VirtualMachine
 from architectures.providers.azure.networking import ApplicationGateway
 
-theme = LightMode()
+theme = LightMode(hue="blue")
 
 with Graph("Simple", theme=theme):
     app_gateway = ApplicationGateway()
