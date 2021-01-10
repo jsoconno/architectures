@@ -280,7 +280,7 @@ class Node():
 
     _default_label = None
 
-    def __init__(self, label="", **attrs):
+    def __init__(self, label="", wrap_label_text=True, **attrs):
         """
         :param str label: Label for a node.
         """
@@ -300,10 +300,11 @@ class Node():
         self._cluster = get_cluster()
 
         # Auto-wrap labels
-        if self._cluster is not None:
-            self.label = wrap_text(self.label, len(self._cluster.label))
-        else:
-            self.label = wrap_text(self.label)
+        if wrap_label_text:
+            if self._cluster is not None:
+                self.label = wrap_text(self.label, len(self._cluster.label))
+            else:
+                self.label = wrap_text(self.label)
 
         # Set node attributes based on the theme using copy to ensure the objects are independent
         self.node_attrs = self._graph.theme.node_attrs.copy()

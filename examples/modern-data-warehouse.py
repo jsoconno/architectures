@@ -18,12 +18,12 @@ with Graph("Modern Data Warehouse", theme=theme, show=True):
         with Cluster("Store") as store:
             data_lake = DataLake("Data Lake")
 
-    with Cluster("Prep and train") as train:
-        databricks = AzureDatabricks("Azure Databricks")
-
     with Cluster("Model") as model:
         analysis_services = AnalysisService("Azure Analysis Services")
         synapse_analytics = AzureSynapseAnalytics("Azure Synapse Analytics")
+
+    with Cluster("Prep and train") as train:
+        databricks = AzureDatabricks("Azure Databricks")
 
     with Cluster("Serve") as serve:
         power_bi = PowerBi("Power BI")

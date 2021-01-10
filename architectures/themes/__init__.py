@@ -194,7 +194,7 @@ class LightMode(_Theme):
             "splines": "ortho",
             "nodesep": "1.0",
             "ranksep": "1.0",
-            "fontname": "Sans-Serif",
+            "fontname": "Calibri",
             "fontsize": "24",
             "fontcolor": "#2D3436",
             "style": "rounded",
@@ -208,7 +208,7 @@ class LightMode(_Theme):
             "style": "rounded",
             "labeljust": "l",
             "pencolor": "#AEB6BE",
-            "fontname": "Sans-Serif",
+            "fontname": "Calibri",
             "fontsize": "12",
             "margin": "30"
         }
@@ -221,7 +221,7 @@ class LightMode(_Theme):
             "height": "1.8",
             "labelloc": "b",
             "imagescale": "true",
-            "fontname": "Sans-Serif",
+            "fontname": "Calibri",
             "fontsize": "13",
             "fontcolor": "#2D3436",
             "color": "invis"
@@ -230,10 +230,11 @@ class LightMode(_Theme):
         self.edge_attrs = {
             "penwidth": "2",
             "margin": "1",
-            "minlen": "1.0"
+            "minlen": "2.0",
+            "fontname": "Calibri"
         }
 
-        self.colors = ["#f3faff", "#e7f5fe", "#dbf0fe", "#cfebfd"]
+        self.colors = ["#FDFEFE", "#F7F9F9", "#F4F6F7", "#ECF0F1"]
 
         if graph_attr_overrides is not None:
             self.graph_attrs.update(graph_attr_overrides)
@@ -298,7 +299,7 @@ class DarkMode(_Theme):
         self.edge_attrs = {
             "penwidth": "2",
             "margin": "1",
-            "minlen": "1.0",
+            "minlen": "2.0",
             "color": "#EEEEEE"
         }
 

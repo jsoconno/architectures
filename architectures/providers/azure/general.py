@@ -106,6 +106,10 @@ class ServiceCatalogManagedApplicationDefinition(_General):
 	_icon = "service-catalog-managed-application-definition.png"
 	_default_label = "Service Catalog Managed Application Definition"
 
+class Computer(_General):
+	_icon = "computer.png"
+	_default_label = "Computer"
+
 class AllResources(_General):
 	_icon = "all-resources.png"
 	_default_label = "All Resources"
