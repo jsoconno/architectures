@@ -1,0 +1,28 @@
+# Do not modify this file directly. It is auto-generated with Python.
+
+from architectures.providers import _Openstack
+
+class _Sharedservices(_Openstack):
+	_service_type = "sharedservices"
+	_icon_dir = "icons/openstack/sharedservices"
+
+class Keystone(_Sharedservices):
+	_icon = "keystone.png"
+	_default_label = "Keystone"
+
+class Karbor(_Sharedservices):
+	_icon = "karbor.png"
+	_default_label = "Karbor"
+
+class Searchlight(_Sharedservices):
+	_icon = "searchlight.png"
+	_default_label = "Searchlight"
+
+class Barbican(_Sharedservices):
+	_icon = "barbican.png"
+	_default_label = "Barbican"
+
+class Glance(_Sharedservices):
+	_icon = "glance.png"
+	_default_label = "Glance"
+

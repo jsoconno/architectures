@@ -1,4 +1,4 @@
-# Do not modify this file directly.  It is auto-generated with Python.
+# Do not modify this file directly. It is auto-generated with Python.
 
 from architectures.providers import _Azure
 
