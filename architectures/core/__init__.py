@@ -499,7 +499,7 @@ class Flow():
                             if isinstance(current_start_node, Node) and isinstance(current_end_node, Node):
                                 self.edge_attrs.update({"ltail": "", "lhead": ""})
                             elif isinstance(current_start_node, Node) and isinstance(current_end_node, (Cluster, Group)):
-                                self.end_node = get_node_from_cluster(self.end_node)
+                                self.end_node = get_node_from_cluster(current_end_node)
                                 self.edge_attrs.update({"lhead": end_cluster.name})
                             elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, Node):
                                 self.start_node = get_node_from_cluster(current_start_node)
@@ -513,7 +513,7 @@ class Flow():
                                 assert isinstance(current_end_node, (Cluster, Group, Node))
                         
                             # Connect nodes with an edge
-                            self._graph.edge(current_start_node, current_end_node, **self.edge_attrs)
+                            self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
         else:
             raise Exception('More than one node must be passed in the list to use the Flow object')
 

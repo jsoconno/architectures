@@ -11,8 +11,15 @@ theme = LightMode()
 
 with Graph("Simple", theme=theme):
     app_gateway = ApplicationGateway()
-    with Cluster():
-        vms = [
+    with Cluster() as cluster_a:
+        vms_a = [
+            VirtualMachine(),
+            VirtualMachine(),
+            VirtualMachine()
+        ]
+
+    with Cluster() as cluster_b:
+        vms_b = [
             VirtualMachine(),
             VirtualMachine(),
             VirtualMachine()
@@ -20,4 +27,4 @@ with Graph("Simple", theme=theme):
     
     database = DataLake()
 
-    Flow([app_gateway, vms, database])
+    Flow([cluster_a, cluster_b])
