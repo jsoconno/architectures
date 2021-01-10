@@ -31,8 +31,6 @@ for provider in providers:
                 f.write(f'\t_service_type = \"{service_type}\"\n')
                 f.write(f'\t_icon_dir = \"icons/{provider}/{service_type}\"\n\n')
 
-    # each image is code: administrative-unit.png
-
             for service in files:
                 raw_service = service.split(".")[0]
                 service_fmt = format_text(raw_service)
