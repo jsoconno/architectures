@@ -24,8 +24,8 @@ default_graph_attrs = {
     "newrank": "false",
     "nodesep": "0.25",
     "nojustify": "false",
-    "nslimit": "",
-    "nslimit1": "",
+    # "nslimit": "",
+    # "nslimit1": "",
     "ordering": "",
     "orientation": "0",
     "outputorder": "breadthfirst",
@@ -205,7 +205,12 @@ class LightMode(_Theme):
 
     def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[], hue="white"):
 
-        self.graph_attrs = {
+        self.graph_attrs = default_graph_attrs
+        self.cluster_attrs = default_cluster_attrs
+        self.edge_attrs = default_edge_attrs
+        self.node_attrs = default_node_attrs
+
+        theme_graph_attrs = {
             "bgcolor": "white",
             "compound": "true", 
             "pad": "1.0",
@@ -221,8 +226,7 @@ class LightMode(_Theme):
             "labelloc": 't',
         }
 
-        self.cluster_attrs = {
-            "shape": "box",
+        theme_cluster_attrs = {
             "style": "rounded",
             "labeljust": "l",
             "pencolor": "#AEB6BE",
@@ -231,7 +235,7 @@ class LightMode(_Theme):
             "margin": "30"
         }
 
-        self.node_attrs = {
+        theme_node_attrs = {
             "shape": "invis",
             "style": "rounded,filled",
             "fixedsize": "true",
@@ -242,16 +246,20 @@ class LightMode(_Theme):
             "fontname": "Calibri",
             "fontsize": "13",
             "fontcolor": "#2D3436",
-            "color": "invis"
+            "color": "invis",
+            "fillcolor": "invis"
         }
 
-        self.edge_attrs = {
+        theme_edge_attrs = {
             "penwidth": "2",
-            "margin": "1",
             "minlen": "2.0",
             "fontname": "Calibri"
         }
 
+        self.graph_attrs.update(theme_graph_attrs)
+        self.cluster_attrs.update(theme_cluster_attrs)
+        self.node_attrs.update(theme_node_attrs)
+        self.edge_attrs.update(theme_edge_attrs)
         self.colors = get_color_pallet(hue)
 
         if graph_attr_overrides is not None:
@@ -273,7 +281,12 @@ class DarkMode(_Theme):
 
     def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
 
-        self.graph_attrs = {
+        self.graph_attrs = default_graph_attrs
+        self.cluster_attrs = default_cluster_attrs
+        self.edge_attrs = default_edge_attrs
+        self.node_attrs = default_node_attrs
+        
+        theme_graph_attrs = {
             "bgcolor": "#17202A",
             "compound": "true", 
             "pad": "1.0",
@@ -289,8 +302,7 @@ class DarkMode(_Theme):
             "labelloc": 't',
         }
 
-        self.cluster_attrs = {
-            "shape": "box",
+        theme_cluster_attrs = {
             "style": "rounded,dotted",
             "labeljust": "l",
             "pencolor": "#AEB6BE",
@@ -300,7 +312,7 @@ class DarkMode(_Theme):
             "margin": "30"
         }
 
-        self.node_attrs = {
+        theme_node_attrs = {
             "shape": "invis",
             "style": "rounded,filled",
             "fixedsize": "true",
@@ -311,16 +323,20 @@ class DarkMode(_Theme):
             "fontname": "Sans-Serif",
             "fontsize": "13",
             "fontcolor": "#EEEEEE",
-            "color": "invis"
+            "color": "invis",
+            "fillcolor": "invis"
         }
 
-        self.edge_attrs = {
+        theme_edge_attrs = {
             "penwidth": "2",
-            "margin": "1",
             "minlen": "2.0",
             "color": "#EEEEEE"
         }
 
+        self.graph_attrs.update(theme_graph_attrs)
+        self.cluster_attrs.update(theme_cluster_attrs)
+        self.node_attrs.update(theme_node_attrs)
+        self.edge_attrs.update(theme_edge_attrs)
         self.colors = ["#1C2833", "#212F3D", "#273746", "#2C3E50", "#566573"]
 
         if graph_attr_overrides is not None:

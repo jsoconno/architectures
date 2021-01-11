@@ -9,7 +9,7 @@ from architectures.providers.azure.ai import BotService, CognitiveServicesSearch
 from architectures.providers.azure.data import SqlDatabase
 from architectures.providers.azure.compute import VirtualMachine
 
-theme = LightMode(graph_attr_overrides={"nodesep":"3"})
+theme = DarkMode(graph_attr_overrides={"nodesep":"3"})
 
 with Graph("Intelligent Search", theme=theme):
     computer = Computer()
