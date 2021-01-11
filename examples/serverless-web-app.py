@@ -1,11 +1,11 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 from architectures.themes import LightMode
 
-from architectures.providers.azure.hierarchies import Subscription, ResourceGroup
+from architectures.providers.azure.hierarchies import ResourceGroup
 
 from architectures.providers.azure.general import Internet, Computer
 from architectures.providers.azure.identity import AzureActiveDirectoryDomainServices
-from architectures.providers.azure.management import ApiManagementService, AzureMonitor
+from architectures.providers.azure.management import ApiManagementService, AzureMonitor, Subscription
 from architectures.providers.azure.application import FunctionApp
 from architectures.providers.azure.data import AzureCosmosDb
 from architectures.providers.azure.networking import CdnProfile
@@ -16,7 +16,15 @@ theme = LightMode()
 
 with Graph('Serverless Web App', theme=theme):
 
-    with Subscription() as subscription:
+    with Cluster("Subscription") as subscription:
+        Subscription(
+            fontsize="6", 
+            loc="t",
+            fixedsize="true", 
+            width="0.5", 
+            height="0.8", 
+            pin="true", 
+            pos="0,2")
         with ResourceGroup() as resource_group:
             with Cluster("Static Content") as static_content:
                 cdn = CdnProfile("CDN")
