@@ -9,3 +9,7 @@ class _Azure(Node):
     _icon_dir = "icons/azure"
 
     fontcolor = "#ffffff"
+
+class _Aws(Node):
+    _provider = "aws"
+    _icon_dir = "icons/aws"
