@@ -30,7 +30,7 @@ with Graph('Serverless Web App', theme=theme):
                 cdn = CdnProfile("CDN")
                 storage = StorageAccountBlobCool("Blob Storage")
 
-            with Cluster("API") as api:
+            with Cluster("API", bgcolor="red") as api:
                 api_management = ApiManagementService()
                 function_app = FunctionApp()
                 cosmos_db = AzureCosmosDb()
