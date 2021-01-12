@@ -19,7 +19,7 @@ default_graph_attrs = {
     "labelloc": "b",
     "landscape": "false",
     "layout": "dot",
-    "margin": "8",
+    "margin": "0",
     "mclimit": "1",
     "newrank": "false",
     "nodesep": "0.25",
