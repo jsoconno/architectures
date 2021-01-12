@@ -196,12 +196,6 @@ class Cluster():
         # Set cluster attributes based on the theme using copy to ensure the objects are independent
         self.dot.graph_attr.update(self._graph.theme.cluster_attrs)
 
-        # Override any values directly passed from the object
-        self.dot.graph_attr.update(attrs)
-
-        # Update cluster label
-        self.dot.graph_attr["label"] = self.label
-
         # Set cluster depth to allow for logic based on the nesting of clusters
         self._depth = self._cluster._depth + 1 if self._cluster else 0
 
@@ -212,6 +206,12 @@ class Cluster():
         if _colors:
             color_index = self._depth % len(_colors)
             self.dot.graph_attr["bgcolor"] = _colors[color_index]
+
+        # Update cluster label
+        self.dot.graph_attr["label"] = self.label
+
+        # Override any values directly passed from the object
+        self.dot.graph_attr.update(attrs)
 
 
     def __enter__(self):
