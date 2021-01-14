@@ -19,7 +19,7 @@ with Graph('Web App Over SQL', theme=theme):
     with Cluster(style="dotted") as resource_group:
         blob_storage = StorageAccountBlobHot()
         with Cluster("App Service Plan") as app_service_plan:
-            app_service = ApplicationService()
+            app_service = ApplicationService("Test")
             app_service_environment = ApplicationServiceEnvironment()
 
         with Cluster("Azure SQL Database") as data_subnet:
@@ -29,7 +29,7 @@ with Graph('Web App Over SQL', theme=theme):
             with Cluster("Another Cluster"):
                 with Cluster("Another Cluster"):
                     with Cluster("Another Cluster"):
-                        vm = VirtualMachineWindows()
+                        vm = VirtualMachineWindows("This is a really long name for a VM", color="grey")
 
     Edge(internet, [azure_ad, dns], style="dotted")
     Edge(internet, app_service)
