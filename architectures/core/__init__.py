@@ -313,11 +313,6 @@ class Node():
         self.node_attrs.update(attrs)
 
         # Add attributes specific for when provider service nodes are used.
-        # 1 - 2.2 (1.2)
-        # 2 - 2.2 (.6)
-        # 3 - 2.2 (.4)
-        # 4 - 1.8 (.2)
-        # 5 - 
         if self._icon:
             padding = .1 * (self.label.count('\n'))
             #self.node_attrs["height"] = "1.5"
