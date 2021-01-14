@@ -314,7 +314,8 @@ class Node():
 
         # Add attributes specific for when provider service nodes are used.
         if self._icon:
-            padding = 0.4 * (self.label.count('\n'))
+            padding = 0.1 * (self.label.count('\n'))
+            #self.node_attrs["height"] = "1.5"
             self.node_attrs["height"] = str(float(self.node_attrs['height']) + padding)
             self.node_attrs["image"] = self._load_icon()
 
