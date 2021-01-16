@@ -130,3 +130,6 @@ dmypy.json
 
 # Mac
 .DS_Store
+
+# Images at root generated from architectures
+/*.png
