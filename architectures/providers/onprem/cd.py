@@ -6,6 +6,10 @@ class _Cd(_Onprem):
 	_service_type = "cd"
 	_icon_dir = "icons/onprem/cd"
 
+class Spinnaker(_Cd):
+	_icon = "spinnaker.png"
+	_default_label = "Spinnaker"
+
 class TektonCli(_Cd):
 	_icon = "tekton-cli.png"
 	_default_label = "Tekton Cli"
@@ -13,8 +17,4 @@ class TektonCli(_Cd):
 class Tekton(_Cd):
 	_icon = "tekton.png"
 	_default_label = "Tekton"
-
-class Spinnaker(_Cd):
-	_icon = "spinnaker.png"
-	_default_label = "Spinnaker"
 

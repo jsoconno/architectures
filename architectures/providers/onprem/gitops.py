@@ -6,13 +6,13 @@ class _Gitops(_Onprem):
 	_service_type = "gitops"
 	_icon_dir = "icons/onprem/gitops"
 
-class Flagger(_Gitops):
-	_icon = "flagger.png"
-	_default_label = "Flagger"
-
 class Argocd(_Gitops):
 	_icon = "argocd.png"
 	_default_label = "Argocd"
+
+class Flagger(_Gitops):
+	_icon = "flagger.png"
+	_default_label = "Flagger"
 
 class Flux(_Gitops):
 	_icon = "flux.png"

@@ -10,10 +10,6 @@ class AppSearch(_Enterprisesearch):
 	_icon = "app-search.png"
 	_default_label = "App Search"
 
-class WorkplaceSearch(_Enterprisesearch):
-	_icon = "workplace-search.png"
-	_default_label = "Workplace Search"
-
 class EnterpriseSearch(_Enterprisesearch):
 	_icon = "enterprise-search.png"
 	_default_label = "Enterprise Search"
@@ -21,4 +17,8 @@ class EnterpriseSearch(_Enterprisesearch):
 class SiteSearch(_Enterprisesearch):
 	_icon = "site-search.png"
 	_default_label = "Site Search"
+
+class WorkplaceSearch(_Enterprisesearch):
+	_icon = "workplace-search.png"
+	_default_label = "Workplace Search"
 

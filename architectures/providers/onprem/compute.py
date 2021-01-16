@@ -6,11 +6,11 @@ class _Compute(_Onprem):
 	_service_type = "compute"
 	_icon_dir = "icons/onprem/compute"
 
-class Server(_Compute):
-	_icon = "server.png"
-	_default_label = "Server"
-
 class Nomad(_Compute):
 	_icon = "nomad.png"
 	_default_label = "Nomad"
+
+class Server(_Compute):
+	_icon = "server.png"
+	_default_label = "Server"
 

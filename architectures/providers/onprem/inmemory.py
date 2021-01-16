@@ -14,11 +14,11 @@ class Hazelcast(_Inmemory):
 	_icon = "hazelcast.png"
 	_default_label = "Hazelcast"
 
-class Redis(_Inmemory):
-	_icon = "redis.png"
-	_default_label = "Redis"
-
 class Memcached(_Inmemory):
 	_icon = "memcached.png"
 	_default_label = "Memcached"
+
+class Redis(_Inmemory):
+	_icon = "redis.png"
+	_default_label = "Redis"
 
