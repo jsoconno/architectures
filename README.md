@@ -1,33 +1,32 @@
 # Architectures
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-![python version](https://img.shields.io/badge/python-3.6%2C3.7%2C3.8-blue?logo=python)
-[![todos](https://badgen.net/https/api.tickgit.com/badgen/github.com/mingrammer/diagrams?label=todos)](https://www.tickgit.com/browse?repo=github.com/jsoconno/architectures)
-
-![default provider](https://img.shields.io/badge/provider-Default-orange?color=C70039)
-![azure provider](https://img.shields.io/badge/provider-Azure-orange?logo=microsoft-azure&color=007FFF)
-
-<a href="https://www.buymeacoffee.com/jsoconno" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?logo=python)
 
 ## Introduction
-In a IT organization far, far away where everything is managed as code...
+Today, almost everything is managed as code including applications, infrastructure, configurations, processes, and more.  Architectures was created to allow teams to manage architecture as code using Python.
 
-Including applications, infrastructure, processes, configurations, and more...
+The goal for this project is to make drawing architecture diagrams with code simple and to enable the use of version control systems and standard coding practices such as pull requests, code reviews, and approvals to eliminate the toil associated with diagram creation and maintenance.
 
-Architecture diagrams were left behind requiring architects and developers to search for the correct versions of documents stored on local servers across the organization...
+Architectures comes with support for a wide variety of cloud and on-premise providers out-of-the-box.
 
-Architectures was designed to help technical teams work better together to build architecture as code and overcome the evil visio diagrams grip on the universe.
-## Design Goals
-The overarching goal of this project is to allow for the development of architecture as code that can be stored in version control allowing teams to better collaborate and leverage standard coding practices such as pull requests, code reviews, approvals, etc to maintain architecture diagrams.
-
-Architectures has been designed to be simple, powerful, extendable and scalable so that anyone in the technology organization can contribute to diagram development.  It is also an attempt to eliminate the toil associated with diagram creation and support a wide variety of cloud and on-premise providers out-of-the-box.
-
+![azure provider](https://img.shields.io/badge/provider-Azure-orange?logo=microsoft-azure&color=0089D6)
+![aws provider](https://img.shields.io/badge/provider-Amazon%20Web%20Services-orange?logo=amazon-aws&color=232F3E)
+![gcp provider](https://img.shields.io/badge/provider-Google%20Cloud%20Platform-orange?logo=google-cloud&color=4285F4)
 ## Dependencies
-Python version 3.6.x or later must be installed.
+Architectures works for all version of python greater than version `3.6.x`.
 
-The graphviz library is also required.  To install with Python, simply run the following command in the terminal:
+Architectures can be installed from PyPi using pip:
+```
+pip install architectures
+```
+The Graphviz library is also required.  To install it, simply run the following pip command in the terminal:
 ```
 pip install graphviz
+```
+If you are using a MacBook for development, you may also have to install the latest version of Graphviz with Homebrew:
+```
+brew install graphviz
 ```
 
 ## Supported Objects
