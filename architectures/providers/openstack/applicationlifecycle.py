@@ -6,9 +6,9 @@ class _Applicationlifecycle(_Openstack):
 	_service_type = "applicationlifecycle"
 	_icon_dir = "icons/openstack/applicationlifecycle"
 
-class Solum(_Applicationlifecycle):
-	_icon = "solum.png"
-	_default_label = "Solum"
+class Freezer(_Applicationlifecycle):
+	_icon = "freezer.png"
+	_default_label = "Freezer"
 
 class Masakari(_Applicationlifecycle):
 	_icon = "masakari.png"
@@ -18,7 +18,7 @@ class Murano(_Applicationlifecycle):
 	_icon = "murano.png"
 	_default_label = "Murano"
 
-class Freezer(_Applicationlifecycle):
-	_icon = "freezer.png"
-	_default_label = "Freezer"
+class Solum(_Applicationlifecycle):
+	_icon = "solum.png"
+	_default_label = "Solum"
 

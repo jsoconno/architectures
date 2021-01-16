@@ -6,6 +6,10 @@ class _Storage(_Openstack):
 	_service_type = "storage"
 	_icon_dir = "icons/openstack/storage"
 
+class Cinder(_Storage):
+	_icon = "cinder.png"
+	_default_label = "Cinder"
+
 class Manila(_Storage):
 	_icon = "manila.png"
 	_default_label = "Manila"
@@ -13,8 +17,4 @@ class Manila(_Storage):
 class Swift(_Storage):
 	_icon = "swift.png"
 	_default_label = "Swift"
-
-class Cinder(_Storage):
-	_icon = "cinder.png"
-	_default_label = "Cinder"
 

@@ -10,11 +10,11 @@ class Loci(_Packaging):
 	_icon = "loci.png"
 	_default_label = "Loci"
 
-class Rpm(_Packaging):
-	_icon = "rpm.png"
-	_default_label = "Rpm"
-
 class Puppet(_Packaging):
 	_icon = "puppet.png"
 	_default_label = "Puppet"
+
+class Rpm(_Packaging):
+	_icon = "rpm.png"
+	_default_label = "Rpm"
 

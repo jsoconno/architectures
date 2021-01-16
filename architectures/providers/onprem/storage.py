@@ -6,6 +6,10 @@ class _Storage(_Onprem):
 	_service_type = "storage"
 	_icon_dir = "icons/onprem/storage"
 
+class CephOsd(_Storage):
+	_icon = "ceph-osd.png"
+	_default_label = "Ceph Osd"
+
 class Ceph(_Storage):
 	_icon = "ceph.png"
 	_default_label = "Ceph"
@@ -13,8 +17,4 @@ class Ceph(_Storage):
 class Glusterfs(_Storage):
 	_icon = "glusterfs.png"
 	_default_label = "Glusterfs"
-
-class CephOsd(_Storage):
-	_icon = "ceph-osd.png"
-	_default_label = "Ceph Osd"
 
