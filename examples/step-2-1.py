@@ -10,12 +10,7 @@ from architectures.providers.azure.compute import VirtualMachineWindows
 from architectures.providers.azure.data import DataLake
 
 # Set the theme
-theme = LightMode(
-    graph_attr_overrides={"labeljust":"c", "nodesep":"0.5", "rankdir":"TB"}, 
-    cluster_attr_overrides={"style":"dotted"},
-    node_attr_overrides={"fontcolor":"dimgrey"}, 
-    edge_attr_overrides={"color":"dimgrey"},
-    color_overrides=["#F5F5F5", "#FAFAFA", "#ECECEC", "#DEDEDE"])
+theme = DarkMode()
 
 with Graph("My Customized Theme", theme=theme):
     with Cluster("Subscription"):
