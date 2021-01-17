@@ -1,15 +1,11 @@
 # Architectures
-
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?logo=python)
-
   - [Introduction](#introduction)
-  - [Dependencies](#dependencies)
+  - [Installation](#installation)
   - [Core Components](#core-components)
     - [Containers](#containers)
     - [Components](#components)
     - [Connections](#connections)
-  - [Example](#example)
+  - [Example Architecture](#example-architecture)
     - [Code](#code)
     - [Output](#output)
   - [How To](#how-to)
@@ -21,8 +17,14 @@
     - [Part 5 - Connecting Nodes and Clusters](#part-5---connecting-nodes-and-clusters)
     - [Part 6 - Using Themes](#part-6---using-themes)
     - [Part 7 - Using Providers](#part-7---using-providers)
+  - [Tips and Tricks](#-tips-and-tricks)
+    - [Using Colors](#-using-colors)
+    - [Modifying Layout](#-modifying-layout)
 
 ## Introduction
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?logo=python)
+
 Today, almost everything is managed as code including applications, infrastructure, configurations, processes, and more.  Architectures was created to allow teams to manage architecture as code using Python.
 
 The goal for this project is to make drawing architecture diagrams with code simple and to enable the use of version control systems and standard coding practices such as pull requests, code reviews, and approvals to eliminate the toil associated with diagram creation and maintenance.
@@ -34,24 +36,28 @@ Architectures comes with support for several providers out-of-the-box.
 ![gcp provider](https://img.shields.io/badge/provider-Google%20Cloud%20Platform-orange?logo=google-cloud&color=4285F4)
 ![kubernetes provider](https://img.shields.io/badge/provider-Kubernetes-orange?logo=kubernetes&color=326CE5)
 
-## Dependencies
-Architectures works for all version of python greater than version `3.6.x`.
+## Installation
+Architectures works for all version of python greater than version `3.6.x`.  Python can be installed from https://www.python.org/downloads/ or using Homebrew on Mac OS:
+```
+brew install python
+```
 
-Architectures can be installed from PyPi using pip:
+Architectures can be installed using the following command (once Python is installed):
 ```
 pip install architectures
 ```
-The Graphviz library is also required.  To install it, simply run the following pip command in the terminal:
+The Graphviz library is also required to use architectures.  To install it, use the following command:
 ```
 pip install graphviz
 ```
-If you are using a MacBook for development, you may also have to install the latest version of Graphviz with Homebrew:
+If you are using a Mac OS for development, you may also have to install the latest version of Graphviz with Homebrew:
 ```
 brew install graphviz
 ```
+It is recommended to use Graphviz version `2.40.x` or later.
 
 ## Core Components
-There are several types of supported objects in the architectures library.  These objects primarily fall into three categories:
+There are several supported objects in the architectures library.  These objects primarily fall into three categories:
 ### Containers
 - **Graphs** allow users to create a base canvas to create their diagram on
 - **Clusters** allow users to group **Nodes** into bounded container
@@ -63,8 +69,8 @@ There are several types of supported objects in the architectures library.  Thes
 - **Edges** allow users to draw a line between a pair or list of **Nodes**, **Clusters**, or **Groups**
 - **Flows** allow users to create a linear flow through a list of **Nodes**, **Clusters**, or **Groups**
 
-The component objects are extended with subclasses that allow for the creation of standard service components from various providers such as Azure, GCP, and AWS.
-## Example
+The Node object is extended with subclasses that allow for the creation of standard service components from various providers such as Azure, GCP, and AWS.  Read on for some examples.
+## Example Architecture
 Here is an example that shows how you can create a beautiful diagram using architectures.  This example is an Azure Event Driven Serverless Architecture in dark mode.
 
 ### Code
@@ -126,7 +132,8 @@ Once you have imported the core module, you will need to use the `Graph` object 
 
 This is the simplest graph you can make:
 ```
-...
+from architectures.core import Graph
+
 with Graph():
     pass
 ```
@@ -137,7 +144,7 @@ Graph accepts the following optional arguments:
 * `theme (Theme object)` - the theme to apply
 * `show (bool)` - whether or not to show the diagram when code is run
 
-If no name is given, the diagram title and output file name will be set to a default value.  The default theme is the Graphviz default`.  The default output file format is PNG.
+If no name is given, the diagram title and output file name will be set to a default value.  The default theme is the Graphviz default.  The default output file format is PNG.
 
 ### Part 3 - Adding Nodes to a Graph
 Once a Graph is created, you will want to start adding objects to it.  One of the most basic objects you can create is a `Node`.
@@ -171,7 +178,7 @@ Node objects accept the following optional arguments:
 * `wrap_label_text (bool)` - a flag to determine if label text should be automatically wrapped
 * `**attrs` - keyword arguments that are used to pass attributes to the Node to override defaults
 
-If no label is given, the Node will appear without a label or with a defined default label.  The default for word wrap is true.
+If no label is given, the Node will appear without a label.  For provider classes (to be seen later), a default label is set based on the service being added to the canvas.  The default for word wrap is true.
 
 For more information on available Node attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 ### Part 4 - Grouping Nodes on a Graph
@@ -208,16 +215,16 @@ Cluster and Group objects accept the following optional arguments:
 * `label (str)` - the label given to the Cluster or Group
 * `**attrs` - keyword arguments that are used to pass attributes to the Cluster or Group to override defaults
 
-If no label is given, the Node will appear without a label or with a defined default label.  The default for word wrap is true.
+If no label is given, Clusters and Groups will appear without a label.
 
 For more information on available Node attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 
 ### Part 5 - Connecting Nodes and Clusters
-A collection of Nodes and Clusters or Groups (henceforth referred to only as Clusters) might not be all that useful by themselves.  To start showing relationships between Nodes and Clusters, you will want to draw lines between them.  This can be done using the `Edge` and `Flow` objects.
+A collection of Nodes, Clusters, and Groups might not be all that useful by themselves.  To start defining relationships, you will want to draw lines between them.  This can be done using the `Edge` and `Flow` objects.
 
-You can draw Edges and Flows between any combination of Nodes and Clusters or lists of Nodes and Clusters.  It is important to assign Nodes and Clusters to a variable so they can be referenced when drawing Edges or Flows.
+It is important to assign Nodes, Clusters, and Groups to a variable so they can be referenced when drawing Edges or Flows.
 
-The example below shows several different scenarios and builds on the previous example.
+The example below shows several different scenarios and builds on the previous example in Part 4.
 
 ```
 with Graph("My Graph"):
@@ -232,7 +239,7 @@ with Graph("My Graph"):
 
     f = Node("F")
 
-    # This will connect nodes a and d
+    # This will connect nodes a and c
     Edge(a, c)
 
     # This will connect nodes d and e to cluster a
@@ -243,10 +250,10 @@ with Graph("My Graph"):
 ```
 !["Architecture"](assets/part5-1.png "Architecture")
 
-You can also pass keyword arguments to modify attributes on an Edge.
+You can also pass keyword arguments to modify attributes on an Edge.  For example:
 ```
 ...
-    Edge(a, d, dir="both", color="blue")
+Edge(a, c, dir="both", color="blue")
 ...
 ```
 
@@ -282,9 +289,9 @@ Flow objects accept the follow required arguments:
 * `nodes (list)` - a list of Cluster, Group, or Node objects to flow through
 
 Both Edge and Flow objects support the following optional arguments:
-* `**attrs` - keyword arguments that are used to pass attributes to the Node to override defaults
+* `**attrs` - keyword arguments that are used to pass attributes to the Edge to override defaults
 
-For more information on available Node attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
+For more information on available Edge attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 
 ### Part 6 - Using Themes
 Although you can now draw any combinations of Clusters, Groups, Nodes, Edges, and Flows on your Graph, you are probably not too happy with the overall appearance of your diagram.  The Default theme is great for prototyping, but not what you would want to share with your team.
@@ -321,14 +328,14 @@ with Graph("My Graph", theme=theme):
 ```
 !["Architecture"](assets/part6-1.png "Architecture")
 
-This does not look great right now because themes were meant to be used with providers.  We will see how this works in the next section.
+This does not look great right now because themes were meant to be used with provider objects that represent services (e.g. Storage, Firewall, Database, etc.).  We will see how this works in the next section.
 
 Theme objects accept the following optional arguments:
 * `graph_attr_overrides (dict)` - overrides to theme defaulted graph attributes
 * `cluster_attr_overrides (dict)` - overrides to theme defaulted cluster attributes
 * `node_attr_overrides (dict)` - overrides to theme defaulted node attributes
 * `edge_attr_overrides (dict)` - overrides to theme defaulted edge attributes
-* `color_overrides (dict)` - overrides to theme defaulted color attributes
+* `color_overrides (list)` - overrides to theme defaulted color attributes that are used to determine what the background color of a Cluster will be
 
 Here is an example:
 ```
@@ -343,6 +350,7 @@ theme = LightMode(
 )
 ...
 ```
+
 For more information on available attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 
 ### Part 7 - Using Providers
@@ -384,11 +392,7 @@ with Graph("Basic Architecture", theme=theme):
 ```
 !["Architecture"](assets/step-4-1.png "Architecture")
 
-This demonstrates what the default `LightMode` theme looks like.
-
-
-
-To apply `DarkMode`, just change the name of the theme.
+Here is what the same diagram would look like just by switching the theme to `DarkMode`.
 ```
 ...
 # Set the theme
@@ -396,3 +400,26 @@ theme = DarkMode()
 ...
 ```
 !["Architecture"](assets/step-5-2.png "Architecture")
+
+## Tips and Tricks
+### Using Colors
+Colors can be used to change an objects background, border, fill, font color, and more.  You can use hex colors or the Graphviz default color scheme names.
+
+Some great resources for finding colors to change the style of your theme are:
+* [Google's Material Design Color Tool](https://material.io/resources/color/)
+* [Color Hunt](https://colorhunt.co/)
+* [Colormind](http://colormind.io/)
+
+To see all all of the build-in colors, check out the [Graphviz Color Name Documentation](https://graphviz.org/doc/info/colors.html).
+
+### Modifying Layout
+There are several attributes that can have a big impact on the way your diagram looks.  Here are some of the major ones:
+* `rankdir` - great for quickly changing the direction of objects layed out on your diagram
+* `constraint` - helps to reduce some Edge constraints to get the layout you want
+* `style` - allows you to change the way things look by making them dotted, dashed, or invisible
+* `nodesep` - change the amount of separation between nodes which can have an impact on linen layout
+* `ranksep` - small changes to this can have big effect on the output of your graph
+
+In addition to attributes that you can modify, you can change the order of the objects in your configuration.  The underlying `dot` engine algorithm used for laying things out renders objects in the reverse order that they are found in your Graph.  Sometimes, reordering things can go a long way to cleaning things up.
+
+MORE TO ADD HERE LATER WITH SOME EXAMPLES
