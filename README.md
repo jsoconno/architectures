@@ -9,7 +9,6 @@
     - [Code](#code)
     - [Output](#output)
   - [How To](#how-to)
-    - [Table of Contents:](#table-of-contents)
     - [Part 1 - Importing the Core Module](#part-1---importing-the-core-module)
     - [Part 2 - Creating a Graph](#part-2---creating-a-graph)
     - [Part 3 - Adding Nodes to a Graph](#part-3---adding-nodes-to-a-graph)
