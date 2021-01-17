@@ -1,16 +1,20 @@
-# Import the base objects
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 
-# Import the available themes
-from architectures.themes import Default, LightMode, DarkMode
+# Import the LightMode theme
+from architectures.themes import LightMode
 
-# Import provider services
-from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer
-from architectures.providers.azure.compute import VirtualMachineWindows
-from architectures.providers.azure.data import DataLake
+theme = LightMode()
 
-# Set the theme
-theme = Default()
+with Graph("My Graph", theme=theme):
+    with Cluster("Cluster A") as cluster_a:
+        a = Node("A")
+        b = Node("B")
+        c = Node("C")
 
-with Graph("Basic Architecture", theme=theme):
-    Flow([Node("A"), Node("B"), [Node("C"), Node("D"), Node("E")]])
+    with Cluster("Cluster B") as cluster_b:
+        d = Node("D")
+        e = Node("E")
+
+    f = Node("F")
+
+    Flow([a, [b, c], cluster_b, f, d, e])
