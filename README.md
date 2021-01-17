@@ -171,7 +171,7 @@ from architectures.core import Graph, Cluster, Group, Node
 Also important to note is that objects are created in the reverse order that they are written in the code.  This is not always something you have to consider, but keep in mind it can have an impact on the final layout.  In particular for larger, more complex diagrams.
 
 ### Step 3 - Connecting Nodes and Clusters
-A collection of nodes and boxes might not be all that useful by themselves.  To start showing relationships, we need to draw lines between them.  This can be done by importing the Edge and Flow objects.
+A collection of Nodes and Clusters might not be all that useful by themselves.  To start showing relationships, we need to draw lines between them.  This can be done by importing the Edge and Flow objects.
 ```
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 ```
@@ -303,7 +303,11 @@ with Graph("Basic Architecture", theme=theme):
 ```
 !["Architecture"](assets/step-4-1.png "Architecture")
 
-You can also overwrite default settings when creating the theme to fine tune the settings that you want by passing dictionaries of attribute key, value pairs to `graph_attr_overrides`, `cluster_attr_overrides`, `node_attr_overrides`, `edge_attr_overrides`, and `color_overries`.
+This demonstrates what the default `LightMode` theme looks like.
+
+You can also overwrite default settings when using a theme to fine tune the settings that you want by passing dictionaries of attribute key, value pairs to `graph_attr_overrides`, `cluster_attr_overrides`, `node_attr_overrides`, `edge_attr_overrides`, and `color_overries`.
+
+For more information on available attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 ```
 # Import the base objects
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
