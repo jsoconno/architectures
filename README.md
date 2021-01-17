@@ -166,7 +166,7 @@ with Graph("My Graph"):
     Node("D")
     Node("E")
 ```
-Node accepts the following optional arguments:
+Node objects accept the following optional arguments:
 * `label (str)` - the label given to the Node
 * `wrap_label_text (bool)` - a flag to determine if label text should be automatically wrapped
 * `**attrs` - keyword arguments that are used to pass attributes to the Node to override defaults
