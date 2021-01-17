@@ -4,7 +4,7 @@ from pathlib import Path
 def format_text(text):
     return text.replace("-", " ").title().replace(" ", "")
 
-root_dir = os.path.dirname(os.getcwd())
+root_dir = os.path.dirname(f'{os.getcwd()}/architectures')
 icons_dir = os.path.join(root_dir, "icons")
 
 providers = os.listdir(icons_dir)
