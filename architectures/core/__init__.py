@@ -299,6 +299,15 @@ class Node():
             raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
         self._cluster = get_cluster()
 
+        # Set default icon
+        if not isinstance(self._graph.theme, Default) and not self._icon:
+            print('yes')
+            self._provider = "general"
+            self._service_type = "blank"
+
+            self._icon_dir = "icons/general/blank"
+            self._icon = "default.png"
+
         # Auto-wrap labels
         if wrap_label_text:
             if self._cluster is not None:
@@ -349,6 +358,7 @@ class Node():
 
     def _load_icon(self):
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
+        print(os.path.join(basedir.parent.parent, self._icon_dir, self._icon))
         return os.path.join(basedir.parent.parent, self._icon_dir, self._icon)
 
 class Edge():

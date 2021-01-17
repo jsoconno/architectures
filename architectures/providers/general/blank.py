@@ -10,3 +10,7 @@ class Blank(_Blank):
 	_icon = "blank.png"
 	_default_label = "Blank"
 
+class Default(_Blank):
+	_icon = "default.png"
+	_default_label = "Default"
+

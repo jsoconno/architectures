@@ -2,10 +2,6 @@
 
 from architectures.core import Node
 
-class _.Ds_Store(Node):
-	_provider = ".DS_Store"
-	_icon_dir = "icons/.DS_Store"
-
 class _Azure(Node):
 	_provider = "azure"
 	_icon_dir = "icons/azure"

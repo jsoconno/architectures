@@ -13,17 +13,4 @@ from architectures.providers.azure.data import DataLake
 theme = LightMode()
 
 with Graph("Basic Architecture", theme=theme):
-    with Cluster("Subscription"):
-        with Cluster("Resource Group"):
-            with Cluster("Virtual Network"):
-                with Cluster("App Gateway Subnet") as app_gateway_subnet:
-                    app_gateway = ApplicationGateway()
-                with Cluster("Build Subnet") as build_subnet:
-                    load_balancer = LoadBalancer()
-                    vm_1 = VirtualMachineWindows("VM")
-                    vm_2 = VirtualMachineWindows("VM")
-                with Cluster("Data Tier Subnet") as data_tier_subnet:
-                    data_lake = DataLake()
-
-    Flow([app_gateway_subnet, load_balancer, [vm_1, vm_2]])
-    Edge(build_subnet, data_lake)
+    Flow([Node("A"), Node("B"), [Node("C"), Node("D"), Node("E")]])
