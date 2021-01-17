@@ -143,7 +143,7 @@ with Graph("My Graph"):
 ```
 And you can group Nodes with Clusters.  Don't forget to import the Cluster class.
 ```
-from architectures.core import Graph, Cluster, Group, Node
+from architectures.core import Graph, Cluster, Node
 
 with Graph("My Graph"):
     with Cluster("Cluster A"):
@@ -157,15 +157,18 @@ with Graph("My Graph"):
 
     Node("F")
 ```
-Note that Clusters will always draw a box around the Nodes it contains.  If you want to ensure Nodes stay near each other without the box you can use the Group object by importing it with the other core objects.
-```
-from architectures.core import Graph, Cluster, Group, Node
-```
-The resulting graph based on the above looks like this:
+The resulting graph based on the above code looks like this:
 
 !["Architecture"](assets/step-2-1.png "Architecture")
 
-Note that objects are created in the reverse order that they are written in the code.  This is not usually something you have to consider, but it is something to be aware of in some situations when trying to get the layout you want.
+Note that Clusters will always draw a boxes around the Nodes they contain.  If you want to cluster Nodes together without the border you can use the Group object by importing it with the other core objects.
+
+You can use the Group object in the exact same way as the Cluster object, so not additional example is given here.
+```
+from architectures.core import Graph, Cluster, Group, Node
+```
+
+Also important to note is that objects are created in the reverse order that they are written in the code.  This is not always something you have to consider, but keep in mind it can have an impact on the final layout.  In particular for larger, more complex diagrams.
 
 ### Step 3 - Connecting Nodes and Clusters
 A collection of nodes and boxes might not be all that useful by themselves.  To start showing relationships, we need to draw lines between them.  This can be done by importing the Edge and Flow objects.
