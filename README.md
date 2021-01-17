@@ -45,7 +45,6 @@ There are several types of supported objects in the architectures library.  Thes
 - **Flows** allow users to create a linear flow through a list of **Nodes**, **Clusters**, or **Groups**
 
 The component objects are extended with subclasses that allow for the creation of standard service components from various providers such as Azure, GCP, and AWS.
-
 ## Example
 ### Azure Event Driven Serverless Architecture
 Here is an example that shows how you can create a beautiful diagram using architectures.
@@ -324,13 +323,13 @@ from architectures.providers.azure.networking import ApplicationGateway, LoadBal
 from architectures.providers.azure.compute import VirtualMachineWindows
 from architectures.providers.azure.data import DataLake
 
-# Set the theme
+# Set the theme and add overrides
 theme = LightMode(
     graph_attr_overrides={"labeljust":"c", "nodesep":"0.5"}, 
     cluster_attr_overrides={"style":"dotted"},
     node_attr_overrides={"fontcolor":"dimgrey"}, 
     edge_attr_overrides={"color":"dimgrey"},
-    color_overrides=["#F5F5F5", "#FAFAFA", "#ECECEC", "#DEDEDE"]
+    color_overrides=["#EBF4FA" "#D7E9F5", "#C3DEEF", "#AFD3EA"]
 )
 
 with Graph("My Customized Theme", theme=theme):
