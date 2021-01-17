@@ -10,12 +10,11 @@ The goal for this project is to make drawing architecture diagrams with code sim
 
 Architectures comes with support for a wide variety of cloud and on-premise providers out-of-the-box.
 
-![azure provider](https://img.shields.io/badge/provider-Azure-orange?logo=microsoft-azure&color=0089D6)
 ![aws provider](https://img.shields.io/badge/provider-Amazon%20Web%20Services-orange?logo=amazon-aws&color=232F3E)
+![azure provider](https://img.shields.io/badge/provider-Azure-orange?logo=microsoft-azure&color=0089D6)
 ![gcp provider](https://img.shields.io/badge/provider-Google%20Cloud%20Platform-orange?logo=google-cloud&color=4285F4)
 ![kubernetes provider](https://img.shields.io/badge/provider-Kubernetes-orange?logo=kubernetes&color=326CE5)
 
-)
 ## Dependencies
 Architectures works for all version of python greater than version `3.6.x`.
 
