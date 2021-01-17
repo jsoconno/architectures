@@ -37,6 +37,7 @@ There are several types of supported objects in the architectures library.  Thes
 - **Groups** allow users to logically group **Nodes** with no bounding container
 ### Components
 - **Nodes** allow users to create an object that represents a service
+- **Anchors** _[coming soon]_ will allow users to better control direction and connection points of Edges.
 ### Connections
 - **Edges** allow users to draw a line between a pair or list of **Nodes**, **Clusters**, or **Groups**
 - **Flows** allow users to create a linear flow through a list of **Nodes**, **Clusters**, or **Groups**
@@ -44,7 +45,6 @@ There are several types of supported objects in the architectures library.  Thes
 The component objects are extended with subclasses that allow for the creation of standard service components from various providers such as Azure, GCP, and AWS.
 
 ## Example
-
 ### Azure Event Driven Serverless Architecture
 Here is an example that shows how you can create a beautiful diagram using architectures.
 
