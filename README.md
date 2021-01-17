@@ -167,8 +167,8 @@ with Graph("My Graph"):
     Node("E")
 ```
 Node accepts the following optional arguments:
-* `label (str)` - the label given to the node
-* `wrap_label_text (bool)` - a flag to determine if text should be automatically wrapped
+* `label (str)` - the label given to the Node
+* `wrap_label_text (bool)` - a flag to determine if label text should be automatically wrapped
 * `**attrs` - keyword arguments that are used to pass attributes to the Node to override defaults
 
 If no label is given, the Node will appear without a label or with a defined default label.  The default for word wrap is true.
@@ -203,6 +203,14 @@ The code above will generate a diagram that looks like this:
 !["Architecture"](assets/step-2-1.png "Architecture")
 
 Note that objects on the Graph are created in the reverse order that they are found in the code.  This is not always something you have to consider, but keep in mind it can have an impact on the final layout.  In particular for larger, more complex diagrams.
+
+Cluster and Group objects accept the following optional arguments:
+* `label (str)` - the label given to the Cluster or Group
+* `**attrs` - keyword arguments that are used to pass attributes to the Cluster or Group to override defaults
+
+If no label is given, the Node will appear without a label or with a defined default label.  The default for word wrap is true.
+
+For more information on available Node attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 
 ### Part 5 - Connecting Nodes and Clusters
 A collection of Nodes and Clusters or Groups (henceforth referred to only as Clusters) might not be all that useful by themselves.  To start showing relationships between Nodes and Clusters, you will want to draw lines between them.  This can be done using the `Edge` and `Flow` objects.
