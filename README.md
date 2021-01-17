@@ -267,8 +267,8 @@ As you can see, the Flow object is a powerful way to streamline your code when c
 
 Note that, as with Edges, the Flow object also accepts keyword arguments to set attributes.
 
-### Step 4 - Using Service Providers
-Architectures supports a variety of providers and themes to allow you to create beautiful architecture diagrams.  Each provider service works exactly like the Node object as they are children classes.
+### Step 4 - Using Service Providers and Themes
+Architectures supports a variety of providers and themes to allow you to create beautiful architecture diagrams.  Each service object works exactly like the Node in the earlier examples.
 
 Here is an example of how you can import services and themes to create a nice looking diagram.
 ```
@@ -312,17 +312,7 @@ You can overwrite default settings when using a theme to fine tune the settings 
 
 For more information on available attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 ```
-# Import the base objects
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
-
-# Import the available themes
-from architectures.themes import LightMode, DarkMode
-
-# Import provider services
-from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer
-from architectures.providers.azure.compute import VirtualMachineWindows
-from architectures.providers.azure.data import DataLake
-
+...
 # Set the theme and add overrides
 theme = LightMode(
     graph_attr_overrides={"labeljust":"c", "nodesep":"0.5"}, 
@@ -331,57 +321,15 @@ theme = LightMode(
     edge_attr_overrides={"color":"dimgrey"},
     color_overrides=["#EBF4FA" "#D7E9F5", "#C3DEEF", "#AFD3EA"]
 )
-
-with Graph("My Customized Theme", theme=theme):
-    with Cluster("Subscription"):
-        with Cluster("Resource Group"):
-            with Cluster("Virtual Network"):
-                with Cluster("App Gateway Subnet") as app_gateway_subnet:
-                    app_gateway = ApplicationGateway()
-                
-                with Cluster("Build Subnet") as build_subnet:
-                    load_balancer = LoadBalancer()
-                    vm_1 = VirtualMachineWindows()
-                    vm_2 = VirtualMachineWindows()
-                
-            data_lake = DataLake()
-
-    Flow([app_gateway_subnet, load_balancer, [vm_1, vm_2]])
-    Edge(build_subnet, data_lake)
+...
 ```
 !["Architecture"](assets/step-5-1.png "Architecture")
 
 To apply `DarkMode`, just change the name of the theme.
 ```
-# Import the base objects
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
-
-# Import the available themes
-from architectures.themes import LightMode, DarkMode
-
-# Import provider services
-from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer
-from architectures.providers.azure.compute import VirtualMachineWindows
-from architectures.providers.azure.data import DataLake
-
+...
 # Set the theme
 theme = DarkMode()
-
-with Graph("My Customized Theme", theme=theme):
-    with Cluster("Subscription"):
-        with Cluster("Resource Group"):
-            with Cluster("Virtual Network"):
-                with Cluster("App Gateway Subnet") as app_gateway_subnet:
-                    app_gateway = ApplicationGateway()
-                
-                with Cluster("Build Subnet") as build_subnet:
-                    load_balancer = LoadBalancer()
-                    vm_1 = VirtualMachineWindows()
-                    vm_2 = VirtualMachineWindows()
-                
-            data_lake = DataLake()
-
-    Flow([app_gateway_subnet, load_balancer, [vm_1, vm_2]])
-    Edge(build_subnet, data_lake)
+...
 ```
 !["Architecture"](assets/step-5-2.png "Architecture")
