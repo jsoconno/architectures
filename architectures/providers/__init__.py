@@ -2,21 +2,25 @@
 
 from architectures.core import Node
 
-class _Aws(Node):
-	_provider = "aws"
-	_icon_dir = "icons/aws"
+class _.Ds_Store(Node):
+	_provider = ".DS_Store"
+	_icon_dir = "icons/.DS_Store"
 
 class _Azure(Node):
 	_provider = "azure"
 	_icon_dir = "icons/azure"
 
+class _General(Node):
+	_provider = "general"
+	_icon_dir = "icons/general"
+
 class _Gcp(Node):
 	_provider = "gcp"
 	_icon_dir = "icons/gcp"
 
-class _General(Node):
-	_provider = "general"
-	_icon_dir = "icons/general"
+class _Aws(Node):
+	_provider = "aws"
+	_icon_dir = "icons/aws"
 
 class _Kubernetes(Node):
 	_provider = "kubernetes"

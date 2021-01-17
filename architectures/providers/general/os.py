@@ -10,17 +10,13 @@ class Android(_Os):
 	_icon = "android.png"
 	_default_label = "Android"
 
-class Centos(_Os):
-	_icon = "centos.png"
-	_default_label = "Centos"
-
 class Ios(_Os):
 	_icon = "ios.png"
 	_default_label = "Ios"
 
-class LinuxGeneral(_Os):
-	_icon = "linux-general.png"
-	_default_label = "Linux General"
+class Windows(_Os):
+	_icon = "windows.png"
+	_default_label = "Windows"
 
 class Suse(_Os):
 	_icon = "suse.png"
@@ -30,7 +26,11 @@ class Ubuntu(_Os):
 	_icon = "ubuntu.png"
 	_default_label = "Ubuntu"
 
-class Windows(_Os):
-	_icon = "windows.png"
-	_default_label = "Windows"
+class Centos(_Os):
+	_icon = "centos.png"
+	_default_label = "Centos"
+
+class LinuxGeneral(_Os):
+	_icon = "linux-general.png"
+	_default_label = "Linux General"
 
