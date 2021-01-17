@@ -92,6 +92,27 @@ This step-by-step guide will walk you through the features and functionalities o
 
 It will first cover the basics, creating diagrams that are not so pretty, but demonstrate the functionality.  Additional imports will be layered on an introduced into the code to show how to achieve the desired end goal of simple and beautiful architecture diagrams.
 
+### Table of Contents:
+- [Architectures](#architectures)
+  - [Introduction](#introduction)
+  - [Dependencies](#dependencies)
+  - [Core Components](#core-components)
+    - [Containers](#containers)
+    - [Components](#components)
+    - [Connections](#connections)
+  - [Example](#example)
+    - [Azure Event Driven Serverless Architecture](#azure-event-driven-serverless-architecture)
+      - [Code](#code)
+      - [Output](#output)
+  - [How To](#how-to)
+    - [Table of Contents:](#table-of-contents)
+    - [Part 1 - Importing the Core Module](#part-1---importing-the-core-module)
+    - [Part 2 - Creating a Graph](#part-2---creating-a-graph)
+    - [Part 3 - Adding Nodes to a Graph](#part-3---adding-nodes-to-a-graph)
+    - [Part 4 - Grouping Nodes on a Graph](#part-4---grouping-nodes-on-a-graph)
+    - [Part 5 - Connecting Nodes and Clusters](#part-5---connecting-nodes-and-clusters)
+    - [Part 6 - Using Themes](#part-6---using-themes)
+    - [Part 7 - Using Providers](#part-7---using-providers)
 ### Part 1 - Importing the Core Module
 The first thing you will need to do is to import the `core` module.  This module contains all of the core functionality required for creating architectures.
 
