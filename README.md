@@ -96,11 +96,11 @@ from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 ```
 For more information on these objects, see the [Supported Objects](##supported-objects) section above.
 
-The next important set of imports to know about are themes.  Themes are what give your graph the styling you want.  You can use what is available as is, pass in attribute overrides, or create entirely new themes to fit your needs.
+The next important set of imports to know about are `themes`.  Themes are what give your graph the styling you want.  You can use what is available as is, pass in attribute overrides, or create entirely new themes to fit your needs.
 ```
 from architectures.themes import Default, LightMode, DarkMode
 ```
-If you are creating a diagram that uses provider services (such as AWS, GCP, or Azure), you will also need to import the services you want to use for those providers.
+If you are creating a diagram that uses provider services (such as AWS, GCP, or Azure), you will also need to import the services you want to use for those `providers`.
 
 Here is an example that import an Azure Virtual Machine:
 ```
