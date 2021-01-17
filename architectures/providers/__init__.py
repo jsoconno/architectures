@@ -1,25 +1,24 @@
-'''
-This file will define a class called Azure that is used by other .py files in this directory
-'''
+# Do not modify this file directly. It is auto-generated with Python.
 
 from architectures.core import Node
 
 class _Aws(Node):
-    _provider = "aws"
-    _icon_dir = "icons/aws"
+	_provider = "aws"
+	_icon_dir = "icons/aws"
 
 class _Azure(Node):
-    _provider = "azure"
-    _icon_dir = "icons/azure"
+	_provider = "azure"
+	_icon_dir = "icons/azure"
 
 class _Gcp(Node):
-    _provider = "gcp"
-    _icon_dir = "icons/gcp"
+	_provider = "gcp"
+	_icon_dir = "icons/gcp"
 
 class _General(Node):
-    _provider = "general"
-    _icon_dir = "icons/general"
+	_provider = "general"
+	_icon_dir = "icons/general"
 
 class _Kubernetes(Node):
-    _provider = "kubernetes"
-    _icon_dir = "icons/kubernetes"
+	_provider = "kubernetes"
+	_icon_dir = "icons/kubernetes"
+
