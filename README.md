@@ -43,64 +43,10 @@ There are several types of supported objects in the architectures library.  Thes
 
 The component objects are extended with subclasses that allow for the creation of standard service components from various providers such as Azure, GCP, and AWS.
 
-## Examples
-### Neural Network
-Architectures supports the default Graphviz layout as the default.  This means that you can actually use architectures as a replacement for Graphviz to simplify your graph development.
-
-Here is an example of a neural network using the default settings.
-#### Code
-```
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
-
-with Graph("Neural Network"):
-    input_layer = [Node() for i in range(3)]
-    with Cluster("Hidden Layers") as hidden_layers:
-        hidden_layer_1 = [Node() for i in range(4)]
-        hidden_layer_2 = [Node() for i in range(4)]
-    output_layer = [Node() for i in range(2)]
-
-    Flow([input_layer, hidden_layer_1, hidden_layer_2, output_layer])
-```
-#### Output
-!["Architecture"](assets/neural-network.png?raw=true "Architecture")
-
-### Amazon Web Services Microservices Architecture
-Architectures supports several providers to make drawing architecture diagrams simple.  It does this by wrapping services into classes than can be called to create resources in your diagram.
-
-It also supports themes to change the look and feel of the diagram you are creating.
-
-Here is an example that shows the use of services and themes together to create an effective diagram.
-
-#### Code
-```
-from architectures.core import *
-from architectures.themes import LightMode
-
-from architectures.providers.aws.storage import SimpleStorageServiceS3
-from architectures.providers.aws.network import Cloudfront, ElasticLoadBalancing
-from architectures.providers.aws.compute import ElasticContainerService
-from architectures.providers.aws.database import Elasticache, Aurora, Dynamodb
-
-theme = LightMode()
-
-with Graph("Simple Microservices Architecture", theme=theme):
-    with Cluster("User Interface") as ui:
-        storage = SimpleStorageServiceS3()
-        cloud_front = Cloudfront()
-    with Cluster("Microservices") as microservices:
-        elb = ElasticLoadBalancing()
-        ecs = ElasticContainerService()
-    with Cluster("Data Store") as data_store:
-        data_stores = [Elasticache(),Aurora(),Dynamodb()]
-
-    Edge(cloud_front, storage, constraint="false")
-    Flow([cloud_front, elb, ecs, data_stores])
-```
-#### Output
-!["Architecture"](assets/simple-microservices-architecture.png?raw=true "Architecture")
+## Example
 
 ### Azure Event Driven Serverless Architecture
-Architectures also allows a tremendous amount of flexibility at over diagram look-and-feel.  Here is an example that leverages `dark mode` and keyword arguments on objects to create a clean diagram.
+Here is an example that shows how you can create a beautiful diagram using architectures.
 
 #### Code
 ```
@@ -138,4 +84,258 @@ with Graph("Event Driven Serverless Architecture", theme=theme):
     Edge(function_resize, function_write_metadata, color="invis") # This ensures alignment between these two function apps
 ```
 #### Output
-!["Architecture"](assets/event-driven-serverless-architecture.png?raw=true "Architecture")
+!["Architecture"](assets/event-driven-serverless-architecture.png?v=4&s=200 "Architecture")
+
+## How To
+This step-by-step guide will walk you through the features and functionalities of architectures so you can start writing your own architecture as code.
+
+### Step 1 - Importing Objects
+There are several things you will want to import to get started.  The first will be the `core` components.
+```
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+```
+For more information on these objects, see the [Supported Objects](##supported-objects) section above.
+
+The next important set of imports to know about are themes.  Themes are what give your graph the styling you want.  You can use what is available as is, pass in attribute overrides, or create entirely new themes to fit your needs.
+```
+from architectures.themes import Default, LightMode, DarkMode
+```
+If you are creating a diagram that uses provider services (such as AWS, GCP, or Azure), you will also need to import the services you want to use for those providers.
+
+Here is an example that import an Azure Virtual Machine:
+```
+from architectures.providers.azure.compute import VirtualMachine
+```
+Importing this class will allow you to draw an Azure Virtual Machine on the graph.
+
+### Step 2 - Adding Nodes to a Graph
+Architectures supports the standard Graphviz formatting out-of-the-box.  To create a basic graph with a single, unlabeled node, you would do something like this.
+```
+from architectures.core import Graph, Node
+
+with Graph("My Graph"):
+    Node()
+```
+You can give a Node a name.
+```
+from architectures.core import Graph, Node
+
+with Graph("My Graph"):
+    Node("My Node")
+```
+And pass attributes as keyword arguments to change the way things look.
+```
+from architectures.core import Graph, Node
+
+with Graph("My Graph"):
+    Node("My Node", style="dotted", color="grey")
+```
+You can add multiple Nodes to a Graph.
+```
+from architectures.core import Graph, Node
+
+with Graph("My Graph"):
+    Node("A")
+    Node("B")
+    Node("C")
+    Node("D")
+    Node("E")
+```
+And you can group Nodes with Clusters.  Don't forget to import the Cluster class.
+```
+from architectures.core import Graph, Cluster, Group, Node
+
+with Graph("My Graph"):
+    with Cluster("Cluster A"):
+        Node("A")
+        Node("B")
+        Node("C")
+
+    with Cluster("Cluster B"):
+        Node("D")
+        Node("E")
+
+    Node("F")
+```
+Note that Clusters will always draw a box around the Nodes it contains.  If you want to ensure Nodes stay near each other without the box you can use the Group object by importing it with the other core objects.
+```
+from architectures.core import Graph, Cluster, Group, Node
+```
+The resulting graph based on the above looks like this:
+
+!["Architecture"](assets/step-2-1.png "Architecture")
+
+Note that objects are created in the reverse order that they are written in the code.  This is not usually something you have to consider, but it is something to be aware of in some situations when trying to get the layout you want.
+
+### Step 3 - Connecting Nodes and Clusters
+A collection of nodes and boxes might not be all that useful by themselves.  To start showing relationships, we need to draw lines between them.  This can be done by importing the Edge and Flow objects.
+```
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+```
+You can draw a line from a Node to a Node using an Edge.  To do this, we should assign each node to a variable.
+
+```
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+
+with Graph("My Graph"):
+    with Cluster("Cluster A"):
+        a = Node("A")
+        b = Node("B")
+        c = Node("C")
+
+    with Cluster("Cluster B"):
+        d = Node("D")
+        e = Node("E")
+
+    f = Node("F")
+
+    # This will connect nodes a and d
+    Edge(a, d)
+```
+!["Architecture"](assets/step-3-1.png "Architecture")
+
+You can also connect Nodes to Clusters or Groups.  To do this, we should also assign each cluster to a variable.
+```
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+
+with Graph("My Graph"):
+    with Cluster("Cluster A") as cluster_a:
+        a = Node("A")
+        b = Node("B")
+        c = Node("C")
+
+    with Cluster("Cluster B") as cluster_b:
+        d = Node("D")
+        e = Node("E")
+
+    f = Node("F")
+
+    # This will connect node b to cluster b
+    Edge(b, cluster_b)
+```
+!["Architecture"](assets/step-3-2.png "Architecture")
+
+In fact, you can connect any combination of Nodes and Clusters to each other using the Edge object.  You can also pass keyword arguments to modify attributes on an Edge.
+```
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+
+with Graph("My Graph"):
+    with Cluster("Cluster A") as cluster_a:
+        a = Node("A")
+        b = Node("B")
+        c = Node("C")
+
+    with Cluster("Cluster B") as cluster_b:
+        d = Node("D")
+        e = Node("E")
+
+    f = Node("F")
+
+    # Every combination of Node and Cluster objects with attributes
+    Edge(a, d, dir="both")
+    Edge(cluster_a, e, color="blue")
+    Edge(cluster_a, cluster_b)
+    Edge(f, cluster_b, style="dotted")
+```
+!["Architecture"](assets/step-3-3.png "Architecture")
+
+The Flow object is similar to the Edge object in that it can connect Nodes.  However, it allows for a list of objects so you can create an end-to-end flow on a diagram.
+```
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+
+with Graph("My Graph"):
+    with Cluster("Cluster A") as cluster_a:
+        a = Node("A")
+        b = Node("B")
+        c = Node("C")
+
+    with Cluster("Cluster B") as cluster_b:
+        d = Node("D")
+        e = Node("E")
+
+    f = Node("F")
+
+    Flow([a, [b, c], cluster_b, f, d, e])
+```
+!["Architecture"](assets/step-3-4.png "Architecture")
+
+As you can see, the Flow object is a powerful way to streamline your code when connecting multiple Node objects together in sequence.
+
+Note that, as with Edges, the Flow object also accepts keyword arguments to set attributes.
+
+### Step 4 - Using Service Providers
+Architectures supports a variety of providers and themes to allow you to create beautiful architecture diagrams.  Each provider service works exactly like the Node object as they are children classes.
+
+Here is an example of how you can import services and themes to create a nice looking diagram.
+```
+# Import the base objects
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+
+# Import the available themes
+from architectures.themes import LightMode, DarkMode
+
+# Import provider services
+from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer
+from architectures.providers.azure.compute import VirtualMachineWindows
+from architectures.providers.azure.data import DataLake
+
+# Set the theme
+theme = LightMode()
+
+with Graph("Basic Architecture", theme=theme):
+    with Cluster("Subscription"):
+        with Cluster("Resource Group"):
+            with Cluster("Virtual Network"):
+                with Cluster("App Gateway Subnet") as app_gateway_subnet:
+                    app_gateway = ApplicationGateway()
+                with Cluster("Build Subnet") as build_subnet:
+                    load_balancer = LoadBalancer()
+                    vm_1 = VirtualMachineWindows()
+                    vm_2 = VirtualMachineWindows()
+                with Cluster("Data Tier Subnet") as data_tier_subnet:
+                    data_lake = DataLake()
+
+    Flow([app_gateway_subnet, load_balancer, [vm_1, vm_2]])
+    Edge(build_subnet, data_lake)
+```
+!["Architecture"](assets/step-4-1.png "Architecture")
+
+You can also overwrite default settings when creating the theme to fine tune the settings that you want by passing dictionaries of attribute key, value pairs to `graph_attr_overrides`, `cluster_attr_overrides`, `node_attr_overrides`, `edge_attr_overrides`, and `color_overries`.
+```
+# Import the base objects
+from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+
+# Import the available themes
+from architectures.themes import LightMode, DarkMode
+
+# Import provider services
+from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer
+from architectures.providers.azure.compute import VirtualMachineWindows
+from architectures.providers.azure.data import DataLake
+
+# Set the theme
+theme = LightMode(
+    graph_attr_overrides={"labeljust":"c", "nodesep":"0.5"}, 
+    cluster_attr_overrides={"style":"dotted"},
+    node_attr_overrides={"fontcolor":"dimgrey"}, 
+    edge_attr_overrides={"color":"dimgrey"},
+    color_overrides=["#F5F5F5", "#FAFAFA", "#ECECEC", "#DEDEDE"])
+
+with Graph("My Customized Theme", theme=theme):
+    with Cluster("Subscription"):
+        with Cluster("Resource Group"):
+            with Cluster("Virtual Network"):
+                with Cluster("App Gateway Subnet") as app_gateway_subnet:
+                    app_gateway = ApplicationGateway()
+                
+                with Cluster("Build Subnet") as build_subnet:
+                    load_balancer = LoadBalancer()
+                    vm_1 = VirtualMachineWindows()
+                    vm_2 = VirtualMachineWindows()
+                
+            data_lake = DataLake()
+
+    Flow([app_gateway_subnet, load_balancer, [vm_1, vm_2]])
+    Edge(build_subnet, data_lake)
+```
+!["Architecture"](assets/step-4-2.png "Architecture")
