@@ -1,4 +1,7 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.themes import Default
+
+theme = Default(graph_attr_overrides={"rankdir":"LR", "nodesep":"2"})
 
 with Graph("Neural Network"):
     input_layer = [Node() for i in range(3)]

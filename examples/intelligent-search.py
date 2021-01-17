@@ -1,8 +1,6 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 from architectures.themes import DarkMode, LightMode
 
-from architectures.providers.azure.hierarchies import Subscription, ResourceGroup
-
 from architectures.providers.azure.general import Computer
 from architectures.providers.azure.application import ApplicationService
 from architectures.providers.azure.ai import BotService, CognitiveServicesSearch, CognitiveServices
@@ -13,8 +11,8 @@ theme = DarkMode(graph_attr_overrides={"nodesep":"3"})
 
 with Graph("Intelligent Search", theme=theme):
     computer = Computer()
-    with Subscription():
-        with ResourceGroup():
+    with Cluster("Subscription"):
+        with Cluster("Resource Group"):
             with Cluster() as app_service_cluster:
                 app_service = ApplicationService()
             with Cluster() as bot_service_cluster:
