@@ -10,9 +10,8 @@
     - [Components](#components)
     - [Connections](#connections)
   - [Example](#example)
-    - [Azure Event Driven Serverless Architecture](#azure-event-driven-serverless-architecture)
-      - [Code](#code)
-      - [Output](#output)
+    - [Code](#code)
+    - [Output](#output)
   - [How To](#how-to)
     - [Table of Contents:](#table-of-contents)
     - [Part 1 - Importing the Core Module](#part-1---importing-the-core-module)
@@ -66,10 +65,9 @@ There are several types of supported objects in the architectures library.  Thes
 
 The component objects are extended with subclasses that allow for the creation of standard service components from various providers such as Azure, GCP, and AWS.
 ## Example
-### Azure Event Driven Serverless Architecture
-Here is an example that shows how you can create a beautiful diagram using architectures.
+Here is an example that shows how you can create a beautiful diagram using architectures.  This example is an Azure Event Driven Serverless Architecture in dark mode.
 
-#### Code
+### Code
 ```
 from architectures.core import *
 from architectures.themes import LightMode, DarkMode
@@ -104,7 +102,7 @@ with Graph("Event Driven Serverless Architecture", theme=theme):
     Edge(function_list_images, cosmos_db, constraint="false") # This constraint setting ensures the edge does not force ranking
     Edge(function_resize, function_write_metadata, color="invis") # This ensures alignment between these two function apps
 ```
-#### Output
+### Output
 !["Architecture"](assets/event-driven-serverless-architecture.png?v=4&s=200 "Architecture")
 
 ## How To
