@@ -1,4 +1,6 @@
 # Architectures
+![Advert](assets/advert.png)
+
   - [Introduction](#introduction)
   - [Installation](#installation)
   - [Core Components](#core-components)
