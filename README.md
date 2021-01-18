@@ -23,8 +23,9 @@
     - [Modifying Layout](#-modifying-layout)
 
 ## Introduction
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?logo=python)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](/LICENSE)
+![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?style=flat-square&logo=python)
+![architectures version](https://img.shields.io/badge/architectures-0.1.0-yellow?style=flat-square)
 
 Today, almost everything is managed as code including applications, infrastructure, configurations, processes, and more.  Architectures was created to allow teams to manage architecture as code using Python.
 
@@ -32,10 +33,10 @@ The goal for this project is to make drawing architecture diagrams with code sim
 
 Architectures comes with support for several providers out-of-the-box.
 
-![aws provider](https://img.shields.io/badge/provider-Amazon%20Web%20Services-orange?logo=amazon-aws&color=232F3E)
-![azure provider](https://img.shields.io/badge/provider-Azure-orange?logo=microsoft-azure&color=0089D6)
-![gcp provider](https://img.shields.io/badge/provider-Google%20Cloud%20Platform-orange?logo=google-cloud&color=4285F4)
-![kubernetes provider](https://img.shields.io/badge/provider-Kubernetes-orange?logo=kubernetes&color=326CE5)
+![aws provider](https://img.shields.io/badge/provider-Amazon%20Web%20Services-orange?style=flat-square&logo=amazon-aws&color=232F3E)
+![azure provider](https://img.shields.io/badge/provider-Azure-orange?style=flat-square&logo=microsoft-azure&color=0089D6)
+![gcp provider](https://img.shields.io/badge/provider-Google%20Cloud%20Platform-orange?style=flat-square&logo=google-cloud&color=4285F4)
+![kubernetes provider](https://img.shields.io/badge/provider-Kubernetes-orange?style=flat-square&logo=kubernetes&color=326CE5)
 
 ## Installation
 Architectures works for all version of python greater than version `3.6.x`.  Python can be installed from https://www.python.org/downloads/ or using Homebrew on Mac OS:
