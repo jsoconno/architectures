@@ -19,6 +19,9 @@ providers = os.listdir(icons_dir)
 
 for provider in providers:
 
+    if provider in [".DS_Store"]:
+        continue
+
     provider_fmt = format_text(provider)
     
     with open(init_file, "a+") as f:
