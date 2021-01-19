@@ -17,7 +17,7 @@ jobs:
 
         brew install rbenv
 
-        sudo brew install ruby
+        brew install ruby
 
         brew install graphviz
 
