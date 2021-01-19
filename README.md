@@ -1,6 +1,3 @@
-# Architectures
-![Advert](assets/advert.png)
-
   - [Introduction](#introduction)
   - [Installation](#installation)
   - [Core Components](#core-components)
@@ -25,7 +22,6 @@
 ## Introduction
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](/LICENSE)
 ![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?style=flat-square&logo=python)
-![architectures version](https://img.shields.io/badge/architectures-0.1.0-yellow?style=flat-square)
 
 Today, almost everything is managed as code including applications, infrastructure, configurations, processes, and more.  Architectures was created to allow teams to manage architecture as code using Python.
 
