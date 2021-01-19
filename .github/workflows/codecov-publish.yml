@@ -15,7 +15,7 @@ jobs:
       run: |
         sudo apt-get remove ruby
 
-        sudo apt-get install software-properties-common
+        sudo apt --fix-broken install python-pycurl python-apt
 
         cd $HOME
         sudo apt-get update 
