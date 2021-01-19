@@ -15,6 +15,8 @@ jobs:
       run: |
         sudo apt-get remove ruby
 
+        brew install rbenv
+
         sudo apt update
         sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
 
@@ -23,8 +25,6 @@ jobs:
         echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
         echo 'eval "$(rbenv init -)"' >> ~/.bashrc
         source ~/.bashrc
-
-        brew install rbenv
 
         rbenv install 2.5.1
         rbenv global 2.5.1
