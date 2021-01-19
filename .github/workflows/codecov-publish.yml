@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: pip install pytest-cov
-    - run: python3 -m pytest --cov=architectures tests --cov-report xml
+    - run: python -m pytest --cov=architectures tests --cov-report xml
     - run: bash <(curl -s https://codecov.io/bash) -t CODECOV_TOKEN
     env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
