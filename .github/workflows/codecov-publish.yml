@@ -26,9 +26,6 @@ jobs:
         echo 'eval "$(rbenv init -)"' >> ~/.bashrc
         source ~/.bashrc
 
-        rbenv install 2.5.1
-        rbenv global 2.5.1
-
         brew install graphviz
 
         python -m pip install --upgrade pip
