@@ -23,7 +23,10 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?)](/LICENSE)
 ![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?logo=python)
 [![codecov](https://codecov.io/gh/Jsoconno/architectures/branch/main/graph/badge.svg?token=BW4GBBD7Y5)](https://codecov.io/gh/Jsoconno/architectures)
+![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/jsoconno/architectures)
 ![](https://img.shields.io/github/commits-since/jsoconno/architectures/latest.svg)
+![downloads](https://img.shields.io/pypi/dm/architectures?color=blue)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/jsoconno/architectures)
 
 Today, almost everything is managed as code including applications, infrastructure, configurations, processes, and more.  Architectures was created to allow teams to manage architecture as code using Python.
 
