@@ -25,7 +25,7 @@
 
 [![codecov](https://codecov.io/gh/Jsoconno/architectures/branch/main/graph/badge.svg?token=BW4GBBD7Y5)](https://codecov.io/gh/Jsoconno/architectures)
 [![CodeFactor](https://www.codefactor.io/repository/github/jsoconno/architectures/badge)](https://www.codefactor.io/repository/github/jsoconno/architectures)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jsoconno/architectures/Publish%20to%20Codecov?label=Tests)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jsoconno/architectures/Publish%20to%20Codecov?label=tests)
 
 ![commits](https://img.shields.io/github/commits-since/jsoconno/architectures/latest.svg)
 ![GitHub issues](https://img.shields.io/github/issues/jsoconno/architectures?color=red)
