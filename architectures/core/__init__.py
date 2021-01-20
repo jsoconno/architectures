@@ -170,9 +170,10 @@ def validate_node(connection):
     validate_types = isinstance(connection, (Cluster, Group, Node, list))
 
     if type(connection) == list:
-        validate_list_items = all(isinstance(x, (Cluster, Group, Node)) for x in connection)
-        
-    return validate_types and validate_list_items
+        validate_list_items = isinstance(connection, list) and all(isinstance(x, (Cluster, Group, Node)) for x in connection)
+        return validate_types and validate_list_items
+    else:
+        return validate_types
 
 class Graph():
     """
