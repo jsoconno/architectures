@@ -97,8 +97,9 @@ def wrap_text(text, max_length=16):
     str
         The new label text
     """
-    if len(text) < 12:
+    if max_length < 12:
         max_length = 12
+        
     if len(text) > max_length:
         words = text.split()
         new_text = ""
