@@ -9,4 +9,3 @@ class _Azure(_Azure):
 class (_Azure):
     _icon = ".DS_Store"
     _default_label = ""
-

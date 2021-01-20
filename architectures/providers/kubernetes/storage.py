@@ -21,4 +21,3 @@ class Pvc(_Storage):
 class Pv(_Storage):
     _icon = "pv.png"
     _default_label = "Pv"
-

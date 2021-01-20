@@ -29,4 +29,3 @@ class Bigtable(_Database):
 class Spanner(_Database):
     _icon = "spanner.png"
     _default_label = "Spanner"
-

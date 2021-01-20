@@ -25,4 +25,3 @@ class Budgets(_Cost):
 class CostExplorer(_Cost):
     _icon = "cost-explorer.png"
     _default_label = "Cost Explorer"
-

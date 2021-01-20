@@ -13,4 +13,3 @@ class Psp(_Others):
 class Crd(_Others):
     _icon = "crd.png"
     _default_label = "Crd"
-

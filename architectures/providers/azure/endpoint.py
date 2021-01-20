@@ -77,4 +77,3 @@ class IntuneDevice(_Endpoint):
 class IntuneSecurityBaseline(_Endpoint):
     _icon = "intune-security-baseline.png"
     _default_label = "Intune Security Baseline"
-

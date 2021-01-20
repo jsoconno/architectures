@@ -97,4 +97,3 @@ class ClientVpn(_Network):
 class Vpc(_Network):
     _icon = "vpc.png"
     _default_label = "Vpc"
-

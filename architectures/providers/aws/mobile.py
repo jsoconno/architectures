@@ -29,4 +29,3 @@ class ApiGateway(_Mobile):
 class DeviceFarm(_Mobile):
     _icon = "device-farm.png"
     _default_label = "Device Farm"
-

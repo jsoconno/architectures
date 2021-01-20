@@ -17,4 +17,3 @@ class Limits(_Clusterconfig):
 class Quota(_Clusterconfig):
     _icon = "quota.png"
     _default_label = "Quota"
-

@@ -93,4 +93,3 @@ class Forecast(_Ml):
 class ElasticInference(_Ml):
     _icon = "elastic-inference.png"
     _default_label = "Elastic Inference"
-

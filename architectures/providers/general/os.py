@@ -33,4 +33,3 @@ class Centos(_Os):
 class LinuxGeneral(_Os):
     _icon = "linux-general.png"
     _default_label = "Linux General"
-

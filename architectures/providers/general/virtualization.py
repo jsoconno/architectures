@@ -17,4 +17,3 @@ class Virtualbox(_Virtualization):
 class Xen(_Virtualization):
     _icon = "xen.png"
     _default_label = "Xen"
-

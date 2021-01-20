@@ -77,4 +77,3 @@ class Cloudformation(_Management):
 class WellArchitectedTool(_Management):
     _icon = "well-architected-tool.png"
     _default_label = "Well Architected Tool"
-

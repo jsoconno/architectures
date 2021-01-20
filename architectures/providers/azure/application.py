@@ -169,4 +169,3 @@ class Cors(_Application):
 class StreamAnalyticsJob(_Application):
     _icon = "stream-analytics-job.png"
     _default_label = "Stream Analytics Job"
-

@@ -33,4 +33,3 @@ class Ds(_Compute):
 class Job(_Compute):
     _icon = "job.png"
     _default_label = "Job"
-

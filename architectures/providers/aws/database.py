@@ -65,4 +65,3 @@ class RdsOnVmware(_Database):
 class Elasticache(_Database):
     _icon = "elasticache.png"
     _default_label = "Elasticache"
-

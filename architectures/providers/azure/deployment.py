@@ -109,4 +109,3 @@ class Deployment(_Deployment):
 class Terraform(_Deployment):
     _icon = "terraform.png"
     _default_label = "Terraform"
-

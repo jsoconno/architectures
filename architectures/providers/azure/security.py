@@ -121,4 +121,3 @@ class SecurityDetonationChamber(_Security):
 class DdosProtection(_Security):
     _icon = "ddos-protection.png"
     _default_label = "Ddos Protection"
-

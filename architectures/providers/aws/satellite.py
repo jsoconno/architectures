@@ -9,4 +9,3 @@ class _Satellite(_Aws):
 class GroundStation(_Satellite):
     _icon = "ground-station.png"
     _default_label = "Ground Station"
-

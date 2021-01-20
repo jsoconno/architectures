@@ -9,4 +9,3 @@ class _Migration(_Gcp):
 class TransferAppliance(_Migration):
     _icon = "transfer-appliance.png"
     _default_label = "Transfer Appliance"
-

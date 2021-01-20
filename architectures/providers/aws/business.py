@@ -17,4 +17,3 @@ class Workmail(_Business):
 class Chime(_Business):
     _icon = "chime.png"
     _default_label = "Chime"
-

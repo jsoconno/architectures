@@ -21,4 +21,3 @@ class Krew(_Ecosystem):
 class ExternalDns(_Ecosystem):
     _icon = "external-dns.png"
     _default_label = "External Dns"
-

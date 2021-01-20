@@ -89,4 +89,3 @@ class O365Onedrive(_Office365):
 class O365Project(_Office365):
     _icon = "o365-project.png"
     _default_label = "O365 Project"
-

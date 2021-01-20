@@ -65,4 +65,3 @@ class Scheduler(_Devtools):
 class IdePlugins(_Devtools):
     _icon = "ide-plugins.png"
     _default_label = "Ide Plugins"
-

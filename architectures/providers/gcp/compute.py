@@ -37,4 +37,3 @@ class GkeOnPrem(_Compute):
 class ContainerOptimizedOs(_Compute):
     _icon = "container-optimized-os.png"
     _default_label = "Container Optimized Os"
-

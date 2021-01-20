@@ -45,4 +45,3 @@ class DataFusion(_Analytics):
 class Pubsub(_Analytics):
     _icon = "pubsub.png"
     _default_label = "Pubsub"
-

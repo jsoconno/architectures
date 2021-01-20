@@ -29,4 +29,3 @@ class Api(_Controlplane):
 class KProxy(_Controlplane):
     _icon = "k-proxy.png"
     _default_label = "K Proxy"
-

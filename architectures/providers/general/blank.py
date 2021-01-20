@@ -13,4 +13,3 @@ class Blank(_Blank):
 class Default(_Blank):
     _icon = "default.png"
     _default_label = "Default"
-

@@ -49,4 +49,3 @@ class SnowballEdge(_Migration):
 class Snowmobile(_Migration):
     _icon = "snowmobile.png"
     _default_label = "Snowmobile"
-

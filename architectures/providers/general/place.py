@@ -9,4 +9,3 @@ class _Place(_General):
 class Datacenter(_Place):
     _icon = "datacenter.png"
     _default_label = "Datacenter"
-

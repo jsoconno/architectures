@@ -345,4 +345,3 @@ class Cost(_Management):
 class AzureArcSqlServer(_Management):
     _icon = "azure-arc-sql-server.png"
     _default_label = "Azure Arc Sql Server"
-

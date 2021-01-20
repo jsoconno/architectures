@@ -13,4 +13,3 @@ class Cm(_Podconfig):
 class Secret(_Podconfig):
     _icon = "secret.png"
     _default_label = "Secret"
-

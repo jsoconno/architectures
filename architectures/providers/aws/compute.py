@@ -173,4 +173,3 @@ class ThinkboxSequoia(_Compute):
 class Lightsail(_Compute):
     _icon = "lightsail.png"
     _default_label = "Lightsail"
-

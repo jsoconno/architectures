@@ -17,4 +17,3 @@ class Robomaker(_Robotics):
 class Robotics(_Robotics):
     _icon = "robotics.png"
     _default_label = "Robotics"
-

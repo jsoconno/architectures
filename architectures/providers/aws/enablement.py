@@ -21,4 +21,3 @@ class Iq(_Enablement):
 class ProfessionalServices(_Enablement):
     _icon = "professional-services.png"
     _default_label = "Professional Services"
-
