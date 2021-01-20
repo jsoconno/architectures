@@ -13,20 +13,7 @@ jobs:
         python-version: '3.x'
     - name: Install dependencies
       run: |
-        brew update && brew upgrade
-        brew doctor
-
-        brew uninstall ruby
-
-        brew install rbenv
-        brew install ruby-build
-        echo 'export RBENV_ROOT=/usr/local/var/rbenv' >> ~/.bash_profile
-        echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.bash_profile
-
-        rbenv install 2.2.2
-        rbenv global 2.2.2
-
-        brew install graphviz
+        sudo apt install graphviz
 
         python -m pip install --upgrade pip
         pip install pytest-cov
