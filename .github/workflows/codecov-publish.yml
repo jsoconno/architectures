@@ -13,11 +13,8 @@ jobs:
         python-version: '3.x'
     - name: Install dependencies
       run: |
-        sudo apt-get remove ruby
-
-        brew install rbenv
-
-        brew install ruby
+        brew install libxml2 libxslt
+        gem install nokogiri --platform=ruby -- --use-system-libraries
 
         brew install graphviz
 
