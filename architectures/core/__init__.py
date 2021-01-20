@@ -19,7 +19,6 @@ Available Functions:
 - wrap_text
 - get_node_from_cluster
 - get_cluster_from_node
-- validate_node
 
 Details for each can be found in the docstrings for the respective class or function.
 """
@@ -153,27 +152,6 @@ def get_cluster_from_node(node):
         for item in nodes:
             if item == node:
                 return cluster
-
-# def validate_node(connection):
-#     """Validates that the type of Node passed is of type Cluster, Group, or Node
-
-#     Parameters
-#     ----------
-#     connection : object
-#         The current object
-
-#     Returns
-#     -------
-#     bool
-#         Whether or not object passed is the right type
-#     """
-#     validate_types = isinstance(connection, (Cluster, Group, Node, list))
-
-#     if type(connection) == list:
-#         validate_list_items = isinstance(connection, list) and all(isinstance(x, (Cluster, Group, Node)) for x in connection)
-#         return validate_types and validate_list_items
-#     else:
-#         return validate_types
 
 class Graph():
     """
@@ -392,7 +370,6 @@ class Node():
 
         # Set default icon
         if not isinstance(self._graph.theme, Default) and not self._icon:
-            print('yes')
             self._provider = "general"
             self._service_type = "blank"
 
@@ -452,7 +429,6 @@ class Node():
 
     def _load_icon(self):
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
-        print(os.path.join(basedir.parent.parent, self._icon_dir, self._icon))
         return os.path.join(basedir.parent.parent, self._icon_dir, self._icon)
 
 class Edge():
@@ -492,15 +468,6 @@ class Edge():
         for nodes in [self.start_node, self.end_node]:
             if not all(isinstance(node, (Cluster, Group, Node)) for node in nodes):
                 raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
-
-        # if all(isinstance(x, (Cluster, Group, Node)) for x in self.end_node):
-        #     pass
-        
-        # if start_node is not None and validate_node(start_node) is False:
-        #     raise TypeError("The Edge class only accepts Cluster, Group, or Node objects")
-
-        # if end_node is not None and validate_node(end_node) is False:
-        #     raise TypeError("The Edge class only accepts Cluster, Group, or Node objects")
 
         start_node_list = self.start_node
         end_node_list = self.end_node
