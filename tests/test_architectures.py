@@ -5,6 +5,8 @@ import pytest
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 from architectures.core import wrap_text
 
+from architectures.themes import Default
+
 
 @pytest.mark.parametrize("test_input, expected", [
     ("short name", "short name"),
@@ -44,6 +46,20 @@ class TestGraph:
         with Graph(graph_name, show=False):
             Node("A")
         assert self.default_ext in glob.glob(graph_name + self.default_ext)[0]
+
+    def test_default_theme(self):
+        graph_name = "test_theme"
+        theme = Default()
+        with Graph(graph_name, theme=theme, show=False) as graph:
+            Node("A")
+        assert isinstance(graph.theme, Default)
+
+    def test_theme_override(self):
+        graph_name = "test_theme_override"
+        theme = Default(graph_attr_overrides={"rankdir":"LR"})
+        with Graph(graph_name, theme=theme) as graph:
+            Node("A")
+        assert graph.theme.graph_attrs["rankdir"] == "LR"
 
 
 class TestCluster:
