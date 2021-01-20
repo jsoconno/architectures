@@ -1,3 +1,29 @@
+"""
+This module contains all core classes required for drawing diagrams.  
+
+Available Classes:
+- Graph
+- Cluster
+- Group
+- Node
+- Edge
+- Flow
+
+Available Functions:
+- get_graph
+- set_graph
+- get_cluster
+- set_cluster
+- get_node
+- set_node
+- wrap_text
+- get_node_from_cluster
+- get_cluster_from_node
+- validate_node
+
+Details for each can be found in the docstrings for the respective class or function.
+"""
+
 import contextvars
 import os
 import uuid
@@ -12,34 +38,66 @@ __cluster = contextvars.ContextVar("cluster")
 __node = contextvars.ContextVar("node")
 
 def get_graph():
+    """
+    Get the current graph context
+    """
     try:
         return __graph.get()
     except LookupError:
         return None
 
 def set_graph(graph):
+    """
+    Set the current graph context
+    """
     __graph.set(graph)
 
 def get_cluster():
+    """
+    Get the current cluster context
+    """
     try:
         return __cluster.get()
     except LookupError:
         return None
 
 def set_cluster(cluster):
+    """
+    Set the current cluster context
+    """
     __cluster.set(cluster)
 
-def set_node(node):
-    __node.set(node)
-
 def get_node():
+    """
+    Get the current node to cluster mapping
+    """
     try:
         return __node.get()
     except LookupError:
         return None
 
+def set_node(node):
+    """
+    Set a node to cluster mapping
+    """
+    __node.set(node)
+
 
 def wrap_text(text, max_length=16):
+    """Return a new label with wrapped text
+
+    Parameters
+    ----------
+    text : str
+        The current label text
+    max_length : int
+        The max length for the label (defaults to 16 characters)
+
+    Returns
+    -------
+    str
+        The new label text
+    """
     if len(text) < 12:
         max_length = 12
     if len(text) > max_length:
@@ -60,12 +118,36 @@ def wrap_text(text, max_length=16):
         return text
 
 def get_node_from_cluster(cluster):
+    """Return the most central Node in a Cluster
+
+    Parameters
+    ----------
+    cluster : Cluster
+        A Cluster object
+
+    Returns
+    -------
+    Node
+        The most centrally located Node object
+    """
     node_dict = get_node()
     center_node_index = round(len(node_dict[cluster])/2) - 1
     node = node_dict[cluster][center_node_index]
     return node
 
 def get_cluster_from_node(node):
+    """Return a Node's parent Cluster
+
+    Parameters
+    ----------
+    node : Node
+        A Node object
+
+    Returns
+    -------
+    Cluster
+        The parent Cluster
+    """
     node_dict = get_node()
     for cluster, nodes in node_dict.items():
         for item in nodes:
@@ -73,16 +155,24 @@ def get_cluster_from_node(node):
                 return cluster
 
 def validate_node(connection):
-    """
-    Validates that the type of node passed is of the right type
+    """Validates that the type of Node passed is of type Cluster, Group, or Node
+
+    Parameters
+    ----------
+    connection : object
+        The current object
+
+    Returns
+    -------
+    bool
+        Whether or not object passed is the right type
     """
     validate_types = isinstance(connection, (Cluster, Group, Node, list))
 
     if type(connection) == list:
-        validate_list_items = isinstance(connection, list) and all(isinstance(x, (Cluster, Group, Node)) for x in connection)
-        return validate_types and validate_list_items
-    else:
-        return validate_types
+        validate_list_items = all(isinstance(x, (Cluster, Group, Node)) for x in connection)
+        
+    return validate_types and validate_list_items
 
 class Graph():
     """
