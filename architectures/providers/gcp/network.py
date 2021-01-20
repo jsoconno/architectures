@@ -73,4 +73,3 @@ class Network(_Network):
 class TrafficDirector(_Network):
     _icon = "traffic-director.png"
     _default_label = "Traffic Director"
-

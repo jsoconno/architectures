@@ -97,4 +97,3 @@ class ManagedDiskPremiumSsd(_Storage):
 class StorageAccountClassic(_Storage):
     _icon = "storage-account-classic.png"
     _default_label = "Storage Account Classic"
-

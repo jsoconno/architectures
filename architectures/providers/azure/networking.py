@@ -177,4 +177,3 @@ class NetworkSecurityGroupClassic(_Networking):
 class OnPremisesDataGateway(_Networking):
     _icon = "on-premises-data-gateway.png"
     _default_label = "On Premises Data Gateway"
-

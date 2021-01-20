@@ -21,4 +21,3 @@ class Appstream20(_Enduser):
 class Workdocs(_Enduser):
     _icon = "workdocs.png"
     _default_label = "Workdocs"
-

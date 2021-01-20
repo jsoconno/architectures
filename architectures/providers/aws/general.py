@@ -49,4 +49,3 @@ class Disk(_General):
 class GenericSdk(_General):
     _icon = "generic-sdk.png"
     _default_label = "Generic Sdk"
-

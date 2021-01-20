@@ -17,4 +17,3 @@ class Master(_Infra):
 class Node(_Infra):
     _icon = "node.png"
     _default_label = "Node"
-

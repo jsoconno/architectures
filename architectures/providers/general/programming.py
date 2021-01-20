@@ -133,4 +133,3 @@ class Elixir(_Programming):
 class Nodejs(_Programming):
     _icon = "nodejs.png"
     _default_label = "Nodejs"
-

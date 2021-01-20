@@ -9,4 +9,3 @@ class _Game(_Aws):
 class Gamelift(_Game):
     _icon = "gamelift.png"
     _default_label = "Gamelift"
-

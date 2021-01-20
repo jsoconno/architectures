@@ -21,4 +21,3 @@ class Ing(_Network):
 class Svc(_Network):
     _icon = "svc.png"
     _default_label = "Svc"
-

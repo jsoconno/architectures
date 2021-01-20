@@ -9,4 +9,3 @@ class _Group(_Kubernetes):
 class Ns(_Group):
     _icon = "ns.png"
     _default_label = "Ns"
-

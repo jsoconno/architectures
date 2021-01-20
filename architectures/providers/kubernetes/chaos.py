@@ -13,4 +13,3 @@ class LitmusChaos(_Chaos):
 class ChaosMesh(_Chaos):
     _icon = "chaos-mesh.png"
     _default_label = "Chaos Mesh"
-

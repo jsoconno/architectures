@@ -189,4 +189,3 @@ class AzureDatabricks(_Data):
 class DataTransfer(_Data):
     _icon = "data-transfer.png"
     _default_label = "Data Transfer"
-

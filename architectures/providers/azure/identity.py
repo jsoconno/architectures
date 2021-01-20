@@ -105,4 +105,3 @@ class AzureActiveDirectoryB2C(_Identity):
 class ManagedIdentity(_Identity):
     _icon = "managed-identity.png"
     _default_label = "Managed Identity"
-

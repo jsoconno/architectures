@@ -9,4 +9,3 @@ class _Quantum(_Aws):
 class Braket(_Quantum):
     _icon = "braket.png"
     _default_label = "Braket"
-

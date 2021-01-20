@@ -49,4 +49,3 @@ class ElasticTranscoder(_Media):
 class ElementalMediaconnect(_Media):
     _icon = "elemental-mediaconnect.png"
     _default_label = "Elemental Mediaconnect"
-

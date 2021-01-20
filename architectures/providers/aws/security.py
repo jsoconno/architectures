@@ -101,4 +101,3 @@ class Macie(_Security):
 class Cloudhsm(_Security):
     _icon = "cloudhsm.png"
     _default_label = "Cloudhsm"
-

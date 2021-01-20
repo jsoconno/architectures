@@ -69,4 +69,3 @@ class Storage(_Storage):
 class ElasticFileSystemEfs(_Storage):
     _icon = "elastic-file-system-efs.png"
     _default_label = "Elastic File System Efs"
-

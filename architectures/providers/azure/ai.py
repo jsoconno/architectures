@@ -185,4 +185,3 @@ class CognitiveServicesHealthAndLifeScience(_Ai):
 class BatchAi(_Ai):
     _icon = "batch-ai.png"
     _default_label = "Batch Ai"
-

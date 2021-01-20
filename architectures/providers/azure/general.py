@@ -129,4 +129,3 @@ class UserPrivacy(_General):
 class CompanyBranding(_General):
     _icon = "company-branding.png"
     _default_label = "Company Branding"
-

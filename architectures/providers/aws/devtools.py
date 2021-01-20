@@ -49,4 +49,3 @@ class Codecommit(_Devtools):
 class Codedeploy(_Devtools):
     _icon = "codedeploy.png"
     _default_label = "Codedeploy"
-

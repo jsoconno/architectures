@@ -49,4 +49,3 @@ class IotEdgeDevice(_Iot):
 class IotCentral(_Iot):
     _icon = "iot-central.png"
     _default_label = "Iot Central"
-

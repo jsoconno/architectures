@@ -21,4 +21,3 @@ class _Aws(Node):
 class _Kubernetes(Node):
     _provider = "kubernetes"
     _icon_dir = "icons/kubernetes"
-

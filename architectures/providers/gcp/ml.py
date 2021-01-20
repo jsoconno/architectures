@@ -89,4 +89,3 @@ class Tpu(_Ml):
 class AiPlatform(_Ml):
     _icon = "ai-platform.png"
     _default_label = "Ai Platform"
-

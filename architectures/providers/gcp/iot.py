@@ -9,4 +9,3 @@ class _Iot(_Gcp):
 class IotCore(_Iot):
     _icon = "iot-core.png"
     _default_label = "Iot Core"
-

@@ -97,4 +97,3 @@ class LakeFormation(_Analytics):
 class Cloudsearch(_Analytics):
     _icon = "cloudsearch.png"
     _default_label = "Cloudsearch"
-

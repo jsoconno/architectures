@@ -121,4 +121,3 @@ class IotCertificate(_Iot):
 class IotAnalytics(_Iot):
     _icon = "iot-analytics.png"
     _default_label = "Iot Analytics"
-

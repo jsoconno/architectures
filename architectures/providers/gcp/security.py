@@ -29,4 +29,3 @@ class KeyManagementService(_Security):
 class ResourceManager(_Security):
     _icon = "resource-manager.png"
     _default_label = "Resource Manager"
-

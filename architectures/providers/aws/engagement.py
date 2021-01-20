@@ -17,4 +17,3 @@ class Connect(_Engagement):
 class SimpleEmailServiceSes(_Engagement):
     _icon = "simple-email-service-ses.png"
     _default_label = "Simple Email Service Ses"
-

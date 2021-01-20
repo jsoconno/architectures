@@ -9,4 +9,3 @@ class _Api(_Gcp):
 class Endpoints(_Api):
     _icon = "endpoints.png"
     _default_label = "Endpoints"
-

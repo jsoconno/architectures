@@ -261,4 +261,3 @@ class VirtualCluster(_Compute):
 class AzureStackPlan(_Compute):
     _icon = "azure-stack-plan.png"
     _default_label = "Azure Stack Plan"
-

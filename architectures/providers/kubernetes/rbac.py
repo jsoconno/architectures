@@ -33,4 +33,3 @@ class CRole(_Rbac):
 class Crb(_Rbac):
     _icon = "crb.png"
     _default_label = "Crb"
-

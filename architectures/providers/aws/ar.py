@@ -9,4 +9,3 @@ class _Ar(_Aws):
 class Sumerian(_Ar):
     _icon = "sumerian.png"
     _default_label = "Sumerian"
-

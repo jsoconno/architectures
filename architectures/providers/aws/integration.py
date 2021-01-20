@@ -37,4 +37,3 @@ class SimpleNotificationServiceSns(_Integration):
 class SimpleQueueServiceSqs(_Integration):
     _icon = "simple-queue-service-sqs.png"
     _default_label = "Simple Queue Service Sqs"
-

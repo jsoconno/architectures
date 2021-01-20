@@ -13,4 +13,3 @@ class Tablet(_Device):
 class Mobile(_Device):
     _icon = "mobile.png"
     _default_label = "Mobile"
-

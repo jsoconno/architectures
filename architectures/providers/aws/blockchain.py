@@ -13,4 +13,3 @@ class QuantumLedgerDatabaseQldb(_Blockchain):
 class ManagedBlockchain(_Blockchain):
     _icon = "managed-blockchain.png"
     _default_label = "Managed Blockchain"
-

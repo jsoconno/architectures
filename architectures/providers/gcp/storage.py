@@ -17,4 +17,3 @@ class Filestore(_Storage):
 class Storage(_Storage):
     _icon = "storage.png"
     _default_label = "Storage"
-
