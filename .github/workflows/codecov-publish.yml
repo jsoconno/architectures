@@ -20,6 +20,4 @@ jobs:
         pip install coverage
         pip install graphviz
     - run: python -m pytest --cov=architectures tests --cov-report xml
-    - run: bash <(curl -s https://codecov.io/bash) -t CODECOV_TOKEN
-    env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - run: bash <(curl -s https://codecov.io/bash) -t ${{ CODECOV_TOKEN }}
