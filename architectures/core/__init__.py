@@ -278,7 +278,7 @@ class Cluster():
         # Set global graph and cluster context
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
         self._cluster = get_cluster()
 
         # Set cluster attributes based on the theme using copy to ensure the objects are independent
@@ -346,7 +346,7 @@ class Group(Cluster):
         # Set global graph and cluster context
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
         self._cluster = get_cluster()
 
         # Update group background color style
@@ -384,7 +384,7 @@ class Node():
         # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
         self._cluster = get_cluster()
 
         # Set default icon
@@ -475,7 +475,7 @@ class Edge():
         # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
         self._node = get_node()
 
         # Set edge attributes based on the theme using copy to ensure the objects are independent
@@ -549,7 +549,7 @@ class Flow():
         # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
 
         # Set edge attributes based on the theme using copy to ensure the objects are independent
         self.edge_attrs = self._graph.theme.edge_attrs.copy()
