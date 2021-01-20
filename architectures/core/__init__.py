@@ -179,10 +179,9 @@ class Graph():
     """
     Create and set default settings for a graph and its clusters, nodes, and edges.
     """
-    def __init__(self, name="my-architecture", output_file_name="", output_file_format="png", theme=None, show=True):
+    def __init__(self, name="my-architecture", output_file_format="png", theme=None, show=True):
         """
         :param str name: The name of the graph.
-        :param str output_file_name: The name of the file that will be output.
         :param str output_file_format: The format of the output file.
         :param theme: The base theme to apply to the graph and its clusters, nodes, and edges.
         :param bool show: Flag used to determine whether or not the graph will render.
@@ -190,9 +189,7 @@ class Graph():
 
         # Set graph and output file name
         self.name = name
-        if not output_file_name:
-            output_file_name = "-".join(self.name.split()).lower()
-        self.output_file_name = output_file_name
+        self.output_file_name = "-".join(self.name.split()).lower()
         self.output_file_format = output_file_format
 
         # Create the graph
