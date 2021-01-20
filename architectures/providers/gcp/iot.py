@@ -3,10 +3,10 @@
 from architectures.providers import _Gcp
 
 class _Iot(_Gcp):
-	_service_type = "iot"
-	_icon_dir = "icons/gcp/iot"
+    _service_type = "iot"
+    _icon_dir = "icons/gcp/iot"
 
 class IotCore(_Iot):
-	_icon = "iot-core.png"
-	_default_label = "Iot Core"
+    _icon = "iot-core.png"
+    _default_label = "Iot Core"
 
