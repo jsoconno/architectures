@@ -169,7 +169,7 @@ def get_color_pallet(hue):
     elif hue == "purple":
         return ["#EEEAF2", "#DCD6E5", "#CBC1D8", "#BAACCB"]
     else:
-        ["#FFFFFF"]
+        return ["#FFFFFF"]
 class _Theme():
 
     def __init__(self):

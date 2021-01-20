@@ -3,10 +3,10 @@
 from architectures.providers import _Gcp
 
 class _Api(_Gcp):
-	_service_type = "api"
-	_icon_dir = "icons/gcp/api"
+    _service_type = "api"
+    _icon_dir = "icons/gcp/api"
 
 class Endpoints(_Api):
-	_icon = "endpoints.png"
-	_default_label = "Endpoints"
+    _icon = "endpoints.png"
+    _default_label = "Endpoints"
 
