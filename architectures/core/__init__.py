@@ -334,7 +334,7 @@ class Group(Cluster):
     """
     Creates a special type of group used only or organizing nodes.
     """
-    
+
     def __init__(self, label="group", **attrs):
 
         # Set the cluster name
@@ -384,7 +384,7 @@ class Node():
         else:
             self.label = label
 
-        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
+        # Get global graph and cluster context to ensure the Node is part of the graph or cluster
         self._graph = get_graph()
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
@@ -441,6 +441,9 @@ class Node():
 
     @property
     def node_id(self):
+        """
+        Return the node id
+        """
         return self._id
 
     @staticmethod
@@ -467,15 +470,15 @@ class Edge():
         # Ensure that the object passed is the correct type
         # THIS CAN BE REMOVED WITH THE NEW ASSERT LOGIC BELOW IN PLACE
         if start_node is not None and validate_node(start_node) is False:
-            raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
+            raise TypeError("The Edge class only accepts Cluster, Group, or Node objects")
 
         if end_node is not None and validate_node(end_node) is False:
-            raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
+            raise TypeError("The Edge class only accepts Cluster, Group, or Node objects")
 
         self.start_node = start_node
         self.end_node = end_node
 
-        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
+        # Get global graph and cluster context to ensure the node is part of the graph or cluster
         self._graph = get_graph()
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
@@ -487,10 +490,10 @@ class Edge():
         # Override any attributes directly passed from the object
         self.edge_attrs.update(attrs)
 
-        if type(self.start_node) is not list:
+        if not isinstance(self.start_node, list):
             self.start_node = [self.start_node]
         
-        if type(self.end_node) is not list:
+        if not isinstance(self.end_node, list):
             self.end_node = [self.end_node]
 
         start_node_list = self.start_node
