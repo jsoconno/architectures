@@ -548,11 +548,11 @@ class Flow():
     Another method of connecting nodes by allowing users to define a flow as a list
     """
     def __init__(self, nodes, **attrs):
-        
+
         self.nodes = nodes
         self.node_count = len(self.nodes)
 
-        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
+        # Get global graph and cluster context to ensure the node is part of the graph or cluster
         self._graph = get_graph()
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
@@ -568,7 +568,7 @@ class Flow():
 
             # For every node in the list
             for i in range(self.node_count):
-                
+
                 # Set the start and end node
                 if i < self.node_count - 1:
                     self.start_node = self.nodes[i]
