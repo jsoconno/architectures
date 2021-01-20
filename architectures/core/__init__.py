@@ -1,3 +1,29 @@
+"""
+This module contains all core classes required for drawing diagrams.  
+
+Available Classes:
+- Graph
+- Cluster
+- Group
+- Node
+- Edge
+- Flow
+
+Available Functions:
+- get_graph
+- set_graph
+- get_cluster
+- set_cluster
+- get_node
+- set_node
+- wrap_text
+- get_node_from_cluster
+- get_cluster_from_node
+- validate_node
+
+Details for each can be found in the docstrings for the respective class or function.
+"""
+
 import contextvars
 import os
 import uuid
@@ -12,34 +38,66 @@ __cluster = contextvars.ContextVar("cluster")
 __node = contextvars.ContextVar("node")
 
 def get_graph():
+    """
+    Get the current graph context
+    """
     try:
         return __graph.get()
     except LookupError:
         return None
 
 def set_graph(graph):
+    """
+    Set the current graph context
+    """
     __graph.set(graph)
 
 def get_cluster():
+    """
+    Get the current cluster context
+    """
     try:
         return __cluster.get()
     except LookupError:
         return None
 
 def set_cluster(cluster):
+    """
+    Set the current cluster context
+    """
     __cluster.set(cluster)
 
-def set_node(node):
-    __node.set(node)
-
 def get_node():
+    """
+    Get the current node to cluster mapping
+    """
     try:
         return __node.get()
     except LookupError:
         return None
 
+def set_node(node):
+    """
+    Set a node to cluster mapping
+    """
+    __node.set(node)
+
 
 def wrap_text(text, max_length=16):
+    """Return a new label with wrapped text
+
+    Parameters
+    ----------
+    text : str
+        The current label text
+    max_length : int
+        The max length for the label (defaults to 16 characters)
+
+    Returns
+    -------
+    str
+        The new label text
+    """
     if len(text) < 12:
         max_length = 12
     if len(text) > max_length:
@@ -60,12 +118,36 @@ def wrap_text(text, max_length=16):
         return text
 
 def get_node_from_cluster(cluster):
+    """Return the most central Node in a Cluster
+
+    Parameters
+    ----------
+    cluster : Cluster
+        A Cluster object
+
+    Returns
+    -------
+    Node
+        The most centrally located Node object
+    """
     node_dict = get_node()
     center_node_index = round(len(node_dict[cluster])/2) - 1
     node = node_dict[cluster][center_node_index]
     return node
 
 def get_cluster_from_node(node):
+    """Return a Node's parent Cluster
+
+    Parameters
+    ----------
+    node : Node
+        A Node object
+
+    Returns
+    -------
+    Cluster
+        The parent Cluster
+    """
     node_dict = get_node()
     for cluster, nodes in node_dict.items():
         for item in nodes:
@@ -73,8 +155,17 @@ def get_cluster_from_node(node):
                 return cluster
 
 def validate_node(connection):
-    """
-    Validates that the type of node passed is of the right type
+    """Validates that the type of Node passed is of type Cluster, Group, or Node
+
+    Parameters
+    ----------
+    connection : object
+        The current object
+
+    Returns
+    -------
+    bool
+        Whether or not object passed is the right type
     """
     validate_types = isinstance(connection, (Cluster, Group, Node, list))
 
@@ -88,10 +179,9 @@ class Graph():
     """
     Create and set default settings for a graph and its clusters, nodes, and edges.
     """
-    def __init__(self, name="my-architecture", output_file_name="", output_file_format="png", theme=None, show=True):
+    def __init__(self, name="my-architecture", output_file_format="png", theme=None, show=True):
         """
         :param str name: The name of the graph.
-        :param str output_file_name: The name of the file that will be output.
         :param str output_file_format: The format of the output file.
         :param theme: The base theme to apply to the graph and its clusters, nodes, and edges.
         :param bool show: Flag used to determine whether or not the graph will render.
@@ -99,9 +189,7 @@ class Graph():
 
         # Set graph and output file name
         self.name = name
-        if not output_file_name:
-            output_file_name = "-".join(self.name.split()).lower()
-        self.output_file_name = output_file_name
+        self.output_file_name = "-".join(self.name.split()).lower()
         self.output_file_format = output_file_format
 
         # Create the graph
@@ -190,7 +278,7 @@ class Cluster():
         # Set global graph and cluster context
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
         self._cluster = get_cluster()
 
         # Set cluster attributes based on the theme using copy to ensure the objects are independent
@@ -232,6 +320,9 @@ class Cluster():
         self.dot.node(node_id, label=label, **attrs)
 
     def subgraph(self, dot=Digraph):
+        """
+        Create a subgraph of the cluster.
+        """
         self.dot.subgraph(dot)
 
     @staticmethod
@@ -243,7 +334,7 @@ class Group(Cluster):
     """
     Creates a special type of group used only or organizing nodes.
     """
-    
+
     def __init__(self, label="group", **attrs):
 
         # Set the cluster name
@@ -258,7 +349,7 @@ class Group(Cluster):
         # Set global graph and cluster context
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
         self._cluster = get_cluster()
 
         # Update group background color style
@@ -293,10 +384,10 @@ class Node():
         else:
             self.label = label
 
-        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
+        # Get global graph and cluster context to ensure the Node is part of the graph or cluster
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
         self._cluster = get_cluster()
 
         # Set default icon
@@ -350,6 +441,9 @@ class Node():
 
     @property
     def node_id(self):
+        """
+        Return the node id
+        """
         return self._id
 
     @staticmethod
@@ -376,18 +470,18 @@ class Edge():
         # Ensure that the object passed is the correct type
         # THIS CAN BE REMOVED WITH THE NEW ASSERT LOGIC BELOW IN PLACE
         if start_node is not None and validate_node(start_node) is False:
-            raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
+            raise TypeError("The Edge class only accepts Cluster, Group, or Node objects")
 
         if end_node is not None and validate_node(end_node) is False:
-            raise TypeError(f"The Edge class only accepts arguments of type Cluster, Group, or Node")
+            raise TypeError("The Edge class only accepts Cluster, Group, or Node objects")
 
         self.start_node = start_node
         self.end_node = end_node
 
-        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
+        # Get global graph and cluster context to ensure the node is part of the graph or cluster
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
         self._node = get_node()
 
         # Set edge attributes based on the theme using copy to ensure the objects are independent
@@ -396,10 +490,10 @@ class Edge():
         # Override any attributes directly passed from the object
         self.edge_attrs.update(attrs)
 
-        if type(self.start_node) is not list:
+        if not isinstance(self.start_node, list):
             self.start_node = [self.start_node]
         
-        if type(self.end_node) is not list:
+        if not isinstance(self.end_node, list):
             self.end_node = [self.end_node]
 
         start_node_list = self.start_node
@@ -454,14 +548,14 @@ class Flow():
     Another method of connecting nodes by allowing users to define a flow as a list
     """
     def __init__(self, nodes, **attrs):
-        
+
         self.nodes = nodes
         self.node_count = len(self.nodes)
 
-        # Get global graph and cluster context to ensure the node is part of the graph and/or cluster
+        # Get global graph and cluster context to ensure the node is part of the graph or cluster
         self._graph = get_graph()
         if self._graph is None:
-            raise EnvironmentError("No global graph object found.  A cluster must be part of a graphs context.")
+            raise EnvironmentError("The object is not part of a Graph")
 
         # Set edge attributes based on the theme using copy to ensure the objects are independent
         self.edge_attrs = self._graph.theme.edge_attrs.copy()
@@ -474,7 +568,7 @@ class Flow():
 
             # For every node in the list
             for i in range(self.node_count):
-                
+
                 # Set the start and end node
                 if i < self.node_count - 1:
                     self.start_node = self.nodes[i]
