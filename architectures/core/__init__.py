@@ -320,6 +320,9 @@ class Cluster():
         self.dot.node(node_id, label=label, **attrs)
 
     def subgraph(self, dot=Digraph):
+        """
+        Create a subgraph of the cluster.
+        """
         self.dot.subgraph(dot)
 
     @staticmethod
