@@ -432,6 +432,19 @@ class Node():
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
         return os.path.join(basedir.parent.parent, self._icon_dir, self._icon)
 
+
+class Anchor(Node):
+    """
+    Creates and Anchor.  This can be used to improve architecture layout.
+    """
+    def __init__(self):
+        super().__init__()
+
+        self._icon = None
+        self.node_attrs["width"] = "0"
+        self.node_attrs["style"] = "point"
+        self.node_attrs["label"] = "test"
+
 class Edge():
     """
     Creates an edge between two nodes

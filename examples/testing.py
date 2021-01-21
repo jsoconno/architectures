@@ -1,4 +1,4 @@
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.core import Graph, Cluster, Group, Node, Anchor, Edge, Flow
 
 # Import the LightMode theme
 from architectures.themes import Default, LightMode
@@ -10,6 +10,9 @@ with Graph("My Graph", theme=theme):
         snooze = Node("Snooze")
         code = Node("Code")
         coffee = Node("Coffee")
+
+        anchor = Anchor()
+        
     
     Flow([coffee, code, snooze], constraint="False")
     Edge(snooze, coffee, style="dotted", constraint="False")
