@@ -5,7 +5,7 @@ import pytest
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 from architectures.core import wrap_text
 
-from architectures.themes import Default
+from architectures.themes import Default, LightMode, DarkMode
 
 
 @pytest.mark.parametrize("test_input, expected", [
@@ -54,12 +54,23 @@ class TestGraph:
             Node("A")
         assert isinstance(graph.theme, Default)
 
-    def test_theme_override(self):
-        graph_name = "test_theme_override"
-        theme = Default(graph_attr_overrides={"rankdir":"LR"})
-        with Graph(graph_name, theme=theme) as graph:
-            Node("A")
-        assert graph.theme.graph_attrs["rankdir"] == "LR"
+    def test_theme_overrides(self):
+        graph_name = "test_theme_overrides"
+        themes = [Default(), LightMode(), DarkMode()]
+        for theme in themes:
+            color = "green"
+            theme.graph_attrs["bgcolor"] = color
+            theme.cluster_attrs["bgcolor"] = color
+            theme.node_attrs["color"] = color
+            theme.edge_attrs["color"] = color
+            theme.colors = ["#FFFFFF"]
+            with Graph(graph_name, theme=theme) as graph:
+                Node("A")
+            assert (graph.theme.graph_attrs["bgcolor"] == color and
+                    graph.theme.cluster_attrs["bgcolor"] == color and
+                    graph.theme.node_attrs["color"] == color and
+                    graph.theme.edge_attrs["color"] == color and
+                    graph.theme.colors == ["#FFFFFF"])
 
 
 class TestCluster:
