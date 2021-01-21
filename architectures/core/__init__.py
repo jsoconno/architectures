@@ -420,7 +420,7 @@ class Node():
     @property
     def node_id(self):
         """
-        Return the node id
+        Return the node id.
         """
         return self._id
 
