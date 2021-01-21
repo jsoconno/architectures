@@ -456,9 +456,6 @@ class Edge():
         # Set edge attributes based on the theme using copy to ensure the objects are independent
         self.edge_attrs = self._graph.theme.edge_attrs.copy()
 
-        # Override any attributes directly passed from the object
-        self.edge_attrs.update(attrs)
-
         if not isinstance(self.start_node, list):
             self.start_node = [self.start_node]
         
@@ -513,6 +510,9 @@ class Edge():
                 else:
                     assert isinstance(self.start_node, (Cluster, Group, Node))
                     assert isinstance(self.end_node, (Cluster, Group, Node))
+
+                # Override any attributes directly passed from the object
+                self.edge_attrs.update(attrs)
 
                 if self.start_node is not None and self.end_node is not None:
                     self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
