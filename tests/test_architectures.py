@@ -310,6 +310,8 @@ class TestFlow:
                 Flow([node_a])
 
 
+# Consider if we want to move testing providers to another file and
+# auto-generate tests for each provider.
 class TestProviders:
     @classmethod
     def setup_class(cls):
