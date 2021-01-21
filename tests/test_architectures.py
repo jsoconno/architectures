@@ -6,6 +6,12 @@ from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 from architectures.core import wrap_text
 from architectures.themes import Default, LightMode, DarkMode
 
+from architectures.providers.aws.analytics import Analytics
+from architectures.providers.azure.ai import BatchAi
+from architectures.providers.gcp.analytics import Bigquery
+from architectures.providers.general.blank import Blank
+from architectures.providers.kubernetes.chaos import ChaosMesh
+
 
 @pytest.mark.parametrize("test_input, expected", [
     ("short name", "short name"),
@@ -302,3 +308,24 @@ class TestFlow:
             
             with pytest.raises(Exception):
                 Flow([node_a])
+
+
+class TestProviders:
+    @classmethod
+    def setup_class(cls):
+        cls.default_graphname = "my-architecture"
+        cls.default_ext = ".png"
+        cls.default_filename = cls.default_graphname + cls.default_ext
+        
+    @classmethod
+    def teardown_class(cls):
+        for graph_image in glob.glob(f"*{cls.default_ext}"):
+            os.remove(graph_image)
+
+    def test_provider_services(self):
+        with Graph():
+            Analytics()
+            BatchAi()
+            Bigquery()
+            Blank()
+            ChaosMesh()
