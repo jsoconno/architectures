@@ -63,12 +63,14 @@ class TestGraph:
             theme.cluster_attrs["bgcolor"] = color
             theme.node_attrs["color"] = color
             theme.edge_attrs["color"] = color
+            theme.colors = ["#FFFFFF"]
             with Graph(graph_name, theme=theme) as graph:
                 Node("A")
             assert (graph.theme.graph_attrs["bgcolor"] == color and
                     graph.theme.cluster_attrs["bgcolor"] == color and
                     graph.theme.node_attrs["color"] == color and
-                    graph.theme.edge_attrs["color"] == color)
+                    graph.theme.edge_attrs["color"] == color and
+                    graph.theme.colors == ["#FFFFFF"])
 
 
 class TestCluster:
