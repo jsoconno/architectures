@@ -485,7 +485,6 @@ class Edge():
                         self.end_node = None
                     else:
                         self.start_node = current_start_node
-                        self.end_node = get_node_from_cluster(current_end_node)
                         self.edge_attrs.update({"lhead": end_cluster.name})
                 elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, Node):
                     start_cluster = current_start_node
