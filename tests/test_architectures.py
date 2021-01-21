@@ -65,7 +65,7 @@ class TestGraph:
             "color_overrides": [color]}
         themes = [Default(**kwargs), LightMode(**kwargs), DarkMode(**kwargs)]
         for theme in themes:
-            with Graph(graph_name, theme=theme) as graph:
+            with Graph(graph_name, theme=theme, show=False) as graph:
                 Node("A")
             assert (graph.theme.graph_attrs["bgcolor"] == color and
                     graph.theme.cluster_attrs["bgcolor"] == color and
@@ -89,6 +89,23 @@ class TestCluster:
     def test_cluster_graph_context(self):
         with pytest.raises(EnvironmentError):
             Cluster("A")
+
+
+class TestGroup:
+    @classmethod
+    def setup_class(cls):
+        cls.default_graphname = "my-architecture"
+        cls.default_ext = ".png"
+        cls.default_filename = cls.default_graphname + cls.default_ext
+    
+    @classmethod
+    def teardown_class(cls):
+        for graph_image in glob.glob(f"*{cls.default_ext}"):
+            os.remove(graph_image)
+
+    def test_group_graph_context(self):
+        with pytest.raises(EnvironmentError):
+            Group("A")
 
 
 class TestNode:
@@ -216,6 +233,19 @@ class TestEdge:
             
             Edge(cluster_a, node_b)  # cluster to node within cluster
             Edge(cluster_b, node_c)  # cluster to node
+
+    def test_self_referencing_nodes(self):
+        with Graph(show=False):
+            with Cluster() as cluster_a:
+                node_a = Node("A")
+
+            edge_a = Edge(cluster_a, node_a)
+            edge_b = Edge(cluster_a, cluster_a)
+            edge_c = Edge(node_a, cluster_a)
+
+        assert edge_a.start_node is None and edge_a.end_node is None
+        assert edge_b.start_node is None and edge_b.end_node is None
+        assert edge_c.start_node is None and edge_c.end_node is None
 
  
 class TestFlow:
