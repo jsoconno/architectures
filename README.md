@@ -19,6 +19,7 @@
     - [Using Colors](#-using-colors)
     - [Modifying Layout](#-modifying-layout)
 
+## Introduction
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?)](/LICENSE)
 ![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?logo=python)
 ![pypi](https://img.shields.io/badge/pypi-pip%20install%20architectures-blue)
@@ -32,13 +33,13 @@
 ![commits](https://img.shields.io/github/commits-since/jsoconno/architectures/latest.svg)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/jsoconno/architectures)
 ![Lines of code](https://img.shields.io/tokei/lines/github/jsoconno/architectures)
+
 ![GitHub issues](https://img.shields.io/github/issues/jsoconno/architectures)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/jsoconno/architectures)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/jsoconno/architectures)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/jsoconno/architectures)
 ![GitHub contributors](https://img.shields.io/github/contributors/jsoconno/architectures)
 
-## Introduction
 Today, almost everything is managed as code including applications, infrastructure, configurations, processes, and more.  Architectures was created to allow teams to manage architecture as code using Python.
 
 The goal for this project is to make drawing architecture diagrams with code simple and to enable the use of version control systems and standard coding practices such as pull requests, code reviews, and approvals to eliminate the toil associated with diagram creation and maintenance.
