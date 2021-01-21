@@ -56,21 +56,22 @@ class TestGraph:
 
     def test_theme_overrides(self):
         graph_name = "test_theme_overrides"
-        themes = [Default(), LightMode(), DarkMode()]
+        color = "#FFFFFF"
+        kwargs = {
+            "graph_attr_overrides": {"bgcolor":color},
+            "cluster_attr_overrides": {"bgcolor":color},
+            "node_attr_overrides": {"color":color},
+            "edge_attr_overrides": {"color":color},
+            "color_overrides": [color]}
+        themes = [Default(**kwargs), LightMode(**kwargs), DarkMode(**kwargs)]
         for theme in themes:
-            color = "green"
-            theme.graph_attrs["bgcolor"] = color
-            theme.cluster_attrs["bgcolor"] = color
-            theme.node_attrs["color"] = color
-            theme.edge_attrs["color"] = color
-            theme.colors = ["#FFFFFF"]
             with Graph(graph_name, theme=theme) as graph:
                 Node("A")
             assert (graph.theme.graph_attrs["bgcolor"] == color and
                     graph.theme.cluster_attrs["bgcolor"] == color and
                     graph.theme.node_attrs["color"] == color and
                     graph.theme.edge_attrs["color"] == color and
-                    graph.theme.colors == ["#FFFFFF"])
+                    graph.theme.colors == [color])
 
 
 class TestCluster:
