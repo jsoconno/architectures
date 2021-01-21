@@ -234,6 +234,13 @@ class TestEdge:
             Edge(cluster_a, node_b)  # cluster to node within cluster
             Edge(cluster_b, node_c)  # cluster to node
 
+    def test_self_referencing_node(self):
+        with Graph(show=False):
+            with Cluster() as cluster_a:
+                node_a = Node("A")
+
+            Edge(cluster_a, node_a)
+
  
 class TestFlow:
     @classmethod
