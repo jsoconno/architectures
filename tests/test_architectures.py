@@ -4,7 +4,6 @@ import pytest
 
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 from architectures.core import wrap_text
-
 from architectures.themes import Default, LightMode, DarkMode
 
 
@@ -47,6 +46,7 @@ class TestGraph:
             Node("A")
         assert self.default_ext in glob.glob(graph_name + self.default_ext)[0]
 
+    # Do we need this test given the test_theme_overrides test?
     def test_default_theme(self):
         graph_name = "test_theme"
         theme = Default()
@@ -302,17 +302,3 @@ class TestFlow:
             
             with pytest.raises(Exception):
                 Flow([node_a])
-
-# TO-DO
-class TestGroup:
-    @classmethod
-    def setup_class(cls):
-        cls.default_graphname = "my-architecture"
-        cls.default_ext = ".png"
-        cls.default_filename = cls.default_graphname + cls.default_ext
-    
-    @classmethod
-    def teardown_class(cls):
-        for graph_image in glob.glob(f"*{cls.default_ext}"):
-            os.remove(graph_image)
-
