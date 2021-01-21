@@ -87,7 +87,7 @@ class TestCluster:
             os.remove(graph_image)
 
     def test_cluster(self):
-        with Graph():
+        with Graph(show=False):
             with Cluster():
                 Node("A")
 
@@ -109,7 +109,7 @@ class TestGroup:
             os.remove(graph_image)
 
     def test_group(self):
-        with Graph():
+        with Graph(show=False):
             with Group():
                 Node("A")
 
