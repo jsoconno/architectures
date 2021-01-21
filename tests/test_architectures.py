@@ -234,14 +234,18 @@ class TestEdge:
             Edge(cluster_a, node_b)  # cluster to node within cluster
             Edge(cluster_b, node_c)  # cluster to node
 
-    def test_self_referencing_node(self):
+    def test_self_referencing_nodes(self):
         with Graph(show=False):
             with Cluster() as cluster_a:
                 node_a = Node("A")
 
-            edge = Edge(cluster_a, node_a)
+            edge_a = Edge(cluster_a, node_a)
+            edge_b = Edge(cluster_a, cluster_a)
+            edge_c = Edge(node_a, cluster_a)
 
-        assert edge.start_node == None and edge.end_node == None
+        assert edge_a.start_node is None and edge_a.end_node is None
+        assert edge_b.start_node is None and edge_b.end_node is None
+        assert edge_c.start_node is None and edge_c.end_node is None
 
  
 class TestFlow:
