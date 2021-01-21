@@ -65,7 +65,7 @@ class TestGraph:
             "color_overrides": [color]}
         themes = [Default(**kwargs), LightMode(**kwargs), DarkMode(**kwargs)]
         for theme in themes:
-            with Graph(graph_name, theme=theme) as graph:
+            with Graph(graph_name, theme=theme, show=False) as graph:
                 Node("A")
             assert (graph.theme.graph_attrs["bgcolor"] == color and
                     graph.theme.cluster_attrs["bgcolor"] == color and
@@ -89,6 +89,23 @@ class TestCluster:
     def test_cluster_graph_context(self):
         with pytest.raises(EnvironmentError):
             Cluster("A")
+
+
+class TestGroup:
+    @classmethod
+    def setup_class(cls):
+        cls.default_graphname = "my-architecture"
+        cls.default_ext = ".png"
+        cls.default_filename = cls.default_graphname + cls.default_ext
+    
+    @classmethod
+    def teardown_class(cls):
+        for graph_image in glob.glob(f"*{cls.default_ext}"):
+            os.remove(graph_image)
+
+    def test_group_graph_context(self):
+        with pytest.raises(EnvironmentError):
+            Group("A")
 
 
 class TestNode:
