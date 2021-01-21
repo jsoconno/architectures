@@ -86,6 +86,11 @@ class TestCluster:
         for graph_image in glob.glob(f"*{cls.default_ext}"):
             os.remove(graph_image)
 
+    def test_cluster(self):
+        with Graph():
+            with Cluster():
+                Node("A")
+
     def test_cluster_graph_context(self):
         with pytest.raises(EnvironmentError):
             Cluster("A")
@@ -102,6 +107,11 @@ class TestGroup:
     def teardown_class(cls):
         for graph_image in glob.glob(f"*{cls.default_ext}"):
             os.remove(graph_image)
+
+    def test_group(self):
+        with Graph():
+            with Group():
+                Node("A")
 
     def test_group_graph_context(self):
         with pytest.raises(EnvironmentError):
