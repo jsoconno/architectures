@@ -239,7 +239,9 @@ class TestEdge:
             with Cluster() as cluster_a:
                 node_a = Node("A")
 
-            Edge(cluster_a, node_a)
+            edge = Edge(cluster_a, node_a)
+
+        assert edge.start_node == None and edge.end_node == None
 
  
 class TestFlow:
