@@ -311,21 +311,21 @@ class Cluster():
 
 class Group(Cluster):
     """
-    Creates a special type of group used only or organizing nodes.
+    Creates a special type of cluster used only or grouping nodes.
     """
 
     def __init__(self, label="group", **attrs):
 
-        # Set the cluster name
+        # Set the group name
         self.name = "cluster_" + self._rand_id()
 
-        # Set the cluster label
+        # Set the group label
         self.label = label
 
-        # Create cluster
+        # Create group
         self.dot = Digraph(self.name)
 
-        # Set global graph and cluster context
+        # Set global graph and group context
         self._graph = get_graph()
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
@@ -334,7 +334,7 @@ class Group(Cluster):
         # Update group background color style
         self.dot.graph_attr["style"] = "invis"
 
-        # Set cluster depth
+        # Set group depth
         self._depth = self._cluster._depth + 1 if self._cluster else 0
 
 class Node():
