@@ -149,12 +149,8 @@ default_edge_attrs = {
     "weight": "1",
     "xlabel": "",
 }
-class _Theme():
 
-    def __init__(self):
-        pass
-
-class Default(_Theme):
+class Default():
 
     def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
     
@@ -180,7 +176,7 @@ class Default(_Theme):
             self.colors = color_overrides
 
 
-class LightMode(_Theme):
+class LightMode():
 
     def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
 
@@ -256,7 +252,7 @@ class LightMode(_Theme):
         if color_overrides:
             self.colors = color_overrides
 
-class DarkMode(_Theme):
+class DarkMode():
 
     def __init__(self, graph_attr_overrides={}, cluster_attr_overrides={}, node_attr_overrides={}, edge_attr_overrides={}, color_overrides=[]):
 
