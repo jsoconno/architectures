@@ -32,6 +32,7 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/jsoconno/architectures)
 ![commits](https://img.shields.io/github/commits-since/jsoconno/architectures/latest.svg)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/jsoconno/architectures)
+![Lines of code](https://img.shields.io/tokei/lines/github/jsoconno/architectures)
 
 ![GitHub issues](https://img.shields.io/github/issues/jsoconno/architectures)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/jsoconno/architectures)
