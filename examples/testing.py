@@ -8,17 +8,13 @@ theme = LightMode()
 with Graph("My Graph", theme=theme):
     with Cluster() as cluster_a:
         with Cluster() as cluster_b:
-            Node()
+            a = Node("A")
+            b = Node("B")
+            c = Node("C")
 
     with Cluster() as cluster_c:
         with Cluster() as cluster_d:
-            Node()
+            d = Node("D")
+            e = Node("E")
 
-    Edge(cluster_a, cluster_c)
-
-
-
-    from architectures.providers.azure.hierarchies import Subscription
-    from architectures.providers.azure.general import Subscription
-
-    Edge(node_a, node_b, ltail=cluster_a._id, lhead=cluster_b._id)
+    Flow([c, e], ltail=cluster_a.name)
