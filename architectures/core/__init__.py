@@ -25,7 +25,6 @@ Details for each can be found in the docstrings for the respective class or func
 
 import contextvars
 import os
-import uuid
 from pathlib import Path
 
 from graphviz import Digraph
@@ -130,7 +129,7 @@ def get_node_obj(obj):
     Node
         The most centrally located Node object
     """
-    if isinstance(obj, Cluster):
+    if isinstance(obj, (Cluster, Group)):
         state = get_state()
         center_node_index = round(len(state[obj])/2) - 1
         obj = state[obj][center_node_index]
@@ -159,7 +158,7 @@ def get_cluster_obj(obj):
             for item in nodes:
                 if item == obj:
                     return cluster
-    elif isinstance(obj, Cluster):
+    elif isinstance(obj, (Cluster, Group)):
         return obj
     else:
         raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
@@ -253,7 +252,7 @@ class Cluster():
         """
 
         # Set the cluster name
-        self.name = "cluster_" + self._rand_id()
+        self.name = "cluster_" + str(id(self))
 
         #Set the cluster label
         if label == "" and self._default_label:
@@ -314,10 +313,6 @@ class Cluster():
         """
         self.dot.subgraph(dot)
 
-    @staticmethod
-    def _rand_id():
-        return uuid.uuid4().hex
-
 
 class Group(Cluster):
     """
@@ -327,7 +322,7 @@ class Group(Cluster):
     def __init__(self, label="group", **attrs):
 
         # Set the group name
-        self.name = "cluster_" + self._rand_id()
+        self.name = "cluster_" + str(id(self))
 
         # Set the group label
         self.label = label
@@ -365,7 +360,7 @@ class Node():
         :param str label: Label for a node.
         """
         # Generate an ID used to uniquely identify a node
-        self._id = self._rand_id()
+        self.id = str(id(self))
 
         #Set the label
         if self._icon and label == "":
@@ -408,9 +403,9 @@ class Node():
 
         # If a node is in the cluster context, add it to cluster.
         if self._cluster:
-            self._cluster.node(self._id, self.label, **self.node_attrs)
+            self._cluster.node(self.id, self.label, **self.node_attrs)
         else:
-            self._graph.node(self._id, self.label, **self.node_attrs)
+            self._graph.node(self.id, self.label, **self.node_attrs)
 
         state = get_state()
         if state is None:
@@ -432,11 +427,7 @@ class Node():
         """
         Return the node id
         """
-        return self._id
-
-    @staticmethod
-    def _rand_id():
-        return uuid.uuid4().hex
+        return self.id
 
     def _load_icon(self):
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
@@ -481,22 +472,30 @@ class Edge():
                 self.start_node = get_node_obj(current_start_obj)
                 self.end_node = get_node_obj(current_end_obj)
 
+                # Cluster to Cluster connections
                 if (isinstance(current_start_obj, (Cluster, Group)) and 
                     isinstance(current_end_obj, (Cluster, Group))):
                     self.edge_attrs.update({"ltail": self.start_cluster.name, "lhead": self.end_cluster.name})
+                    self_reference = self.start_cluster == self.end_cluster
+                # Cluster to Node connections
                 elif (isinstance(current_start_obj, (Cluster, Group)) and 
                     isinstance(current_end_obj, Node)):
                     self.edge_attrs.update({"ltail": self.start_cluster.name})
+                    self_reference = self.start_cluster == self.end_cluster
+                # Node to Cluster connections
                 elif (isinstance(current_start_obj, Node) and 
                     isinstance(current_end_obj, (Cluster, Group))):
                     self.edge_attrs.update({"lhead": self.end_cluster.name})
+                    self_reference = self.start_cluster == self.end_cluster
+                # Node to Node connections
                 else:
                     self.edge_attrs.update({"ltail": "", "lhead": ""})
+                    self_reference = self.start_node == self.end_node
 
                 # Override any attributes directly passed from the object
                 self.edge_attrs.update(attrs)
 
-                if not self.start_cluster is self.end_cluster:
+                if not self_reference:
                     self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
 
 class Flow():

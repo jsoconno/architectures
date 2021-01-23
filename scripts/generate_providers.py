@@ -53,5 +53,3 @@ for provider in providers:
                     f.write(f'\n\nclass {service_fmt}(_{service_type_fmt}):\n')
                     f.write(f'    _icon = \"{icon}\"\n')
                     f.write(f'    _default_label = "{icon_name.replace("-", " ").title()}"')
-
-                    
