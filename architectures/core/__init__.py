@@ -475,19 +475,23 @@ class Edge():
                 if (isinstance(current_start_obj, (Cluster, Group)) and 
                     isinstance(current_end_obj, (Cluster, Group))):
                     self.edge_attrs.update({"ltail": self.start_cluster.name, "lhead": self.end_cluster.name})
+                    self_reference = self.start_cluster == self.end_cluster
                 elif (isinstance(current_start_obj, (Cluster, Group)) and 
                     isinstance(current_end_obj, Node)):
                     self.edge_attrs.update({"ltail": self.start_cluster.name})
+                    self_reference = self.start_cluster == self.end_cluster
                 elif (isinstance(current_start_obj, Node) and 
                     isinstance(current_end_obj, (Cluster, Group))):
                     self.edge_attrs.update({"lhead": self.end_cluster.name})
+                    self_reference = self.start_cluster == self.end_cluster
                 else:
                     self.edge_attrs.update({"ltail": "", "lhead": ""})
+                    self_reference = False
 
                 # Override any attributes directly passed from the object
                 self.edge_attrs.update(attrs)
 
-                if not self.start_cluster is self.end_cluster:
+                if not self_reference:
                     self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
 
 class Flow():

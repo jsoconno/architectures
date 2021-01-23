@@ -16,4 +16,4 @@ with Graph("My Graph", theme=theme) as graph:
         with Cluster() as cluster_d:
             node_d = Node("D")
 
-    e = Edge(node_d, cluster_b)
+    e = Edge(node_d, cluster_d)
