@@ -360,7 +360,7 @@ class Node():
         :param str label: Label for a node.
         """
         # Generate an ID used to uniquely identify a node
-        self._id = str(id(self))
+        self.id = str(id(self))
 
         #Set the label
         if self._icon and label == "":
@@ -403,9 +403,9 @@ class Node():
 
         # If a node is in the cluster context, add it to cluster.
         if self._cluster:
-            self._cluster.node(self._id, self.label, **self.node_attrs)
+            self._cluster.node(self.id, self.label, **self.node_attrs)
         else:
-            self._graph.node(self._id, self.label, **self.node_attrs)
+            self._graph.node(self.id, self.label, **self.node_attrs)
 
         state = get_state()
         if state is None:
@@ -427,7 +427,7 @@ class Node():
         """
         Return the node id
         """
-        return self._id
+        return self.id
 
     def _load_icon(self):
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
