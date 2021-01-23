@@ -130,7 +130,7 @@ def get_node_obj(obj):
     Node
         The most centrally located Node object
     """
-    if isinstance(obj, Cluster):
+    if isinstance(obj, (Cluster, Group)):
         state = get_state()
         center_node_index = round(len(state[obj])/2) - 1
         obj = state[obj][center_node_index]
@@ -159,7 +159,7 @@ def get_cluster_obj(obj):
             for item in nodes:
                 if item == obj:
                     return cluster
-    elif isinstance(obj, Cluster):
+    elif isinstance(obj, (Cluster, Group)):
         return obj
     else:
         raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
