@@ -7,9 +7,15 @@ theme = LightMode(graph_attr_overrides={"rankdir": "TB"})
 
 with Graph("My Graph", theme=theme):
     with Cluster() as cluster_a:
-        snooze = Node("Snooze")
-        code = Node("Code")
-        coffee = Node("Coffee")
-    
-    Flow([coffee, code, snooze], constraint="False")
-    Edge(snooze, coffee, style="dotted", constraint="False")
+        with Cluster() as cluster_b:
+            node_a = Node("A")
+            node_b = Node("B")
+            node_c = Node("C")
+
+    with Cluster() as cluster_c:
+        with Cluster() as cluster_d:
+            node_d = Node("D")
+
+    Edge(node_a, cluster_d, ltail=str(cluster_b))
+
+    print(node_a)
