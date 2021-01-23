@@ -472,21 +472,25 @@ class Edge():
                 self.start_node = get_node_obj(current_start_obj)
                 self.end_node = get_node_obj(current_end_obj)
 
+                # Cluster to Cluster connections
                 if (isinstance(current_start_obj, (Cluster, Group)) and 
                     isinstance(current_end_obj, (Cluster, Group))):
                     self.edge_attrs.update({"ltail": self.start_cluster.name, "lhead": self.end_cluster.name})
                     self_reference = self.start_cluster == self.end_cluster
+                # Cluster to Node connections
                 elif (isinstance(current_start_obj, (Cluster, Group)) and 
                     isinstance(current_end_obj, Node)):
                     self.edge_attrs.update({"ltail": self.start_cluster.name})
                     self_reference = self.start_cluster == self.end_cluster
+                # Node to Cluster connections
                 elif (isinstance(current_start_obj, Node) and 
                     isinstance(current_end_obj, (Cluster, Group))):
                     self.edge_attrs.update({"lhead": self.end_cluster.name})
                     self_reference = self.start_cluster == self.end_cluster
+                # Node to Node connections
                 else:
                     self.edge_attrs.update({"ltail": "", "lhead": ""})
-                    self_reference = False
+                    self_reference = self.start_node == self.end_node
 
                 # Override any attributes directly passed from the object
                 self.edge_attrs.update(attrs)
