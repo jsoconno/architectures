@@ -259,10 +259,6 @@ class TestEdge:
             edge_b = Edge(cluster_a, cluster_a)
             edge_c = Edge(node_a, cluster_a)
 
-        assert edge_a.start_node is None and edge_a.end_node is None
-        assert edge_b.start_node is None and edge_b.end_node is None
-        assert edge_c.start_node is None and edge_c.end_node is None
-
  
 class TestFlow:
     @classmethod

@@ -5,7 +5,7 @@ from architectures.themes import Default, LightMode
 
 theme = LightMode(graph_attr_overrides={"rankdir": "TB"})
 
-with Graph("My Graph", theme=theme):
+with Graph("My Graph", theme=theme) as graph:
     with Cluster() as cluster_a:
         with Cluster() as cluster_b:
             node_a = Node("A")
@@ -16,6 +16,4 @@ with Graph("My Graph", theme=theme):
         with Cluster() as cluster_d:
             node_d = Node("D")
 
-    Edge(node_a, cluster_d, ltail=str(cluster_b))
-
-    print(node_a)
+    e = Edge(node_d, cluster_b)

@@ -14,11 +14,11 @@ Available Functions:
 - set_graph
 - get_cluster
 - set_cluster
-- get_node
-- set_node
+- get_state
+- set_state
 - wrap_text
-- get_node_from_cluster
-- get_cluster_from_node
+- get_node_obj
+- get_cluster_obj
 
 Details for each can be found in the docstrings for the respective class or function.
 """
@@ -34,7 +34,7 @@ from architectures.themes import Default
 
 __graph = contextvars.ContextVar("graph")
 __cluster = contextvars.ContextVar("cluster")
-__node = contextvars.ContextVar("node")
+__state = contextvars.ContextVar("state")
 
 def get_graph():
     """
@@ -66,20 +66,20 @@ def set_cluster(cluster):
     """
     __cluster.set(cluster)
 
-def get_node():
+def get_state():
     """
     Get the current node to cluster mapping
     """
     try:
-        return __node.get()
+        return __state.get()
     except LookupError:
         return None
 
-def set_node(node):
+def set_state(state):
     """
     Set a node to cluster mapping
     """
-    __node.set(node)
+    __state.set(state)
 
 
 def wrap_text(text, max_length=16):
@@ -117,42 +117,52 @@ def wrap_text(text, max_length=16):
     else:
         return text
 
-def get_node_from_cluster(cluster):
+def get_node_obj(obj):
     """Return the most central Node in a Cluster
 
     Parameters
     ----------
-    cluster : Cluster
-        A Cluster object
+    obj : Cluster, Node
+        A Cluster, Group, or Node object
 
     Returns
     -------
     Node
         The most centrally located Node object
     """
-    node_dict = get_node()
-    center_node_index = round(len(node_dict[cluster])/2) - 1
-    node = node_dict[cluster][center_node_index]
-    return node
+    if isinstance(obj, Cluster):
+        state = get_state()
+        center_node_index = round(len(state[obj])/2) - 1
+        obj = state[obj][center_node_index]
+        return obj
+    elif isinstance(obj, Node):
+        return obj
+    else:
+        raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
 
-def get_cluster_from_node(node):
+def get_cluster_obj(obj):
     """Return a Node's parent Cluster
 
     Parameters
     ----------
-    node : Node
-        A Node object
+    obj : Cluster, Node
+        A Cluster, Group, or Node object
 
     Returns
     -------
     Cluster
         The parent Cluster
     """
-    node_dict = get_node()
-    for cluster, nodes in node_dict.items():
-        for item in nodes:
-            if item == node:
-                return cluster
+    if isinstance(obj, Node):
+        state = get_state()
+        for cluster, nodes in state.items():
+            for item in nodes:
+                if item == obj:
+                    return cluster
+    elif isinstance(obj, Cluster):
+        return obj
+    else:
+        raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
 
 class Graph():
     """
@@ -402,20 +412,20 @@ class Node():
         else:
             self._graph.node(self._id, self.label, **self.node_attrs)
 
-        node_dict = get_node()
-        if node_dict is None:
+        state = get_state()
+        if state is None:
             # Creates the initial node dictionary if one does not exist
-            node_dict = {self._cluster: [self]}
-            set_node(node_dict)
-        elif self._cluster not in node_dict:
+            state = {self._cluster: [self]}
+            set_state(state)
+        elif self._cluster not in state:
             # Adds a new cluster key and value to the node dictionary
-            node_dict.update({self._cluster: [self]})
+            state.update({self._cluster: [self]})
         else:
             # Updates an existing cluster value in the node dictionary
-            node_list = node_dict[self._cluster]
+            node_list = state[self._cluster]
             node_list.append(self)
-            node_dict.update({self._cluster: node_list})
-            set_node(node_dict)
+            state.update({self._cluster: node_list})
+            set_state(state)
 
     @property
     def node_id(self):
@@ -437,94 +447,66 @@ class Edge():
     Creates an edge between two nodes
     """
 
-    def __init__(self, start_node, end_node, **attrs):
+    def __init__(self, start_obj, end_obj, **attrs):
         """
         :param start: The origin cluster, group, or node object.
         :param end: The destination cluster, group, or node object.
         :param attrs: Other edge attributes.
         """
-
-        self.start_node = start_node
-        self.end_node = end_node
+        self.start_obj = start_obj
+        self.end_obj = end_obj
 
         # Get global graph and cluster context to ensure the node is part of the graph or cluster
         self._graph = get_graph()
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
-        self._node = get_node()
 
         # Set edge attributes based on the theme using copy to ensure the objects are independent
         self.edge_attrs = self._graph.theme.edge_attrs.copy()
 
-        if not isinstance(self.start_node, list):
-            self.start_node = [self.start_node]
+        if not isinstance(self.start_obj, list):
+            self.start_obj = [self.start_obj]
         
-        if not isinstance(self.end_node, list):
-            self.end_node = [self.end_node]
+        if not isinstance(self.end_obj, list):
+            self.end_obj = [self.end_obj]
 
-        # Ensure object passed is of the correct type
-        for nodes in [self.start_node, self.end_node]:
-            if not all(isinstance(node, (Cluster, Group, Node)) for node in nodes):
-                raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
-
-        start_node_list = self.start_node
-        end_node_list = self.end_node
+        start_obj_list = self.start_obj
+        end_obj_list = self.end_obj
 
         # Handle all cases
-        for current_start_node in start_node_list:
-            for current_end_node in end_node_list:
-                if isinstance(current_start_node, Node) and isinstance(current_end_node, Node):
-                    self.start_node = current_start_node
-                    self.end_node = current_end_node
-                    self.edge_attrs.update({"ltail": "", "lhead": ""})
-                elif isinstance(current_start_node, Node) and isinstance(current_end_node, (Cluster, Group)):
-                    start_cluster = get_cluster_from_node(current_start_node)
-                    end_cluster = current_end_node
-                    if start_cluster == end_cluster:
-                        self.start_node = None
-                        self.end_node = None
-                    else:
-                        self.start_node = current_start_node
-                        self.end_node = get_node_from_cluster(current_end_node)
-                        self.edge_attrs.update({"lhead": end_cluster.name})
-                elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, Node):
-                    start_cluster = current_start_node
-                    end_cluster = get_cluster_from_node(current_end_node)
-                    if start_cluster == end_cluster:
-                        self.start_node = None
-                        self.end_node = None
-                    else:
-                        self.start_node = get_node_from_cluster(current_start_node)
-                        self.end_node = current_end_node
-                        self.edge_attrs.update({"ltail": start_cluster.name})
-                elif isinstance(current_start_node, (Cluster, Group)) and isinstance(current_end_node, (Cluster, Group)):
-                    start_cluster = current_start_node
-                    end_cluster = current_end_node
-                    if start_cluster == end_cluster:
-                        self.start_node = None
-                        self.end_node = None
-                    else:
-                        self.start_node = get_node_from_cluster(current_start_node)
-                        self.end_node = get_node_from_cluster(current_end_node)
-                        self.edge_attrs.update({"ltail": start_cluster.name, "lhead": end_cluster.name})
+        for current_start_obj in start_obj_list:
+            for current_end_obj in end_obj_list:
+                self.start_cluster = get_cluster_obj(current_start_obj)
+                self.end_cluster = get_cluster_obj(current_end_obj)
+                self.start_node = get_node_obj(current_start_obj)
+                self.end_node = get_node_obj(current_end_obj)
+
+                if (isinstance(current_start_obj, (Cluster, Group)) and 
+                    isinstance(current_end_obj, (Cluster, Group))):
+                    self.edge_attrs.update({"ltail": self.start_cluster.name, "lhead": self.end_cluster.name})
+                elif (isinstance(current_start_obj, (Cluster, Group)) and 
+                    isinstance(current_end_obj, Node)):
+                    self.edge_attrs.update({"ltail": self.start_cluster.name})
+                elif (isinstance(current_start_obj, Node) and 
+                    isinstance(current_end_obj, (Cluster, Group))):
+                    self.edge_attrs.update({"lhead": self.end_cluster.name})
                 else:
-                    assert isinstance(self.start_node, (Cluster, Group, Node))
-                    assert isinstance(self.end_node, (Cluster, Group, Node))
+                    self.edge_attrs.update({"ltail": "", "lhead": ""})
 
                 # Override any attributes directly passed from the object
                 self.edge_attrs.update(attrs)
 
-                if self.start_node is not None and self.end_node is not None:
+                if not self.start_cluster is self.end_cluster:
                     self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
 
 class Flow():
     """
     Another method of connecting nodes by allowing users to define a flow as a list
     """
-    def __init__(self, nodes, **attrs):
+    def __init__(self, objs, **attrs):
 
-        self.nodes = nodes
-        self.node_count = len(self.nodes)
+        self.objs = objs
+        self.obj_count = len(self.objs)
 
         # Get global graph and cluster context to ensure the node is part of the graph or cluster
         self._graph = get_graph()
@@ -538,19 +520,19 @@ class Flow():
         self.edge_attrs.update(attrs)
 
         # Make sure there is more than one node
-        if self.node_count > 1:
+        if self.obj_count > 1:
 
             # For every node in the list
-            for i in range(self.node_count):
+            for i in range(self.obj_count):
 
                 # Set the start and end node
-                if i < self.node_count - 1:
-                    self.start_node = self.nodes[i]
-                    self.end_node = self.nodes[i + 1]
+                if i < self.obj_count - 1:
+                    self.start_obj = self.objs[i]
+                    self.end_obj = self.objs[i + 1]
 
-                    Edge(self.start_node, self.end_node, **self.edge_attrs)
+                    Edge(self.start_obj, self.end_obj, **self.edge_attrs)
         else:
-            raise Exception('More than one node must be passed in the list to use the Flow object')
+            raise Exception('More than one object must be passed in the list to use Flow')
 
 Connection = Edge
 Container = Cluster
