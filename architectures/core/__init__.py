@@ -25,7 +25,6 @@ Details for each can be found in the docstrings for the respective class or func
 
 import contextvars
 import os
-import uuid
 from pathlib import Path
 
 from graphviz import Digraph
@@ -253,7 +252,7 @@ class Cluster():
         """
 
         # Set the cluster name
-        self.name = "cluster_" + self._rand_id()
+        self.name = "cluster_" + str(id(self))
 
         #Set the cluster label
         if label == "" and self._default_label:
@@ -314,10 +313,6 @@ class Cluster():
         """
         self.dot.subgraph(dot)
 
-    @staticmethod
-    def _rand_id():
-        return uuid.uuid4().hex
-
 
 class Group(Cluster):
     """
@@ -327,7 +322,7 @@ class Group(Cluster):
     def __init__(self, label="group", **attrs):
 
         # Set the group name
-        self.name = "cluster_" + self._rand_id()
+        self.name = "cluster_" + str(id(self))
 
         # Set the group label
         self.label = label
@@ -365,7 +360,7 @@ class Node():
         :param str label: Label for a node.
         """
         # Generate an ID used to uniquely identify a node
-        self._id = self._rand_id()
+        self._id = str(id(self))
 
         #Set the label
         if self._icon and label == "":
@@ -433,10 +428,6 @@ class Node():
         Return the node id
         """
         return self._id
-
-    @staticmethod
-    def _rand_id():
-        return uuid.uuid4().hex
 
     def _load_icon(self):
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
