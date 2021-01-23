@@ -97,6 +97,15 @@ class TestCluster:
             with Cluster():
                 Node("A")
 
+    def test_edge_and_cluster_connections(self):
+        with Graph(show=False):
+            with Cluster() as cluster_a:
+                node_a = Node()
+            with Cluster() as cluster_b:
+                node_b = Node()
+
+            Flow([node_a, cluster_b, cluster_a, node_b])
+
     def test_cluster_graph_context(self):
         with pytest.raises(EnvironmentError):
             Cluster("A")
@@ -118,6 +127,15 @@ class TestGroup:
         with Graph(show=False):
             with Group():
                 Node("A")
+
+    def test_edge_and_group_connections(self):
+        with Graph(show=False):
+            with Group() as group_a:
+                node_a = Node()
+            with Group() as group_b:
+                node_b = Node()
+
+            Flow([node_a, group_b, group_a, node_b])
 
     def test_group_graph_context(self):
         with pytest.raises(EnvironmentError):

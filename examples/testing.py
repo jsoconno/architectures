@@ -7,13 +7,13 @@ theme = LightMode(graph_attr_overrides={"rankdir": "TB"})
 
 with Graph("My Graph", theme=theme) as graph:
     with Cluster() as cluster_a:
-        with Cluster() as cluster_b:
+        with Group() as group_b:
             node_a = Node("A")
             node_b = Node("B")
             node_c = Node("C")
 
     with Cluster() as cluster_c:
-        with Cluster() as cluster_d:
+        with Group() as group_d:
             node_d = Node("D")
 
-    e = Edge(node_d, node_b)
+    Flow([node_a, group_d, group_b, node_d])

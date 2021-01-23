@@ -129,7 +129,7 @@ def get_node_obj(obj):
     Node
         The most centrally located Node object
     """
-    if isinstance(obj, (Cluster, Group)):
+    if isinstance(obj, Cluster):
         state = get_state()
         center_node_index = round(len(state[obj])/2) - 1
         obj = state[obj][center_node_index]
@@ -158,7 +158,7 @@ def get_cluster_obj(obj):
             for item in nodes:
                 if item == obj:
                     return cluster
-    elif isinstance(obj, (Cluster, Group)):
+    elif isinstance(obj, Cluster):
         return obj
     else:
         raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
@@ -473,18 +473,15 @@ class Edge():
                 self.end_node = get_node_obj(current_end_obj)
 
                 # Cluster to Cluster connections
-                if (isinstance(current_start_obj, (Cluster, Group)) and 
-                    isinstance(current_end_obj, (Cluster, Group))):
+                if isinstance(current_start_obj, Cluster) and isinstance(current_end_obj, Cluster):
                     self.edge_attrs.update({"ltail": self.start_cluster.name, "lhead": self.end_cluster.name})
                     self_reference = self.start_cluster == self.end_cluster
                 # Cluster to Node connections
-                elif (isinstance(current_start_obj, (Cluster, Group)) and 
-                    isinstance(current_end_obj, Node)):
+                elif isinstance(current_start_obj, Cluster) and isinstance(current_end_obj, Node):
                     self.edge_attrs.update({"ltail": self.start_cluster.name})
                     self_reference = self.start_cluster == self.end_cluster
                 # Node to Cluster connections
-                elif (isinstance(current_start_obj, Node) and 
-                    isinstance(current_end_obj, (Cluster, Group))):
+                elif isinstance(current_start_obj, Node) and isinstance(current_end_obj, Cluster):
                     self.edge_attrs.update({"lhead": self.end_cluster.name})
                     self_reference = self.start_cluster == self.end_cluster
                 # Node to Node connections
