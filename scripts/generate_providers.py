@@ -1,19 +1,20 @@
-  
 import os
 
-heading_text = f'# Do not modify this file directly. It is auto-generated with Python.\n\n'
+heading_text = '# Do not modify this file directly. It is auto-generated with Python.\n\n'
 
 root_dir = os.path.dirname(os.getcwd())
 icons_dir = os.path.join(root_dir, "icons")
 providers_dir = os.path.join(root_dir, "architectures", "providers")
 
+
 def format_text(text):
     return text.replace("-", " ").title().replace(" ", "")
+
 
 init_file = os.path.join(providers_dir, "__init__.py")
 with open(init_file, "w+") as f:
     f.write(heading_text)
-    f.write(f'from architectures.core import Node')
+    f.write('from architectures.core import Node')
 
 providers = os.listdir(icons_dir)
 
@@ -23,7 +24,6 @@ for provider in providers:
         continue
 
     provider_fmt = format_text(provider)
-    
     with open(init_file, "a+") as f:
         f.write(f'\n\nclass _{provider_fmt}(Node):\n')
         f.write(f'    _provider = \"{provider}\"\n')
