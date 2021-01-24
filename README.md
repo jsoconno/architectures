@@ -52,7 +52,7 @@ Architectures comes with support for several providers out-of-the-box.
 ![kubernetes provider](https://img.shields.io/badge/provider-Kubernetes-orange?logo=kubernetes&color=326CE5)
 
 ## Installation
-Architectures works for all version of python greater than version `3.6.x`.  Python can be installed from https://www.python.org/downloads/ or using Homebrew on Mac OS:
+Architectures works for all version of python greater than version `3.7.x`.  Python can be installed from https://www.python.org/downloads/ or using Homebrew on Mac OS:
 ```
 brew install python
 ```
@@ -69,6 +69,8 @@ If you are using a Mac OS for development, you may also have to install the late
 ```
 brew install graphviz
 ```
+If you are using a Windows machine, follow the simplified installation instructions on the [official Graphviz forums](https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224).
+
 It is recommended to use Graphviz version `2.40.x` or later.
 
 ## Core Components
@@ -139,7 +141,7 @@ from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
 ```
 ... or import everything using `*`.
 ```
-rom architectures.core import *
+from architectures.core import *
 ```
 For more information on these objects, see the [Core Components](##core-components) section above.
 ### Part 2 - Creating a Graph
