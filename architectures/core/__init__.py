@@ -1,5 +1,5 @@
 """
-This module contains all core classes required for drawing diagrams.  
+This module contains all core classes required for drawing diagrams.
 
 Available Classes:
 - Graph
@@ -22,10 +22,12 @@ Available Functions:
 
 Details for each can be found in the docstrings for the respective class or function.
 """
+from __future__ import annotations
 
 import contextvars
 import os
 from pathlib import Path
+from typing import Any, Union
 
 from graphviz import Digraph
 
@@ -35,7 +37,8 @@ __graph = contextvars.ContextVar("graph")
 __cluster = contextvars.ContextVar("cluster")
 __state = contextvars.ContextVar("state")
 
-def get_graph():
+
+def get_graph() -> Union[None, Graph]:
     """
     Get the current graph context
     """
@@ -44,13 +47,15 @@ def get_graph():
     except LookupError:
         return None
 
-def set_graph(graph):
+
+def set_graph(graph: Union[None, Graph]) -> None:
     """
     Set the current graph context
     """
     __graph.set(graph)
 
-def get_cluster():
+
+def get_cluster() -> Union[None, Cluster]:
     """
     Get the current cluster context
     """
@@ -59,13 +64,15 @@ def get_cluster():
     except LookupError:
         return None
 
-def set_cluster(cluster):
+
+def set_cluster(cluster: Cluster) -> None:
     """
     Set the current cluster context
     """
     __cluster.set(cluster)
 
-def get_state():
+
+def get_state() -> Union[None, dict]:
     """
     Get the current node to cluster mapping
     """
@@ -74,14 +81,15 @@ def get_state():
     except LookupError:
         return None
 
-def set_state(state):
+
+def set_state(state: dict) -> None:
     """
     Set a node to cluster mapping
     """
     __state.set(state)
 
 
-def wrap_text(text, max_length=16):
+def wrap_text(text: str, max_length: int = 16) -> str:
     """Return a new label with wrapped text
 
     Parameters
@@ -98,7 +106,7 @@ def wrap_text(text, max_length=16):
     """
     if max_length < 12:
         max_length = 12
-        
+
     if len(text) > max_length:
         words = text.split()
         new_text = ""
@@ -116,7 +124,8 @@ def wrap_text(text, max_length=16):
     else:
         return text
 
-def get_node_obj(obj):
+
+def get_node_obj(obj: Union[Cluster, Node]) -> Node:
     """Return the most central Node in a Cluster
 
     Parameters
@@ -139,7 +148,8 @@ def get_node_obj(obj):
     else:
         raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
 
-def get_cluster_obj(obj):
+
+def get_cluster_obj(obj: Union[Cluster, Node]) -> Cluster:
     """Return a Node's parent Cluster
 
     Parameters
@@ -163,11 +173,15 @@ def get_cluster_obj(obj):
     else:
         raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
 
+
 class Graph():
     """
     Create and set default settings for a graph and its clusters, nodes, and edges.
     """
-    def __init__(self, name="my-architecture", output_file_format="png", theme=None, show=True):
+    def __init__(self, name: str = "my-architecture",
+                 output_file_format: str = "png",
+                 theme: Any = None, show: bool = True
+                 ) -> None:
         """
         :param str name: The name of the graph.
         :param str output_file_format: The format of the output file.
@@ -202,42 +216,43 @@ class Graph():
         # Set option to show architecture diagram
         self.show = show
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.dot)
 
-    def __enter__(self):
+    def __enter__(self) -> Graph:
         set_graph(self)
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
         self.render()
         # Remove the graphviz file leaving only the image.
         os.remove(self.output_file_name)
         set_graph(None)
 
-    def node(self, node_id, label, **attrs):
+    def node(self, node_id: str, label: str, **attrs: Any) -> None:
         """
         Create a node.
         """
         self.dot.node(node_id, label=label, **attrs)
 
-    def edge(self, start_node, end_node, **attrs):
+    def edge(self, start_node: Node, end_node: Node, **attrs: Any) -> None:
         """
         Connect individual or lists of nodes with edges.
         """
         self.dot.edge(start_node.node_id, end_node.node_id, **attrs)
 
-    def subgraph(self, dot):
+    def subgraph(self, dot: Digraph) -> None:
         """
         Create a subgraph for grouping nodes.
         """
         self.dot.subgraph(dot)
 
-    def render(self):
+    def render(self) -> None:
         """
         Generate output file.
         """
         self.dot.render(format=self.output_file_format, view=self.show, quiet=True)
+
 
 class Cluster():
     """
@@ -246,7 +261,7 @@ class Cluster():
 
     _default_label = None
 
-    def __init__(self, label="", **attrs):
+    def __init__(self, label: str = "", **attrs: Any) -> None:
         """
         :param label: Label for the cluster.
         """
@@ -289,25 +304,24 @@ class Cluster():
         # Override any values directly passed from the object
         self.dot.graph_attr.update(attrs)
 
-
-    def __enter__(self):
+    def __enter__(self) -> Cluster:
         set_cluster(self)
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
         if self._cluster:
             self._cluster.subgraph(self.dot)
         else:
             self._graph.subgraph(self.dot)
         set_cluster(self._cluster)
 
-    def node(self, node_id, label, **attrs):
+    def node(self, node_id: str, label: str, **attrs: Any) -> None:
         """
         Create a node in the cluster.
         """
         self.dot.node(node_id, label=label, **attrs)
 
-    def subgraph(self, dot=Digraph):
+    def subgraph(self, dot: Digraph = Digraph) -> None:
         """
         Create a subgraph of the cluster.
         """
@@ -319,7 +333,7 @@ class Group(Cluster):
     Creates a special type of cluster used only or grouping nodes.
     """
 
-    def __init__(self, label="group", **attrs):
+    def __init__(self, label: str = "group", **attrs: Any) -> None:
 
         # Set the group name
         self.name = "cluster_" + str(id(self))
@@ -342,6 +356,7 @@ class Group(Cluster):
         # Set group depth
         self._depth = self._cluster._depth + 1 if self._cluster else 0
 
+
 class Node():
     """
     Creates a node.  This can be a standard node or a node representing a service from a provider.
@@ -355,7 +370,10 @@ class Node():
 
     _default_label = None
 
-    def __init__(self, label="", wrap_label_text=True, **attrs):
+    def __init__(self, label: str = "",
+                 wrap_label_text: bool = True,
+                 **attrs: Any
+                 ) -> None:
         """
         :param str label: Label for a node.
         """
@@ -423,22 +441,26 @@ class Node():
             set_state(state)
 
     @property
-    def node_id(self):
+    def node_id(self) -> str:
         """
         Return the node id
         """
         return self.id
 
-    def _load_icon(self):
+    def _load_icon(self) -> str:
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
         return os.path.join(basedir.parent.parent, self._icon_dir, self._icon)
+
 
 class Edge():
     """
     Creates an edge between two nodes
     """
 
-    def __init__(self, start_obj, end_obj, **attrs):
+    def __init__(self, start_obj: Union[Cluster, Group, Node],
+                 end_obj: Union[Cluster, Group, Node],
+                 **attrs: Any
+                 ) -> None:
         """
         :param start: The origin cluster, group, or node object.
         :param end: The destination cluster, group, or node object.
@@ -495,11 +517,12 @@ class Edge():
                 if not self_reference:
                     self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
 
+
 class Flow():
     """
     Another method of connecting nodes by allowing users to define a flow as a list
     """
-    def __init__(self, objs, **attrs):
+    def __init__(self, objs: list[Union[Cluster, Node]], **attrs: Any) -> None:
 
         self.objs = objs
         self.obj_count = len(self.objs)
@@ -529,6 +552,7 @@ class Flow():
                     Edge(self.start_obj, self.end_obj, **self.edge_attrs)
         else:
             raise Exception('More than one object must be passed in the list to use Flow')
+
 
 Connection = Edge
 Container = Cluster
