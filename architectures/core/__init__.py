@@ -117,11 +117,7 @@ def search_state(search_dict: dict, search_key: Cluster) -> list:
                     v =  search_state(item, search_key)
 
     # Create a list of nodes to output
-    node_list = []
-    for item in v:
-        if isinstance(item, Node):
-            node_list.append(item)
-
+    node_list = [item for item in v if isinstance(item, Node)]
     return node_list
 
 def wrap_text(text: str, max_length: int = 16) -> str:
