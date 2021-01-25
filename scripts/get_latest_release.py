@@ -21,5 +21,5 @@ def get_release_data(user, repo, field=None, regex_pattern=None, group_number=0)
 
     return output
 
-version = get_release_data(user="jsoconno", repo="architectures", field="tag_name", regex_pattern="[0-9]*\.[0-9]*\.[0-9]*")
-print(version)
+data = get_release_data(user="jsoconno", repo="architectures")#, field="tag_name", regex_pattern="[0-9]*\.[0-9]*\.[0-9]*")
+print(data)
