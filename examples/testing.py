@@ -8,15 +8,11 @@ theme = LightMode(graph_attr_overrides={"rankdir": "TB"})
 with Graph("My Graph", theme=theme, show=True) as graph:
     with Cluster("A") as cluster_a:
         a = Node("A")
+        b = Node("B")
 
     with Cluster("B") as cluster_b:
-        b = Node("B")
         c = Node("C")
-        d = Node("D")
-        e = Node("E")
-        f = Node("F")
-        collection = [b, c, d]
-        with Cluster():
-            g = Node("G")
+        with Cluster("A"):
+            d = Node("D")
 
-    Flow([a, collection, e, f])
+    Flow([[a, b], cluster_b])

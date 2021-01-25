@@ -89,7 +89,7 @@ def set_state(state: dict) -> None:
     __state.set(state)
 
 
-def update_state(state: dict, target_key: Union[Cluster, Node], target_value: Union[dict, Node]):
+def update_state(state: dict, target_key: Union[Cluster, Node], target_value: Union[dict, Node]) -> dict:
     if isinstance(state, dict):
         for k, v in state.items():
             if k is target_key:
@@ -102,11 +102,12 @@ def update_state(state: dict, target_key: Union[Cluster, Node], target_value: Un
         return {k: v}
 
 
-def search_state(search_dict, search_key):
+def search_state(search_dict: dict, search_key: Cluster) -> list:
     """
     Search nested dicts and lists for the search_value (key)
     and return the corresponding value.
     """
+    # Get the value of the matching key
     for k, v in search_dict.items():
         if k is search_key:
             break
@@ -115,7 +116,13 @@ def search_state(search_dict, search_key):
                 if isinstance(item, dict):
                     v =  search_state(item, search_key)
 
-    return v
+    # Create a list of nodes to output
+    node_list = []
+    for item in v:
+        if isinstance(item, Node):
+            node_list.append(item)
+
+    return node_list
 
 def wrap_text(text: str, max_length: int = 16) -> str:
     """Return a new label with wrapped text
@@ -168,12 +175,9 @@ def get_node_obj(obj: Union[Cluster, Node]) -> Node:
     """
     if isinstance(obj, Cluster):
         state = get_state()
-        #print(f'searching for {obj} in {state}...')
         values = search_state(state, obj)
-        print(f'search obj: {obj}')
-        print(f'state: {state}')
-        print(f'values: {values}')
-        center_node_index = round(len(values)/2) - 1
+        count = len(values)
+        center_node_index = round(count/2) - 1
         obj = values[center_node_index]
         return obj
     elif isinstance(obj, Node):
