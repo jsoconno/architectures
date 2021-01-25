@@ -5,15 +5,14 @@ from architectures.themes import Default, LightMode
 
 theme = LightMode(graph_attr_overrides={"rankdir": "TB"})
 
-with Graph("My Graph", theme=theme) as graph:
-    with Cluster() as cluster_a:
-        with Group() as group_b:
-            node_a = Node("A")
-            node_b = Node("B")
-            node_c = Node("C")
+with Graph("My Graph", theme=theme, show=True) as graph:
+    with Cluster("A") as cluster_a:
+        a = Node("A")
+        b = Node("B")
 
-    with Cluster() as cluster_c:
-        with Group() as group_d:
-            node_d = Node("D")
+    with Cluster("B") as cluster_b:
+        c = Node("C")
+        with Cluster("A"):
+            d = Node("D")
 
-    Flow([node_a, group_d, group_b, node_d])
+    Flow([[a, b], cluster_b])
