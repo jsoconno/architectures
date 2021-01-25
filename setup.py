@@ -1,11 +1,20 @@
+import os
 import setuptools
+
+command = r"""
+curl --silent "https://api.github.com/repos/jsoconno/architectures/releases/latest" | 
+grep '"tag_name":' | 
+sed -E 's/.*"v([^"]+)".*/\1/'   
+"""
+
+version = os.popen(command).read().strip()
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="architectures",
-    version="0.1.3",
+    version=version,
     author="Justin O'Connor",
     author_email="jsoconno@gmail.com",
     description="Tools for creating architecture as code using Python.",
