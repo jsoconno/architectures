@@ -52,26 +52,36 @@ Architectures comes with support for several providers out-of-the-box.
 ![kubernetes provider](https://img.shields.io/badge/provider-Kubernetes-orange?logo=kubernetes&color=326CE5)
 
 ## Installation
-Architectures works for all version of python greater than version `3.7.x`.  Python can be installed from https://www.python.org/downloads/ or using Homebrew on Mac OS:
+Architectures works for all version of python greater than version `3.7.x`.
+
+It is recommended to use Graphviz version `2.41.x` or later.
+### Install Mac OS Dependencies
+1) Install Python:
 ```
 brew install python
 ```
-
-Architectures can be installed using the following command (once Python is installed):
-```
-pip install architectures
-```
-The Graphviz library is also required to use architectures.  To install it, use the following command:
-```
-pip install graphviz
-```
-If you are using a Mac OS for development, you may also have to install the latest version of Graphviz with Homebrew:
+2) Install Graphviz:
 ```
 brew install graphviz
 ```
-If you are using a Windows machine, follow the simplified installation instructions on the [official Graphviz forums](https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224).
+### Install Windows Dependencies
+1) Install Python:
 
-It is recommended to use Graphviz version `2.40.x` or later.
+[Manual Install](https://www.python.org/downloads/) or...
+```
+choco install python
+```
+2) Install Graphviz
+
+[Manual Install](https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224) or...
+```
+choco install graphviz
+```
+### Download Architectures from PyPi
+Architectures can be installed using the following command once all dependencies for your operating system are in place:
+```
+pip install architectures
+```
 
 ## Core Components
 There are several supported objects in the architectures library.  These objects primarily fall into three categories:
