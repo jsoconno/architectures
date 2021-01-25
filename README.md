@@ -21,7 +21,7 @@
 
 ## Introduction
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?)](/LICENSE)
-![python version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue?logo=python)
+![python version](https://img.shields.io/badge/python-3.7%2C%203.8%2C%203.9-blue?logo=python)
 ![pypi](https://img.shields.io/badge/pypi-pip%20install%20architectures-blue)
 ![downloads](https://img.shields.io/pypi/dm/architectures?color=blue)
 
