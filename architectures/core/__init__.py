@@ -114,7 +114,7 @@ def search_state(search_dict: dict, search_key: Cluster) -> list:
         elif isinstance(v, list):
             for item in v:
                 if isinstance(item, dict):
-                    v =  search_state(item, search_key)
+                    v = search_state(item, search_key)
 
     # Create a list of nodes to output
     node_list = [item for item in v if isinstance(item, Node)]
