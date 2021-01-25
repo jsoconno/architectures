@@ -40,7 +40,7 @@ __state = contextvars.ContextVar("state")
 
 def get_graph() -> Union[None, Graph]:
     """
-    Get the current graph context
+    Get the current graph context.
     """
     try:
         return __graph.get()
@@ -50,14 +50,14 @@ def get_graph() -> Union[None, Graph]:
 
 def set_graph(graph: Union[None, Graph]) -> None:
     """
-    Set the current graph context
+    Set the current graph context.
     """
     __graph.set(graph)
 
 
 def get_cluster() -> Union[None, Cluster]:
     """
-    Get the current cluster context
+    Get the current cluster context.
     """
     try:
         return __cluster.get()
@@ -67,14 +67,14 @@ def get_cluster() -> Union[None, Cluster]:
 
 def set_cluster(cluster: Cluster) -> None:
     """
-    Set the current cluster context
+    Set the current cluster context.
     """
     __cluster.set(cluster)
 
 
 def get_state() -> Union[None, dict]:
     """
-    Get the current node to cluster mapping
+    Get the current node to cluster mapping.
     """
     try:
         return __state.get()
@@ -84,12 +84,15 @@ def get_state() -> Union[None, dict]:
 
 def set_state(state: dict) -> None:
     """
-    Set a node to cluster mapping
+    Set a node to cluster mapping.
     """
     __state.set(state)
 
 
 def update_state(state: dict, target_key: Union[Cluster, Node], target_value: Union[dict, Node]) -> dict:
+    """
+    Create a map of all resources hierarchial relationship as a nested dictionary.
+    """
     if isinstance(state, dict):
         for k, v in state.items():
             if k is target_key:
@@ -121,7 +124,7 @@ def search_state(search_dict: dict, search_key: Cluster) -> list:
     return node_list
 
 def wrap_text(text: str, max_length: int = 16) -> str:
-    """Return a new label with wrapped text
+    """Return a new label with wrapped text.
 
     Parameters
     ----------
@@ -157,7 +160,7 @@ def wrap_text(text: str, max_length: int = 16) -> str:
 
 
 def get_node_obj(obj: Union[Cluster, Node]) -> Node:
-    """Return the most central Node in a Cluster
+    """Return the most central Node in a Cluster.
 
     Parameters
     ----------
@@ -183,7 +186,7 @@ def get_node_obj(obj: Union[Cluster, Node]) -> Node:
 
 
 def get_cluster_obj(obj: Union[Cluster, Node]) -> Cluster:
-    """Return a Node's parent Cluster
+    """Return a Node's parent Cluster.
 
     Parameters
     ----------
@@ -499,7 +502,7 @@ class Node():
 
 class Edge():
     """
-    Creates an edge between two nodes
+    Creates an edge between two nodes.
     """
 
     def __init__(self, start_obj: Union[Cluster, Group, Node],
@@ -566,7 +569,7 @@ class Edge():
 
 class Flow():
     """
-    Another method of connecting nodes by allowing users to define a flow as a list
+    Another method of connecting nodes by allowing users to define a flow as a list.
     """
     def __init__(self, objs: list[Union[Cluster, Node]], **attrs: Any) -> None:
 
