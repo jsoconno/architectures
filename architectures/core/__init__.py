@@ -89,6 +89,34 @@ def set_state(state: dict) -> None:
     __state.set(state)
 
 
+def update_state(state: dict, target_key: Union[Cluster, Node], target_value: Union[dict, Node]):
+    if isinstance(state, dict):
+        for k, v in state.items():
+            if k is target_key:
+                v.append(target_value)
+            else:
+                if isinstance(v, list):
+                    for i in v:
+                        update_state(i, target_key, target_value)
+
+        return {k: v}
+
+
+def search_state(search_dict, search_key):
+    """
+    Search nested dicts and lists for the search_value (key)
+    and return the corresponding value.
+    """
+    for k, v in search_dict.items():
+        if k is search_key:
+            break
+        elif isinstance(v, list):
+            for item in v:
+                if isinstance(item, dict):
+                    v =  search_state(item, search_key)
+
+    return v
+
 def wrap_text(text: str, max_length: int = 16) -> str:
     """Return a new label with wrapped text
 
@@ -140,8 +168,13 @@ def get_node_obj(obj: Union[Cluster, Node]) -> Node:
     """
     if isinstance(obj, Cluster):
         state = get_state()
-        center_node_index = round(len(state[obj])/2) - 1
-        obj = state[obj][center_node_index]
+        #print(f'searching for {obj} in {state}...')
+        values = search_state(state, obj)
+        print(f'search obj: {obj}')
+        print(f'state: {state}')
+        print(f'values: {values}')
+        center_node_index = round(len(values)/2) - 1
+        obj = values[center_node_index]
         return obj
     elif isinstance(obj, Node):
         return obj
@@ -215,6 +248,9 @@ class Graph():
 
         # Set option to show architecture diagram
         self.show = show
+
+        # Set initial state to just the Graph
+        set_state({self: []})
 
     def __str__(self) -> str:
         return str(self.dot)
@@ -304,6 +340,14 @@ class Cluster():
         # Override any values directly passed from the object
         self.dot.graph_attr.update(attrs)
 
+        # Add Clusters to state
+        state = get_state()
+        if self._cluster:
+            state = update_state(state, self._cluster, {self: []})
+        else:
+            state = update_state(state, self._graph, {self: []})
+        set_state(state)
+
     def __enter__(self) -> Cluster:
         set_cluster(self)
         return self
@@ -355,6 +399,14 @@ class Group(Cluster):
 
         # Set group depth
         self._depth = self._cluster._depth + 1 if self._cluster else 0
+
+        # Add Groups to state
+        state = get_state()
+        if self._cluster:
+            state = update_state(state, self._cluster, {self: []})
+        else:
+            state = update_state(state, self._graph, {self: []})
+        set_state(state)
 
 
 class Node():
@@ -425,20 +477,13 @@ class Node():
         else:
             self._graph.node(self.id, self.label, **self.node_attrs)
 
+        # Add Nodes to state
         state = get_state()
-        if state is None:
-            # Creates the initial node dictionary if one does not exist
-            state = {self._cluster: [self]}
-            set_state(state)
-        elif self._cluster not in state:
-            # Adds a new cluster key and value to the node dictionary
-            state.update({self._cluster: [self]})
+        if self._cluster:
+            state = update_state(state, self._cluster, self)
         else:
-            # Updates an existing cluster value in the node dictionary
-            node_list = state[self._cluster]
-            node_list.append(self)
-            state.update({self._cluster: node_list})
-            set_state(state)
+            state = update_state(state, self._graph, self)
+        set_state(state)
 
     @property
     def node_id(self) -> str:
@@ -473,6 +518,7 @@ class Edge():
         self._graph = get_graph()
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
+        self._state = get_state()
 
         # Set edge attributes based on the theme using copy to ensure the objects are independent
         self.edge_attrs = self._graph.theme.edge_attrs.copy()
