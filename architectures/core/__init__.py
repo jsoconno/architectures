@@ -105,23 +105,22 @@ def update_state(state: dict, target_key: Union[Cluster, Node], target_value: Un
         return {k: v}
 
 
-def search_state(search_dict: dict, search_key: Cluster) -> list:
+def search_state(search_dict: dict, search_key: Cluster, output: list = []) -> list:
     """
     Search nested dicts and lists for the search_value (key)
     and return the corresponding value.
     """
-    # Get the value of the matching key
+    
     for k, v in search_dict.items():
-        if k is search_key:
-            break
-        elif isinstance(v, list):
+        if k is not search_key and isinstance(v, list):
             for item in v:
                 if isinstance(item, dict):
-                    v = search_state(item, search_key)
+                    search_state(item, search_key, output)
+        else:
+            for item in v:
+                output.append(item)
 
-    # Create a list of nodes to output
-    node_list = [item for item in v if isinstance(item, Node)]
-    return node_list
+    return output
 
 def wrap_text(text: str, max_length: int = 16) -> str:
     """Return a new label with wrapped text.
@@ -174,15 +173,20 @@ def get_node_obj(obj: Union[Cluster, Node]) -> Node:
     """
     if isinstance(obj, Cluster):
         state = get_state()
-        values = search_state(state, obj)
-        count = len(values)
-        center_node_index = round(count/2) - 1
-        obj = values[center_node_index]
-        return obj
-    elif isinstance(obj, Node):
-        return obj
-    else:
-        raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
+        values = search_state(state, obj, [])
+        print(values)
+        if any(isinstance(x, Node) for x in values):
+            node_list = [item for item in values if isinstance(item, Node)]
+            count = len(node_list)
+            center_node_index = round(count/2) - 1
+            obj = node_list[center_node_index]
+        else:
+            for item in values:
+                if isinstance(item, dict):
+                    for k, v in item.items():
+                        return get_node_obj(k)
+    
+    return obj
 
 
 def get_cluster_obj(obj: Union[Cluster, Node]) -> Cluster:
@@ -255,8 +259,8 @@ class Graph():
         # Set initial state to just the Graph
         set_state({self: []})
 
-    def __str__(self) -> str:
-        return str(self.dot)
+    # def __str__(self) -> str:
+    #     return str(self.dot)
 
     def __enter__(self) -> Graph:
         set_graph(self)
