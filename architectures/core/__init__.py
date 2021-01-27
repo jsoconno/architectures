@@ -16,9 +16,10 @@ Available Functions:
 - set_cluster
 - get_state
 - set_state
+- update_state
+- search_state
 - wrap_text
 - get_node_obj
-- get_cluster_obj
 
 Details for each can be found in the docstrings for the respective class or function.
 """
@@ -105,11 +106,13 @@ def update_state(state: dict, target_key: Union[Cluster, Node], target_value: Un
         return {k: v}
 
 
-def search_state(search_dict: dict, search_key: Cluster, output: list = []) -> list:
+def search_state(search_dict: dict, search_key: Cluster, output: list = None) -> list:
     """
     Search nested dicts and lists for the search_value (key)
     and return the corresponding value.
     """
+    if output is None:
+        output = []
     
     for k, v in search_dict.items():
         if k is not search_key and isinstance(v, list):
@@ -173,8 +176,7 @@ def get_node_obj(obj: Union[Cluster, Node]) -> Node:
     """
     if isinstance(obj, Cluster):
         state = get_state()
-        values = search_state(state, obj, [])
-        print(values)
+        values = search_state(state, obj)
         if any(isinstance(x, Node) for x in values):
             node_list = [item for item in values if isinstance(item, Node)]
             count = len(node_list)
@@ -187,31 +189,6 @@ def get_node_obj(obj: Union[Cluster, Node]) -> Node:
                         return get_node_obj(k)
     
     return obj
-
-
-def get_cluster_obj(obj: Union[Cluster, Node]) -> Cluster:
-    """Return a Node's parent Cluster.
-
-    Parameters
-    ----------
-    obj : Cluster, Node
-        A Cluster, Group, or Node object
-
-    Returns
-    -------
-    Cluster
-        The parent Cluster
-    """
-    if isinstance(obj, Node):
-        state = get_state()
-        for cluster, nodes in state.items():
-            for item in nodes:
-                if item == obj:
-                    return cluster
-    elif isinstance(obj, Cluster):
-        return obj
-    else:
-        raise TypeError("The Edge object only accepts Clusters, Groups, and Nodes.")
 
 
 class Graph():
@@ -542,33 +519,32 @@ class Edge():
         # Handle all cases
         for current_start_obj in start_obj_list:
             for current_end_obj in end_obj_list:
-                self.start_cluster = get_cluster_obj(current_start_obj)
-                self.end_cluster = get_cluster_obj(current_end_obj)
-                self.start_node = get_node_obj(current_start_obj)
-                self.end_node = get_node_obj(current_end_obj)
+                start_node = get_node_obj(current_start_obj)
+                end_node = get_node_obj(current_end_obj)
 
                 # Cluster to Cluster connections
                 if isinstance(current_start_obj, Cluster) and isinstance(current_end_obj, Cluster):
-                    self.edge_attrs.update({"ltail": self.start_cluster.name, "lhead": self.end_cluster.name})
-                    self_reference = self.start_cluster == self.end_cluster
+                    self.edge_attrs.update({"ltail": current_start_obj.name, "lhead": current_end_obj.name})
+                    self_reference = current_start_obj == current_end_obj
                 # Cluster to Node connections
                 elif isinstance(current_start_obj, Cluster) and isinstance(current_end_obj, Node):
-                    self.edge_attrs.update({"ltail": self.start_cluster.name})
-                    self_reference = self.start_cluster == self.end_cluster
+                    self.edge_attrs.update({"ltail": current_start_obj.name})
+                    self_reference = start_node == current_end_obj
                 # Node to Cluster connections
                 elif isinstance(current_start_obj, Node) and isinstance(current_end_obj, Cluster):
-                    self.edge_attrs.update({"lhead": self.end_cluster.name})
-                    self_reference = self.start_cluster == self.end_cluster
+                    self.edge_attrs.update({"lhead": current_end_obj.name})
+                    self_reference = current_start_obj == end_node
                 # Node to Node connections
                 else:
                     self.edge_attrs.update({"ltail": "", "lhead": ""})
-                    self_reference = self.start_node == self.end_node
+                    self_reference = start_node == end_node
 
                 # Override any attributes directly passed from the object
                 self.edge_attrs.update(attrs)
 
+                # Create the connection between Nodes
                 if not self_reference:
-                    self._graph.edge(self.start_node, self.end_node, **self.edge_attrs)
+                    self._graph.edge(start_node, end_node, **self.edge_attrs)
 
 
 class Flow():

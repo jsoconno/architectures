@@ -186,12 +186,6 @@ class TestEdge:
             Edge(node_c, node_d)  # node to node within the same cluster
             Edge(node_d, node_e)  # node to node within different clusters
 
-            with pytest.raises(TypeError):
-                Edge(node_a, "node_b")
-
-            with pytest.raises(TypeError):
-                Edge("node_a", node_b)
-
     def test_node_to_nodes(self):
         with Graph(show=False):
             node_a = Node("A")
@@ -202,12 +196,6 @@ class TestEdge:
 
             Edge(node_a, [node_b, node_c])  # node to list of nodes
             Edge([node_a, node_b], node_c)  # list of nodes to node
-
-            with pytest.raises(TypeError):
-                Edge(node_a, [node_b, "node_c"])
-
-            with pytest.raises(TypeError):
-                Edge([node_a, "node_b"], node_c)
     
     def test_node_to_cluster(self):
         with Graph(show=False):
@@ -233,12 +221,6 @@ class TestEdge:
             Edge(cluster_a, cluster_b)  # cluster to cluster
             Edge(cluster_b, cluster_a)
 
-            with pytest.raises(TypeError):
-                Edge(cluster_a, "cluster_b")
-
-            with pytest.raises(TypeError):
-                Edge("cluster_a", cluster_b)
-
     def test_cluster_to_clusters(self):
         with Graph(show=False):
             with Cluster() as cluster_a:
@@ -250,12 +232,6 @@ class TestEdge:
 
             Edge(cluster_a, [cluster_b, cluster_c])  # cluster to list of clusters
             Edge([cluster_a, cluster_b], cluster_c)
-
-            with pytest.raises(TypeError):
-                Edge(cluster_a, [cluster_b, "cluster_c"])
-
-            with pytest.raises(TypeError):
-                Edge([cluster_a, "cluster_b"], cluster_c)
 
     def test_cluster_to_node(self):
         with Graph(show=False):
