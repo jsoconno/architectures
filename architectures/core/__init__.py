@@ -561,11 +561,8 @@ class Flow():
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
 
-        # Set edge attributes based on the theme using copy to ensure the objects are independent
-        self.edge_attrs = self._graph.theme.edge_attrs.copy()
-
-        # Override any attributes directly passed from the object
-        self.edge_attrs.update(attrs)
+        # Set edge attributes based on attributes directly passed from the object
+        self.edge_attrs = attrs
 
         # Make sure there is more than one node
         if self.obj_count > 1:
