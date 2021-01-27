@@ -528,11 +528,11 @@ class Edge():
                     self_reference = current_start_obj == current_end_obj
                 # Cluster to Node connections
                 elif isinstance(current_start_obj, Cluster) and isinstance(current_end_obj, Node):
-                    self.edge_attrs.update({"ltail": current_start_obj.name})
+                    self.edge_attrs.update({"ltail": current_start_obj.name, "lhead": ""})
                     self_reference = start_node == current_end_obj
                 # Node to Cluster connections
                 elif isinstance(current_start_obj, Node) and isinstance(current_end_obj, Cluster):
-                    self.edge_attrs.update({"lhead": current_end_obj.name})
+                    self.edge_attrs.update({"ltail": "", "lhead": current_end_obj.name})
                     self_reference = current_start_obj == end_node
                 # Node to Node connections
                 else:

@@ -131,8 +131,9 @@ dmypy.json
 # Mac
 .DS_Store
 
-# Images at root generated from architectures
+# Files at root of architectures
 /*.png
+sandbox.py
 
 # VSCode
 .vscode
