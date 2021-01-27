@@ -449,9 +449,14 @@ class Node():
         # Override any values directly passed from the object
         self.node_attrs.update(attrs)
 
+        if self.label == "":
+            baseline_padding = 0.0
+        else:
+            baseline_padding = 0.5
+
         # Add attributes specific for when provider service nodes are used.
         if self._icon:
-            padding = 0.1 * (self.label.count('\n'))
+            padding = baseline_padding + (0.15 * (self.label.count('\n')))
             self.node_attrs["height"] = str(float(self.node_attrs['height']) + padding)
             self.node_attrs["image"] = self._load_icon()
 
