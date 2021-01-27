@@ -216,7 +216,7 @@ class LightMode():
             "style": "rounded,filled",
             "fixedsize": "true",
             "width": "1.0",
-            "height": "1.5",
+            "height": "1.0",
             "labelloc": "b",
             "imagescale": "true",
             "fontname": "Calibri",
