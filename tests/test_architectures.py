@@ -2,7 +2,7 @@ import glob
 import os
 import pytest
 
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.core import Graph, Cluster, Group, Node, Anchor, Edge, Flow
 from architectures.core import wrap_text
 from architectures.themes import Default, LightMode, DarkMode
 
@@ -157,6 +157,22 @@ class TestNode:
     def test_node_graph_context(self):
         with pytest.raises(EnvironmentError):
             Node("A")
+
+class TestAnchor:
+    @classmethod
+    def setup_class(cls):
+        cls.default_graphname = "my-architecture"
+        cls.default_ext = ".png"
+        cls.default_filename = cls.default_graphname + cls.default_ext
+
+    @classmethod
+    def teardown_class(cls):
+        for graph_image in glob.glob(f"*{cls.default_ext}"):
+            os.remove(graph_image)
+
+    def test_node_graph_context(self):
+        with pytest.raises(EnvironmentError):
+            Anchor("A")
 
 
 class TestEdge:

@@ -1,9 +1,9 @@
 from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
-from architectures.themes import Default
+from architectures.themes import Default, LightMode
 
-theme = Default(graph_attr_overrides={"rankdir":"LR", "nodesep":"2"})
+theme = LightMode(graph_attr_overrides={"splines":"false"})
 
-with Graph("Neural Network"):
+with Graph("Neural Network", theme=theme):
     input_layer = [Node() for i in range(3)]
     with Cluster("Hidden Layers") as hidden_layers:
         hidden_layer_1 = [Node() for i in range(4)]
