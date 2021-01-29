@@ -1,4 +1,4 @@
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.core import Graph, Cluster, Node, Edge, Flow
 from architectures.themes import Default, LightMode
 
 from architectures.providers.azure.general import Computer
@@ -19,7 +19,7 @@ with Graph("Jenkins Server on Azure", theme=LightMode()):
                 vm2 = VirtualMachineWindows("Build VM")
                 vm3 = VirtualMachineWindows("Build VM")
                 agent_pool = [vm1, vm2, vm3]
-            with Group():
+            with Cluster(hide_border=True):
                 jenkins_server = VirtualMachineWindows("Jenkins Server")
     computer = Computer()
     active_directory = AzureActiveDirectory()
