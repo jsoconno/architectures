@@ -5,7 +5,7 @@ from architectures.providers.azure.data import DataLake, SqlServer
 from architectures.providers.azure.compute import VirtualMachine
 from architectures.providers.azure.networking import ApplicationGateway
 
-theme = LightMode(graph_attr_overrides={"rankdir":"TB"}, hue="blue")
+theme = LightMode(graph_attr_overrides={"rankdir":"TB"})
 
 with Graph("Simple", theme=theme):
     app_gateway = ApplicationGateway()
