@@ -195,7 +195,7 @@ class Graph():
     """
     Create and set default settings for a graph and its clusters, nodes, and edges.
     """
-    def __init__(self, name: str = "my-architecture",
+    def __init__(self, name: str = "My Architecture",
                  output_file_format: str = "png",
                  theme: Any = None, show: bool = True
                  ) -> None:
@@ -249,17 +249,17 @@ class Graph():
         os.remove(self.output_file_name)
         set_graph(None)
 
-    def node(self, node_id: str, label: str, **attrs: Any) -> None:
+    def node(self, name: str, label: str, **attrs: Any) -> None:
         """
         Create a node.
         """
-        self.dot.node(node_id, label=label, **attrs)
+        self.dot.node(name, label=label, **attrs)
 
     def edge(self, start_node: Node, end_node: Node, **attrs: Any) -> None:
         """
         Connect individual or lists of nodes with edges.
         """
-        self.dot.edge(start_node.node_id, end_node.node_id, **attrs)
+        self.dot.edge(start_node.id, end_node.id, **attrs)
 
     def subgraph(self, dot: Digraph) -> None:
         """
@@ -286,8 +286,8 @@ class Cluster():
         :param label: Label for the cluster.
         """
 
-        # Set the cluster name
-        self.name = "cluster_" + str(id(self))
+        # Set the cluster id
+        self.id = "cluster_" + str(id(self))
 
         #Set the cluster label
         if label == "" and self._default_label:
@@ -296,7 +296,7 @@ class Cluster():
             self.label = label
 
         # Create cluster
-        self.dot = Digraph(self.name)
+        self.dot = Digraph(self.id)
 
         # Set global graph and cluster context
         self._graph = get_graph()
@@ -315,8 +315,8 @@ class Cluster():
 
         # Set the cluster background color
         if _colors:
-            color_index = self._depth % len(_colors)
-            self.dot.graph_attr["bgcolor"] = _colors[color_index]
+            _color_index = self._depth % len(_colors)
+            self.dot.graph_attr["bgcolor"] = _colors[_color_index]
 
         # Update cluster label
         self.dot.graph_attr["label"] = self.label
@@ -343,11 +343,11 @@ class Cluster():
             self._graph.subgraph(self.dot)
         set_cluster(self._cluster)
 
-    def node(self, node_id: str, label: str, **attrs: Any) -> None:
+    def node(self, name: str, label: str, **attrs: Any) -> None:
         """
         Create a node in the cluster.
         """
-        self.dot.node(node_id, label=label, **attrs)
+        self.dot.node(name, label=label, **attrs)
 
     def subgraph(self, dot: Digraph = Digraph) -> None:
         """
@@ -361,25 +361,22 @@ class Group(Cluster):
     Creates a special type of cluster used only or grouping nodes.
     """
 
-    def __init__(self, label: str = "group", **attrs: Any) -> None:
-
-        # Set the group name
-        self.name = "cluster_" + str(id(self))
+    def __init__(self, label: str = "", **attrs: Any) -> None:
+        
+        # Set the group id
+        self.id = "group_" + str(id(self))
 
         # Set the group label
         self.label = label
 
         # Create group
-        self.dot = Digraph(self.name)
+        self.dot = Digraph(self.id)
 
         # Set global graph and group context
         self._graph = get_graph()
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
         self._cluster = get_cluster()
-
-        # Update group background color style
-        self.dot.graph_attr["style"] = "invis"
 
         # Set group depth
         self._depth = self._cluster._depth + 1 if self._cluster else 0
@@ -414,7 +411,7 @@ class Node():
         :param str label: Label for a node.
         """
         # Generate an ID used to uniquely identify a node
-        self.id = str(id(self))
+        self.id = "node_" + str(id(self))
 
         #Set the label
         if self._icon and label == "":
@@ -474,13 +471,6 @@ class Node():
             state = update_state(state, self._graph, self)
         set_state(state)
 
-    @property
-    def node_id(self) -> str:
-        """
-        Return the node id
-        """
-        return self.id
-
     def _load_icon(self) -> str:
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
         return os.path.join(basedir.parent.parent, self._icon_dir, self._icon)
@@ -500,6 +490,9 @@ class Edge():
         :param end: The destination cluster, group, or node object.
         :param attrs: Other edge attributes.
         """
+
+        self.id = "edge_" + str(id(self))
+
         self.start_obj = start_obj
         self.end_obj = end_obj
 
@@ -529,15 +522,15 @@ class Edge():
 
                 # Cluster to Cluster connections
                 if isinstance(current_start_obj, Cluster) and isinstance(current_end_obj, Cluster):
-                    self.edge_attrs.update({"ltail": current_start_obj.name, "lhead": current_end_obj.name})
+                    self.edge_attrs.update({"ltail": current_start_obj.id, "lhead": current_end_obj.id})
                     self_reference = current_start_obj == current_end_obj
                 # Cluster to Node connections
                 elif isinstance(current_start_obj, Cluster) and isinstance(current_end_obj, Node):
-                    self.edge_attrs.update({"ltail": current_start_obj.name, "lhead": ""})
+                    self.edge_attrs.update({"ltail": current_start_obj.id, "lhead": ""})
                     self_reference = start_node == current_end_obj
                 # Node to Cluster connections
                 elif isinstance(current_start_obj, Node) and isinstance(current_end_obj, Cluster):
-                    self.edge_attrs.update({"ltail": "", "lhead": current_end_obj.name})
+                    self.edge_attrs.update({"ltail": "", "lhead": current_end_obj.id})
                     self_reference = current_start_obj == end_node
                 # Node to Node connections
                 else:
@@ -557,6 +550,8 @@ class Flow():
     Another method of connecting nodes by allowing users to define a flow as a list.
     """
     def __init__(self, objs: list[Union[Cluster, Node]], **attrs: Any) -> None:
+
+        self.id = "flow_" + str(id(self))
 
         self.objs = objs
         self.obj_count = len(self.objs)
@@ -585,5 +580,6 @@ class Flow():
             raise Exception('More than one object must be passed in the list to use Flow')
 
 
+Canvas = Graph
 Connection = Edge
 Container = Cluster

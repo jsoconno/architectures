@@ -31,7 +31,7 @@ with Graph("Jenkins Server on Azure", theme=LightMode()):
     
 
     Flow([computer, jenkins_server, [active_directory, managed_discs, scaled_agents_cluster, monitor]])
-    Edge(vm3, [key_vault, blob_storage], ltail=scaled_agents_cluster.name)
+    Edge(vm3, [key_vault, blob_storage], ltail=scaled_agents_cluster.id)
     Edge(source_control, jenkins_server)
     Flow([vm1, vm2, vm3], style="invis")
 
