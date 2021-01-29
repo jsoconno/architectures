@@ -7,7 +7,7 @@ from architectures.providers.azure.data import AzureCosmosDb
 from architectures.providers.azure.general import Computer
 from architectures.providers.azure.storage import StorageAccountBlob
 
-theme = LightMode()
+theme = LightMode(cluster_attr_overrides={"rank":"same"})
 
 with Graph("Event Driven Serverless Architecture", theme=theme):
     computer = Computer("Single Page Web App")
