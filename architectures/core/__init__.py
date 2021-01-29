@@ -4,7 +4,6 @@ This module contains all core classes required for drawing diagrams.
 Available Classes:
 - Graph
 - Cluster
-- Group
 - Node
 - Edge
 - Flow
@@ -281,9 +280,10 @@ class Cluster():
 
     _default_label = None
 
-    def __init__(self, label: str = "", **attrs: Any) -> None:
+    def __init__(self, label: str = "", hide_border: bool = False, **attrs: Any) -> None:
         """
-        :param label: Label for the cluster.
+        :param label str: Label for the cluster.
+        :param bool hide_border: Determines whether or not a border is shown around the cluster.
         """
 
         # Set the cluster id
@@ -320,6 +320,11 @@ class Cluster():
 
         # Update cluster label
         self.dot.graph_attr["label"] = self.label
+
+        # Make group border invisible
+        if hide_border:
+            self.dot.graph_attr["penwidth"] = "0"
+            self.dot.graph_attr["bgcolor"] = "invis"
 
         # Override any values directly passed from the object
         self.dot.graph_attr.update(attrs)
@@ -356,91 +361,6 @@ class Cluster():
         self.dot.subgraph(dot)
 
 
-class Group(Cluster):
-    """
-    Creates a special type of cluster used only or grouping nodes.
-    """
-
-    _default_label = None
-
-    def __init__(self, label: str = "", **attrs: Any) -> None:
-        """
-        :param label: Label for the group.
-        """
-
-        # Set the cluster id
-        self.id = "cluster_" + str(id(self))
-
-        #Set the cluster label
-        if label == "" and self._default_label:
-            self.label = self._default_label
-        else:
-            self.label = label
-
-        # Create cluster
-        self.dot = Digraph(self.id)
-
-        # Set global graph and cluster context
-        self._graph = get_graph()
-        if self._graph is None:
-            raise EnvironmentError("The object is not part of a Graph")
-        self._cluster = get_cluster()
-
-        # Set cluster attributes based on the theme using copy to ensure the objects are independent
-        self.dot.graph_attr.update(self._graph.theme.cluster_attrs)
-
-        # Set cluster depth to allow for logic based on the nesting of clusters
-        self._depth = self._cluster._depth + 1 if self._cluster else 0
-
-        # Get background colors from theme
-        _colors = self._graph.theme.colors
-
-        # Set the cluster background color
-        if _colors:
-            _color_index = self._depth % len(_colors)
-            self.dot.graph_attr["bgcolor"] = _colors[_color_index]
-
-        # Update cluster label
-        self.dot.graph_attr["label"] = self.label
-        
-        # Make group border invisible
-        self.dot.graph_attr["style"] = "invis"
-
-        # Override any values directly passed from the object
-        self.dot.graph_attr.update(attrs)
-
-        # Add Clusters to state
-        state = get_state()
-        if self._cluster:
-            state = update_state(state, self._cluster, {self: []})
-        else:
-            state = update_state(state, self._graph, {self: []})
-        set_state(state)
-
-    def __enter__(self) -> Cluster:
-        set_cluster(self)
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback) -> None:
-        if self._cluster:
-            self._cluster.subgraph(self.dot)
-        else:
-            self._graph.subgraph(self.dot)
-        set_cluster(self._cluster)
-
-    def node(self, name: str, label: str, **attrs: Any) -> None:
-        """
-        Create a node in the group.
-        """
-        self.dot.node(name, label=label, **attrs)
-
-    def subgraph(self, dot: Digraph = Digraph) -> None:
-        """
-        Create a subgraph of the group.
-        """
-        self.dot.subgraph(dot)
-
-
 class Node():
     """
     Creates a node.  This can be a standard node or a node representing a service from a provider.
@@ -455,14 +375,19 @@ class Node():
     _default_label = None
 
     def __init__(self, label: str = "",
+                 hide_node: bool = False,
                  wrap_label_text: bool = True,
                  **attrs: Any
                  ) -> None:
         """
         :param str label: Label for a node.
+        :param bool hide_node: Determines whether or not a node should act as a hidden node with not width or height.
         """
         # Generate an ID used to uniquely identify a node
         self.id = "node_" + str(id(self))
+
+        # Set hide_node attribute
+        self.hide_node = hide_node
 
         #Set the label
         if self._icon and label == "":
@@ -507,95 +432,10 @@ class Node():
             padding = baseline_padding + (0.15 * (self.label.count('\n')))
             self.node_attrs["height"] = str(float(self.node_attrs['height']) + padding)
             self.node_attrs["image"] = self._load_icon()
-
-        # If a node is in the cluster context, add it to cluster.
-        if self._cluster:
-            self._cluster.node(self.id, self.label, **self.node_attrs)
-        else:
-            self._graph.node(self.id, self.label, **self.node_attrs)
-
-        # Add Nodes to state
-        state = get_state()
-        if self._cluster:
-            state = update_state(state, self._cluster, self)
-        else:
-            state = update_state(state, self._graph, self)
-        set_state(state)
-
-    def _load_icon(self) -> str:
-        basedir = Path(os.path.abspath(os.path.dirname(__file__)))
-        return os.path.join(basedir.parent.parent, self._icon_dir, self._icon)
-
-
-class Anchor(Node):
-    """
-    Creates a node.  This can be a standard node or a node representing a service from a provider.
-    """
-
-    _provider = None
-    _service_type = None
-
-    _icon_dir = None
-    _icon = None
-
-    _default_label = None
-
-    def __init__(self, label: str = "",
-                 wrap_label_text: bool = True,
-                 **attrs: Any
-                 ) -> None:
-        """
-        :param str label: Label for a node.
-        """
-        # Generate an ID used to uniquely identify a node
-        self.id = "node_" + str(id(self))
-
-        #Set the label
-        if self._icon and label == "":
-            self.label = self._default_label
-        else:
-            self.label = label
-
-        # Get global graph and cluster context to ensure the Node is part of the graph or cluster
-        self._graph = get_graph()
-        if self._graph is None:
-            raise EnvironmentError("The object is not part of a Graph")
-        self._cluster = get_cluster()
-
-        # Set default icon
-        if not isinstance(self._graph.theme, Default) and not self._icon:
-            self._provider = "general"
-            self._service_type = "blank"
-
-            self._icon_dir = "icons/general/blank"
-            self._icon = "default.png"
-
-        # Auto-wrap labels
-        if wrap_label_text:
-            if self._cluster is not None:
-                self.label = wrap_text(self.label, len(self._cluster.label))
-            else:
-                self.label = wrap_text(self.label)
-
-        # Set node attributes based on the theme using copy to ensure the objects are independent
-        self.node_attrs = self._graph.theme.node_attrs.copy()
 
         # Set the width and height to be 0
-        self.node_attrs.update({"width":"0", "height":"0"})
-
-        # Override any values directly passed from the object
-        self.node_attrs.update(attrs)
-
-        if self.label == "":
-            baseline_padding = 0.0
-        else:
-            baseline_padding = 0.5
-
-        # Add attributes specific for when provider service nodes are used.
-        if self._icon:
-            padding = baseline_padding + (0.15 * (self.label.count('\n')))
-            self.node_attrs["height"] = str(float(self.node_attrs['height']) + padding)
-            self.node_attrs["image"] = self._load_icon()
+        if hide_node:
+            self.node_attrs.update({"width":"0", "height":"0"})
 
         # If a node is in the cluster context, add it to cluster.
         if self._cluster:
@@ -614,7 +454,6 @@ class Anchor(Node):
     def _load_icon(self) -> str:
         basedir = Path(os.path.abspath(os.path.dirname(__file__)))
         return os.path.join(basedir.parent.parent, self._icon_dir, self._icon)
-
 
 class Edge():
     """
@@ -678,7 +517,7 @@ class Edge():
                     self_reference = start_node == end_node
 
                 # Update the type of edge based on if the object is an anchor
-                if isinstance(current_end_obj, Anchor):
+                if isinstance(current_end_obj, Node) and current_end_obj.hide_node:
                     self.edge_attrs.update({"dir":"none"})
 
                 # Override any attributes directly passed from the object

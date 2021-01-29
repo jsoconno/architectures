@@ -1,19 +1,31 @@
-from architectures.core import Graph, Cluster, Group, Node, Anchor, Edge, Flow
-from architectures.themes import Default, LightMode
+# Import the base objects
+from architectures.core import Graph, Cluster, Node, Edge, Flow
 
-with Graph(theme=LightMode(), show=True) as graph:
-    with Cluster(rank="same"):
-        a = Node()
-        x = Anchor()
-        b = Node()
+# Import the available themes
+from architectures.themes import LightMode, DarkMode
 
-    y = Anchor()
+# Import provider services
+from architectures.providers.azure.networking import ApplicationGateway, LoadBalancer
+from architectures.providers.azure.compute import VirtualMachineWindows
+from architectures.providers.azure.data import DataLake
 
-    with Cluster(rank="same"):
-        c = Node()
-        d = Node()
-        e = Node()
+# Set the theme
+theme = LightMode()
 
-    Flow([a, x, b], dir="none")
-    Edge(x, y,)
-    Edge(y, [c, d, e])
+with Graph("Basic Architecture", theme=theme):
+    a = Node("A")
+    b = Node("B")
+    c = Node("C")
+    d = Node("D")
+    e = Node("E")
+
+    to_x_to = Node(hide_node=True)
+    to_y_to = Node(hide_node=True)
+    to_z_to = Node(hide_node=True)
+
+    # Flow([a, to_x_to, [b, c]])
+
+    Edge(a, to_x_to)
+    Edge(to_x_to, [to_y_to, to_z_to])
+    Edge(to_y_to, [b, c])
+    Edge(to_z_to, [d, e])

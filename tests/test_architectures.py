@@ -2,7 +2,7 @@ import glob
 import os
 import pytest
 
-from architectures.core import Graph, Cluster, Group, Node, Anchor, Edge, Flow
+from architectures.core import Graph, Cluster, Node, Edge, Flow
 from architectures.core import wrap_text
 from architectures.themes import Default, LightMode, DarkMode
 
@@ -111,37 +111,6 @@ class TestCluster:
             Cluster("A")
 
 
-class TestGroup:
-    @classmethod
-    def setup_class(cls):
-        cls.default_graphname = "my-architecture"
-        cls.default_ext = ".png"
-        cls.default_filename = cls.default_graphname + cls.default_ext
-    
-    @classmethod
-    def teardown_class(cls):
-        for graph_image in glob.glob(f"*{cls.default_ext}"):
-            os.remove(graph_image)
-
-    def test_group(self):
-        with Graph(show=False):
-            with Group():
-                Node("A")
-
-    def test_edge_and_group_connections(self):
-        with Graph(show=False):
-            with Group() as group_a:
-                node_a = Node()
-            with Group() as group_b:
-                node_b = Node()
-
-            Flow([node_a, group_b, group_a, node_b])
-
-    def test_group_graph_context(self):
-        with pytest.raises(EnvironmentError):
-            Group("A")
-
-
 class TestNode:
     @classmethod
     def setup_class(cls):
@@ -157,22 +126,6 @@ class TestNode:
     def test_node_graph_context(self):
         with pytest.raises(EnvironmentError):
             Node("A")
-
-class TestAnchor:
-    @classmethod
-    def setup_class(cls):
-        cls.default_graphname = "my-architecture"
-        cls.default_ext = ".png"
-        cls.default_filename = cls.default_graphname + cls.default_ext
-
-    @classmethod
-    def teardown_class(cls):
-        for graph_image in glob.glob(f"*{cls.default_ext}"):
-            os.remove(graph_image)
-
-    def test_node_graph_context(self):
-        with pytest.raises(EnvironmentError):
-            Anchor("A")
 
 
 class TestEdge:
