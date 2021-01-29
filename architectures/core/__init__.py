@@ -196,7 +196,8 @@ class Graph():
     """
     def __init__(self, name: str = "My Architecture",
                  output_file_format: str = "png",
-                 theme: Any = None, show: bool = True
+                 theme: Any = None, show: bool = True,
+                 **attrs: Any
                  ) -> None:
         """
         :param str name: The name of the graph.
@@ -221,6 +222,7 @@ class Graph():
 
         # Set global graph attributes
         self.dot.graph_attr.update(self.theme.graph_attrs)
+        self.dot.graph_attr.update(attrs)
         self.dot.graph_attr["label"] = self.name
 
         # Set global node attributes
