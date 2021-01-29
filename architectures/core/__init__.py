@@ -364,7 +364,7 @@ class Group(Cluster):
     def __init__(self, label: str = "", **attrs: Any) -> None:
         
         # Set the group id
-        self.id = "group_" + str(id(self))
+        self.id = "cluster_" + str(id(self))
 
         # Set the group label
         self.label = label
@@ -377,6 +377,9 @@ class Group(Cluster):
         if self._graph is None:
             raise EnvironmentError("The object is not part of a Graph")
         self._cluster = get_cluster()
+
+        # Make group border invisible
+        self.dot.graph_attr["style"] = "invis"
 
         # Set group depth
         self._depth = self._cluster._depth + 1 if self._cluster else 0
