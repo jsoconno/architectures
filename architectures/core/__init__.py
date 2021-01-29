@@ -4,7 +4,6 @@ This module contains all core classes required for drawing diagrams.
 Available Classes:
 - Graph
 - Cluster
-- Group
 - Node
 - Edge
 - Flow
@@ -283,7 +282,8 @@ class Cluster():
 
     def __init__(self, label: str = "", hide_border: bool = False, **attrs: Any) -> None:
         """
-        :param label: Label for the cluster.
+        :param label str: Label for the cluster.
+        :param bool hide_border: Determines whether or not a border is shown around the cluster.
         """
 
         # Set the cluster id
@@ -381,6 +381,7 @@ class Node():
                  ) -> None:
         """
         :param str label: Label for a node.
+        :param bool hide_node: Determines whether or not a node should act as a hidden node with not width or height.
         """
         # Generate an ID used to uniquely identify a node
         self.id = "node_" + str(id(self))
