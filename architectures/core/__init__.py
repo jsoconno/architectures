@@ -365,7 +365,7 @@ class Group(Cluster):
 
     def __init__(self, label: str = "", **attrs: Any) -> None:
         """
-        :param label: Label for the cluster.
+        :param label: Label for the group.
         """
 
         # Set the cluster id
@@ -430,13 +430,13 @@ class Group(Cluster):
 
     def node(self, name: str, label: str, **attrs: Any) -> None:
         """
-        Create a node in the cluster.
+        Create a node in the group.
         """
         self.dot.node(name, label=label, **attrs)
 
     def subgraph(self, dot: Digraph = Digraph) -> None:
         """
-        Create a subgraph of the cluster.
+        Create a subgraph of the group.
         """
         self.dot.subgraph(dot)
 
