@@ -87,14 +87,12 @@ pip install architectures
 There are several supported objects in the architectures library.  These objects primarily fall into three categories:
 ### Containers
 - **Graphs** allow users to create a base canvas to create their diagram on
-- **Clusters** allow users to group **Nodes** into bounded container
-- **Groups** allow users to logically group **Nodes** with no bounding container
+- **Clusters** allow users to group **Nodes** into a container
 ### Components
 - **Nodes** allow users to create an object that represents a service
-- **Anchors** _[coming soon]_ will allow users to better control direction and connection points of Edges.
 ### Connections
-- **Edges** allow users to draw a line between a pair or list of **Nodes**, **Clusters**, or **Groups**
-- **Flows** allow users to create a linear flow through a list of **Nodes**, **Clusters**, or **Groups**
+- **Edges** allow users to draw a line between a pair or list of **Clusters** or **Nodes**
+- **Flows** allow users to create a linear flow through a list of **Clusters** or **Nodes**
 
 The Node object is extended with subclasses that allow for the creation of standard service components from various providers such as Azure, GCP, and AWS.  Read on for some examples.
 ## Example Architecture
@@ -147,7 +145,7 @@ The first thing you will need to do is to import the `core` module.  This module
 
 You can explicitly import only the objects that you need...
 ```
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.core import Graph, Cluster, Node, Edge, Flow
 ```
 ... or import everything using `*`.
 ```
@@ -202,6 +200,7 @@ with Graph("My Graph"):
 ```
 Node objects accept the following optional arguments:
 * `label (str)` - the label given to the Node
+* `hide_node (bool)` - a flag to determine if a node is hidden
 * `wrap_label_text (bool)` - a flag to determine if label text should be automatically wrapped
 * `**attrs` - keyword arguments that are used to pass attributes to the Node to override defaults
 
@@ -209,9 +208,9 @@ If no label is given, the Node will appear without a label.  For provider classe
 
 For more information on available Node attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 ### Part 4 - Grouping Nodes on a Graph
-No doubt you will want to be able to logically group Nodes on your architecture diagram.  You can do this with the `Cluster` and `Group` objects.
+No doubt you will want to be able to logically group Nodes on your architecture diagram.  You can do this with the `Cluster` object.
 
-The primary difference between a Cluster and a Group is that a Cluster will draw a border around a collection of Nodes while a Group will not.  Clusters and Groups must both be contained by a Graph.
+Node: Clusters must be contained by a Graph.
 
 For more information on these objects, see the [Core Components](##core-components) section above.
 
@@ -238,18 +237,19 @@ The code above will generate a diagram that looks like this:
 
 Note that objects on the Graph are created in the reverse order that they are found in the code.  This is not always something you have to consider, but keep in mind it can have an impact on the final layout.  In particular for larger, more complex diagrams.
 
-Cluster and Group objects accept the following optional arguments:
+Cluster objects accept the following optional arguments:
 * `label (str)` - the label given to the Cluster or Group
+* `hide_border (bool)` - a flag that determines whether to make the cluster background and border invisible
 * `**attrs` - keyword arguments that are used to pass attributes to the Cluster or Group to override defaults
 
-If no label is given, Clusters and Groups will appear without a label.
+If no label is given, Clusters will appear without a label.
 
 For more information on available Node attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 
 ### Part 5 - Connecting Nodes and Clusters
-A collection of Nodes, Clusters, and Groups might not be all that useful by themselves.  To start defining relationships, you will want to draw lines between them.  This can be done using the `Edge` and `Flow` objects.
+A collection of Clusters and Nodes might not be all that useful by themselves.  To start defining relationships, you will want to draw lines between them.  This can be done using the `Edge` and `Flow` objects.
 
-It is important to assign Nodes, Clusters, and Groups to a variable so they can be referenced when drawing Edges or Flows.
+It is important to assign Clusters and Nodes to a variable so they can be referenced when drawing Edges or Flows.
 
 The example below shows several different scenarios and builds on the previous example in Part 4.
 
@@ -286,7 +286,7 @@ Edge(a, c, dir="both", color="blue")
 
 The Flow object is similar to the Edge object in that it can connect Nodes.  However, it allows for a list of objects so you can create an end-to-end flow on a diagram.
 ```
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.core import Graph, Cluster, Node, Edge, Flow
 
 with Graph("My Graph"):
     with Cluster("Cluster A") as cluster_a:
@@ -309,11 +309,11 @@ As you can see, the Flow object is a powerful way to streamline your code when c
 Note that, as with Edges, the Flow object also accepts keyword arguments to set attributes.
 
 Edge objects accept the following required arguments:
-* `start_node (Cluster, Group, or Node object(s))` - the the source object(s) from where the Edge will originate
-* `end_node (Cluster, Group, or Node object(s))` - the destination object(s) to where th Edge will terminate
+* `start_node (Cluster or Node object(s))` - the the source object(s) from where the Edge will originate
+* `end_node (Cluster or Node object(s))` - the destination object(s) to where th Edge will terminate
 
 Flow objects accept the follow required arguments:
-* `nodes (list)` - a list of Cluster, Group, or Node objects to flow through
+* `nodes (list)` - a list of Cluster or Node objects to flow through
 
 Both Edge and Flow objects support the following optional arguments:
 * `**attrs` - keyword arguments that are used to pass attributes to the Edge to override defaults
@@ -321,7 +321,7 @@ Both Edge and Flow objects support the following optional arguments:
 For more information on available Edge attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 
 ### Part 6 - Using Themes
-Although you can now draw any combinations of Clusters, Groups, Nodes, Edges, and Flows on your Graph, you are probably not too happy with the overall appearance of your diagram.  The Default theme is great for prototyping, but not what you would want to share with your team.
+Although you can now draw any combinations of Clusters, Nodes, Edges, and Flows on your Graph, you are probably not too happy with the overall appearance of your diagram.  The Default theme is great for prototyping, but not what you would want to share with your team.
 
 `Themes` allow you to style your architecture diagram so that it looks professional.  You can import any pre-defined themes from the themes module.  Currently supported Themes include:
 * `Default` - the standard Graphviz settings for drawing diagrams
@@ -332,7 +332,7 @@ from architectures.themes import Default, LightMode, DarkMode
 ```
 Here is our previous code example using the LightMode theme.
 ```
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.core import Graph, Cluster, Node, Edge, Flow
 
 # Import the LightMode theme
 from architectures.themes import LightMode
@@ -388,7 +388,7 @@ Each service from these providers is represented by a class that inherits from t
 Here is an example of how you can import services and themes to create a nice looking diagram.
 ```
 # Import the base objects
-from architectures.core import Graph, Cluster, Group, Node, Edge, Flow
+from architectures.core import Graph, Cluster, Node, Edge, Flow
 
 # Import the available themes
 from architectures.themes import LightMode, DarkMode
