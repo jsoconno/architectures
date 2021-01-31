@@ -7,7 +7,7 @@ from architectures.providers.azure.ai import BotService, CognitiveServicesSearch
 from architectures.providers.azure.data import SqlDatabase
 from architectures.providers.azure.compute import VirtualMachine
 
-graph_settings = GraphSettings(bgcolor="blue")
+graph_settings = GraphSettings(nodesep="3")
 theme = LightMode(graph_settings=graph_settings)
 
 with Graph("Intelligent Search", theme=theme):
