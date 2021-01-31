@@ -1,5 +1,5 @@
 from architectures.core import Graph, Cluster, Node, Edge, Flow
-from architectures.themes import DarkMode, LightMode
+from architectures.themes import DarkMode, LightMode, GraphSettings
 
 from architectures.providers.azure.general import Computer
 from architectures.providers.azure.application import ApplicationService
@@ -7,7 +7,8 @@ from architectures.providers.azure.ai import BotService, CognitiveServicesSearch
 from architectures.providers.azure.data import SqlDatabase
 from architectures.providers.azure.compute import VirtualMachine
 
-theme = DarkMode(graph_attr_overrides={"nodesep":"3"})
+graph_settings = GraphSettings(bgcolor="blue")
+theme = LightMode(graph_settings=graph_settings)
 
 with Graph("Intelligent Search", theme=theme):
     computer = Computer()
