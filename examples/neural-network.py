@@ -1,7 +1,7 @@
 from architectures.core import Graph, Cluster, Node, Edge, Flow
 from architectures.themes import Default, LightMode
 
-theme = LightMode(graph_attr_overrides={"splines":"false"})
+theme = LightMode(graph_settings={"splines":"false"})
 
 with Graph("Neural Network", theme=theme):
     input_layer = [Node() for i in range(3)]
