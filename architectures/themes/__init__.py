@@ -39,10 +39,10 @@ class Default(_Theme):
 
     def __init__(
         self, 
-        graph_settings=None, 
-        cluster_settings=None, 
-        node_settings=None, 
-        edge_settings=None, 
+        graph_settings=None,
+        cluster_settings=None,
+        node_settings=None,
+        edge_settings=None,
         color_settings=None
     ):
         self.graph_attrs = dict(GraphSettings())
@@ -74,22 +74,22 @@ class LightMode(_Theme):
 
     def __init__(
         self, 
-        graph_settings=None, 
-        cluster_settings=None, 
-        node_settings=None, 
-        edge_settings=None, 
+        graph_settings=None,
+        cluster_settings=None,
+        node_settings=None,
+        edge_settings=None,
         color_settings=[]
     ):
 
         self.graph_attrs = dict(GraphSettings(
             bgcolor = "white",
-            compound = "true", 
-            pad = "1.0",
+            compound = True, 
+            pad = 1.0,
             splines = "ortho",
-            nodesep = "1.0",
-            ranksep = "1.0",
-            fontname = "Calibri",
-            fontsize = "24",
+            nodesep = 1.0,
+            ranksep = 1.0,
+            fontname = "calibri",
+            fontsize = 24,
             fontcolor = "#2D3436",
             style = "rounded",
             rankdir = "LR",
@@ -100,28 +100,28 @@ class LightMode(_Theme):
             style = "rounded",
             labeljust = "l",
             pencolor = "#AEB6BE",
-            fontname = "Calibri",
-            fontsize = "12",
-            margin = "30"
+            fontname = "calibri",
+            fontsize = 12,
+            margin = 30
         ))
         self.node_attrs = dict(NodeSettings(
             shape = "invis",
             style = "rounded,filled",
-            fixedsize = "true",
-            width = "1.0",
-            height = "1.0",
+            fixedsize = True,
+            width = 1.0,
+            height = 1.0,
             labelloc = "b",
             imagescale = "true",
-            fontname = "Calibri",
-            fontsize = "13",
+            fontname = "calibri",
+            fontsize = 13,
             fontcolor = "#2D3436",
             color = "invis",
             fillcolor = "invis"
         ))
         self.edge_attrs = dict(EdgeSettings(
-            penwidth = "2",
-            minlen = "2.0",
-            fontname = "Calibri"
+            penwidth = 2,
+            minlen = 2.0,
+            fontname = "calibri"
         ))
         self.colors = ["#FBFBFB", "#EDEDED", "#E0E0E0", "#D3D3D3"]
 
@@ -153,22 +153,22 @@ class DarkMode(_Theme):
 
     def __init__(
         self, 
-        graph_settings=None, 
-        cluster_settings=None, 
-        node_settings=None, 
-        edge_settings=None, 
+        graph_settings=None,
+        cluster_settings=None,
+        node_settings=None,
+        edge_settings=None,
         color_settings=None
     ):
 
         self.graph_attrs = dict(GraphSettings(
             bgcolor = "#17202A",
-            compound = "true", 
-            pad = "1.0",
+            compound = True, 
+            pad = 1.0,
             splines = "ortho",
-            nodesep = "1.0",
-            ranksep = "1.0",
-            fontname = "Sans-Serif",
-            fontsize = "24",
+            nodesep = 1.0,
+            ranksep = 1.0,
+            fontname = "calibri",
+            fontsize = 24,
             fontcolor = "#EEEEEE",
             style = "rounded",
             rankdir = "LR",
@@ -179,28 +179,28 @@ class DarkMode(_Theme):
             style = "rounded,dotted",
             labeljust = "l",
             pencolor = "#AEB6BE",
-            fontname = "Sans-Serif",
-            fontsize = "12",
+            fontname = "calibri",
+            fontsize = 12,
             fontcolor = "#EEEEEE",
-            margin = "30"
+            margin = 30
         ))
         self.node_attrs = dict(NodeSettings(
             shape = "invis",
             style = "rounded,filled",
             fixedsize = "true",
-            width = "1.0",
-            height = "1.0",
+            width = 1.0,
+            height = 1.0,
             labelloc = "b",
-            imagescale = "true",
-            fontname = "Sans-Serif",
-            fontsize = "13",
+            imagescale = True,
+            fontname = "calibri",
+            fontsize = 13,
             fontcolor = "#EEEEEE",
             color = "invis",
             fillcolor = "invis"
         ))
         self.edge_attrs = dict(EdgeSettings(
-            penwidth = "2",
-            minlen = "2.0",
+            penwidth = 2,
+            minlen = 2.0,
             color = "#EEEEEE"
         ))
         self.colors = ["#1C2833", "#212F3D", "#273746", "#2C3E50", "#566573"]
