@@ -15,6 +15,10 @@ class _Theme():
         return iter(self.__dict__.items())
 
     def get_delta_dict(self, first_dict, second_dict):
+        """
+        Compare two dictionaries and return a new dictionary
+        that contains same keys with different values or new keys.
+        """
         # create a merged dict
         merged_dict = {**first_dict, **second_dict}
         # create a new dict
@@ -29,6 +33,9 @@ class _Theme():
         return new_dict
 
 class Default(_Theme):
+    """
+    The Graphviz default theme.
+    """
 
     def __init__(
         self, 
@@ -61,6 +68,9 @@ class Default(_Theme):
 
 
 class LightMode(_Theme):
+    """
+    A clean, light theme for general diagram creation.
+    """
 
     def __init__(
         self, 
@@ -137,6 +147,9 @@ class LightMode(_Theme):
             self.colors = color_settings
 
 class DarkMode(_Theme):
+    """
+    A dark mode version of lightmode
+    """
 
     def __init__(
         self, 
@@ -212,17 +225,3 @@ class DarkMode(_Theme):
 
         if color_settings:
             self.colors = color_settings
-
-    def get_delta_dict(self, first_dict, second_dict):
-        # create a merged dict
-        merged_dict = {**first_dict, **second_dict}
-        # create a new dict
-        new_dict = {}
-        for k, v in merged_dict.items():
-            if k in first_dict:
-                if first_dict[k] != v:
-                    new_dict[k] = v
-            else:
-                new_dict[k] = v
-
-        return new_dict
