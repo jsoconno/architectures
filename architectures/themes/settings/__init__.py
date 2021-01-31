@@ -23,44 +23,44 @@ class GraphSettings(_Settings):
         clusterrank = "local",
         colorscheme = "",
         comment = "",
-        compound = "true",
-        concentrate = "false",
+        compound = True,
+        concentrate = False,
         fontcolor = "black",
         fontname = "times-roman",
         fontpath = "system-dependent",
-        fontsize = "14",
-        forcelabels = "true",
-        gradientangle = "",
+        fontsize = 14,
+        forcelabels = True,
+        gradientangle = 0,
         imagepath = "",
         label = "",
         labeljust = "c",
         labelloc = "b",
-        landscape = "false",
+        landscape = False,
         layout = "dot",
-        margin = "0",
-        mclimit = "1",
-        newrank = "false",
-        nodesep = "0.25",
-        nojustify = "false",
+        margin = 0,
+        mclimit = 1,
+        newrank = False,
+        nodesep = 0.25,
+        nojustify = False,
         # "nslimit = "",
         # "nslimit1 = "",
         ordering = "",
-        orientation = "0",
+        orientation = 0,
         outputorder = "breadthfirst",
-        pack = "false",
+        pack = False,
         # "packmode = "node",
-        pad = "0.0555",
+        pad = 0.0555,
         pagedir = "bl",
-        quantum = "0.0",
+        quantum = 0.0,
         rankdir = "TB",
-        ranksep = "0.5",
+        ranksep = 0.5,
         ratio = "auto",
-        remincross = "true",
-        rotate = "0",
-        searchsize = "30",
-        showboxes = "0",
-        size = "",
-        sortv = "0",
+        remincross = True,
+        rotate = 0,
+        searchsize = 30,
+        showboxes = 0,
+        size = 100.0,
+        sortv = 0,
         splines = "line",
         style = "",
         viewport = "",
@@ -114,7 +114,13 @@ class GraphSettings(_Settings):
         self.style = style
         self.viewport = viewport
 
+        # Add any additional keyword arguments
         self.__dict__.update(kwargs)
+
+        # Ensure that all values for attributes are strings
+        for k, v in self.__dict__.items():
+            if not isinstance(v, str):
+                self.__dict__[k] = str(v).lower().lower()
 
 
 class ClusterSettings(_Settings):
@@ -126,18 +132,18 @@ class ClusterSettings(_Settings):
         fillcolor = "black",
         fontcolor = "black",
         fontname = "times-roman",
-        fontsize = "14",
-        gradientangle = "",
+        fontsize = 14,
+        gradientangle = 0,
         label = "",
         labeljust = "c",
         labelloc = "t",
         layer = "",
-        margin = "8",
-        nojustify = "false",
+        margin = 8,
+        nojustify = False,
         pencolor = "black",
-        penwidth = "1",
-        peripheries = "1",
-        sortv = "0",
+        penwidth = 1,
+        peripheries = 1,
+        sortv = 0,
         style = "",
         **kwargs
     ):
@@ -161,7 +167,13 @@ class ClusterSettings(_Settings):
         self.sortv = sortv
         self.style = style
 
+        # Add any additional keyword arguments
         self.__dict__.update(kwargs)
+
+        # Ensure that all values for attributes are strings
+        for k, v in self.__dict__.items():
+            if not isinstance(v, str):
+                self.__dict__[k] = str(v).lower()
 
 
 class NodeSettings(_Settings):
@@ -170,37 +182,37 @@ class NodeSettings(_Settings):
         color = "black",
         colorscheme = "",
         comment = "",
-        distortion = "0",
+        distortion = 0,
         fillcolor = "lightgrey",
-        fixedsize = "false",
+        fixedsize = False,
         fontcolor = "black",
         fontname = "times-roman",
-        fontsize = "14",
-        gradientangle = "",
+        fontsize = 14,
+        gradientangle = 0,
         group = "",
-        height = "0.5",
+        height = 0.5,
         # image = "",
         imagepos = "tc",
-        imagescale = "false",
+        imagescale = False,
         # label = "",
         labelloc = "c",
         layer = "",
         margin = "0.11,0.055",
-        nojustify = "false",
+        nojustify = False,
         ordering = "",
-        orientation = "0",
-        penwidth = "1",
-        peripheries = "1",
+        orientation = 0,
+        penwidth = 1,
+        peripheries = 1,
         pos = "",
-        regular = "false",
+        regular = False,
         shape = "ellipse",
         shapefile = "",
-        showboxes = "0",
-        sides = "4",
-        skew = "0",
-        sortv = "0",
+        showboxes = 0,
+        sides = 4,
+        skew = 0,
+        sortv = 0,
         style = "",
-        width = "0.75",
+        width = 0.75,
         # xlabel = "",
         **kwargs
     ):
@@ -240,50 +252,56 @@ class NodeSettings(_Settings):
         self.width = width
         # self.xlabel = xlabel
 
+        # Add any additional keyword arguments
         self.__dict__.update(kwargs)
+
+        # Ensure that all values for attributes are strings
+        for k, v in self.__dict__.items():
+            if not isinstance(v, str):
+                self.__dict__[k] = str(v).lower()
 
 
 class EdgeSettings(_Settings):
     def __init__(
         self,
         arrowhead = "normal",
-        arrowsize = "1",
+        arrowsize = 1,
         arrowtail = "normal",
         color = "black",
         colorscheme = "",
         comment = "",
-        constraint = "true",
-        decorate = "false",
+        constraint = True,
+        decorate = False,
         dir = "forward",
         fillcolor = "black",
         fontcolor = "black",
         fontname = "times-roman",
-        fontsize = "14",
-        headclip = "true",
+        fontsize = 14,
+        headclip = True,
         headlabel = "",
         headport = "center",
         label = "",
-        labelangle = "-25",
-        labeldistance = "1",
-        labelfloat = "false",
+        labelangle = -25,
+        labeldistance = 1,
+        labelfloat = False,
         labelfontcolor = "black",
         labelfontname = "times-roman",
-        labelfontsize = "14",
+        labelfontsize = 14,
         layer = "",
         lhead = "",
         ltail = "",
-        minlen = "1",
-        nojustify = "false",
-        penwidth = "1",
+        minlen = 1,
+        nojustify = False,
+        penwidth = 1,
         pos = "",
         samehead = "",
         sametail = "",
-        showboxes = "0",
+        showboxes = 0,
         style = "",
-        tailclip = "true",
+        tailclip = True,
         taillabel = "",
         tailport = "center",
-        weight = "1",
+        weight = 1,
         xlabel = "",
         **kwargs
     ):
@@ -327,4 +345,10 @@ class EdgeSettings(_Settings):
         self.weight = weight
         self.xlabel = xlabel
 
+        # Add any additional keyword arguments
         self.__dict__.update(kwargs)
+
+        # Ensure that all values for attributes are strings
+        for k, v in self.__dict__.items():
+            if not isinstance(v, str):
+                self.__dict__[k] = str(v).lower()
