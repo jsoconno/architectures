@@ -1,5 +1,8 @@
 class _Settings():
 
+    # Validation values
+    _dir_settings = ["forward", "back", "both", "none"]
+
     def __setitem__(self, key, value):
         self.__dict__[key] = value
 
@@ -11,6 +14,9 @@ class _Settings():
 
     def __iter__(self):
         return iter(self.__dict__.items())
+
+    def check_string_settings(self, setting: str, valid_settings: list) -> bool:
+        return setting in valid_settings
 
 
 class GraphSettings(_Settings):
@@ -347,6 +353,11 @@ class EdgeSettings(_Settings):
 
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
+
+        # Check dir settings
+        # _field = "dir"
+        # if not self.check_string_settings(dict(self)["dir"], self._dir_settings):
+        #     raise ValueError(f"The field {_field} must be one of the following: {', '.join(self._dir_settings)}")
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
