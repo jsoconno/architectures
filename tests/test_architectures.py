@@ -64,11 +64,11 @@ class TestGraph:
         graph_name = "test_theme_overrides"
         color = "#FFFFFF"
         kwargs = {
-            "graph_attr_overrides": {"bgcolor":color},
-            "cluster_attr_overrides": {"bgcolor":color},
-            "node_attr_overrides": {"color":color},
-            "edge_attr_overrides": {"color":color},
-            "color_overrides": [color]}
+            "graph_settings": {"bgcolor":color},
+            "cluster_settings": {"bgcolor":color},
+            "node_settings": {"color":color},
+            "edge_settings": {"color":color},
+            "color_settings": [color]}
         themes = [Default(**kwargs), LightMode(**kwargs), DarkMode(**kwargs)]
         for theme in themes:
             with Graph(graph_name, theme=theme, show=False) as graph:
