@@ -1,7 +1,9 @@
 class _Settings():
 
-    # Validation values
-    _dir_settings = ["forward", "back", "both", "none"]
+    # String Validation
+    _field_checks = {
+        "dir": ["forward", "back", "both", "none"]
+    }
 
     def __setitem__(self, key, value):
         self.__dict__[key] = value
@@ -355,9 +357,12 @@ class EdgeSettings(_Settings):
         self.__dict__.update(kwargs)
 
         # Check dir settings
-        # _field = "dir"
-        # if not self.check_string_settings(dict(self)["dir"], self._dir_settings):
-        #     raise ValueError(f"The field {_field} must be one of the following: {', '.join(self._dir_settings)}")
+        for field, checks in self._field_checks.items():
+            value = dict(self)[field]
+            if not isinstance(value, str):
+                raise TypeError(f"The {field} attribute expects a string.")
+            if not self.check_string_settings(value, checks):
+                raise ValueError(f"The {field} attribute is set to a value of {value} but expects {', '.join(checks)}.")
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
