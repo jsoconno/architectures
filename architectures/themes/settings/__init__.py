@@ -6,17 +6,17 @@ class _Settings():
 
     # String Checks
     _string_field_checks = {
-        "bgcolor": None,
+        # "bgcolor": None,
         "dir": ["forward", "back", "both", "none"],
         "charset": ["utf-8", "iso-8859-1"],
-        "colorscheme": None,
+        # "colorscheme": None,
         "clusterrank": ["local", "global", "none"],
-        "comment": None,
-        "fontcolor": None,
-        "fontname": None,
-        "fontpath": None,
-        "imagepath": None,
-        "label": None,
+        # "comment": None,
+        # "fontcolor": None,
+        # "fontname": None,
+        # "fontpath": None,
+        # "imagepath": None,
+        # "label": None,
         "labeljust": ["c", "r", "l"],
         "labelloc": ["t", "c", "b"],
         "layout": ["circo", "dot", "fdp", "neato", "patchwork", "twopi"],
@@ -27,7 +27,7 @@ class _Settings():
         "ratio": ["fill", "compress", "expand", "auto"],
         "splines": ["true", "false", "none", "line", "polyline", "ortho", "curved", "spline"],
         "style": ["dashed", "dotted", "solid", "invis", "bold", "tapered", "filled", "striped", "wedged", "diagonals", "rounded", "radial"],
-        "viewport": None,
+        # "viewport": None,
     }
 
     # Boolean Checks
@@ -68,8 +68,15 @@ class _Settings():
     def __iter__(self):
         return iter(self.__dict__.items())
 
-    def check_string_settings(self, setting: str, valid_settings: list) -> bool:
-        return setting in valid_settings
+    def _check_string_settings(self):
+        for field, checks in self._string_field_checks.items():
+            if field in dict(self):
+                value = dict(self)[field].lower()
+                valid_value = value in checks
+                if not isinstance(value, str): 
+                    raise TypeError(f"The {field} attribute expects a string.")
+                if not valid_value and value is not "":
+                    raise ValueError(f"The {field} attribute is set to a value of {value} but expects {', '.join(checks)}.")
 
 
 class GraphSettings(_Settings):
@@ -111,7 +118,7 @@ class GraphSettings(_Settings):
         pad = 0.0555,
         pagedir = "bl",
         quantum = 0.0,
-        rankdir = "TB",
+        rankdir = "tb",
         ranksep = 0.5,
         ratio = "auto",
         remincross = True,
@@ -176,6 +183,9 @@ class GraphSettings(_Settings):
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
 
+        # Check string settings
+        self._check_string_settings()
+
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
             if not isinstance(v, str):
@@ -228,6 +238,9 @@ class ClusterSettings(_Settings):
 
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
+
+        # Check string settings
+        self._check_string_settings()
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
@@ -313,6 +326,9 @@ class NodeSettings(_Settings):
 
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
+
+        # Check string settings
+        self._check_string_settings()
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
@@ -407,13 +423,8 @@ class EdgeSettings(_Settings):
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
 
-        # Check dir settings
-        for field, checks in self._field_checks.items():
-            value = dict(self)[field]
-            if not isinstance(value, str):
-                raise TypeError(f"The {field} attribute expects a string.")
-            if not self.check_string_settings(value, checks):
-                raise ValueError(f"The {field} attribute is set to a value of {value} but expects {', '.join(checks)}.")
+        # Check string settings
+        self._check_string_settings()
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():

@@ -92,7 +92,7 @@ class LightMode(_Theme):
             fontsize = 24,
             fontcolor = "#2D3436",
             style = "rounded",
-            rankdir = "LR",
+            rankdir = "lr",
             labeljust = "l",
             labelloc = 't',
         ))
@@ -128,6 +128,7 @@ class LightMode(_Theme):
         _default_settings = Default()
 
         if graph_settings:
+            print(graph_settings)
             custom_attrs = self.get_delta_dict(_default_settings.graph_attrs, dict(graph_settings))
             self.graph_attrs.update(custom_attrs)
 
@@ -171,7 +172,7 @@ class DarkMode(_Theme):
             fontsize = 24,
             fontcolor = "#EEEEEE",
             style = "rounded",
-            rankdir = "LR",
+            rankdir = "lr",
             labeljust = "l",
             labelloc = 't',
         ))
