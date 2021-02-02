@@ -7,51 +7,81 @@ class _Settings():
     # String Checks
     _string_field_checks = {
         # "bgcolor": None,
+        # "color": None,
         "dir": ["forward", "back", "both", "none"],
         "charset": ["utf-8", "iso-8859-1"],
         # "colorscheme": None,
         "clusterrank": ["local", "global", "none"],
         # "comment": None,
+        # "fillcolor": None,
         # "fontcolor": None,
         # "fontname": None,
         # "fontpath": None,
+        # "group": None,
+        # "image": None,
         # "imagepath": None,
+        "imagepos": ["tl", "tc", "tr", "ml", "mc", "mr", "bl", "bc", "br"],
         # "label": None,
         "labeljust": ["c", "r", "l"],
         "labelloc": ["t", "c", "b"],
+        # "layer": None,
         "layout": ["circo", "dot", "fdp", "neato", "patchwork", "twopi"],
         "ordering": ["in", "out"],
         "outputorder": ["breadthfirst", "nodesfirst", "edgesfirst"],
         "pagedir": ["bl", "br", "tl", "tr", "rb", "rt", "lb", "lt"],
+        # "pencolor": None,
+        # "pos": None,
         "rankdir": ["tb", "lr", "bt", "rl"],
         "ratio": ["fill", "compress", "expand", "auto"],
+        "shape": [
+            "box", "polygon", "ellipse", "oval", "circle", "point", "egg", "triangle", "plaintext", "plain", 
+            "diamond", "trapezuim", "parallelogram", "house", "pentagon", "hexagon", "septagon", "octagon", 
+            "doublecircle", "doubleoctagon", "tripleoctagon", "invtriangle", "invtrapezium", "invhouse", 
+            "mdiamond", "msquare", "mcircle", "rect", "rectangle", "square", "star", "none", "underline", 
+            "cylinder", "note", "tab", "folder", "box3d", "component", "promoter", "cds", "terminator", 
+            "utr", "primersite", "restrictionsite", "fivepoverhang", "threepoverhang", "noverhang", "assembly", 
+            "signature", "insulator", "ribosite", "rnastab", "proteasesite", "proteinstab", "rpromoter", 
+            "rarror", "larrow", "lpromoter", "invis"
+        ],
+        # "shapefile": None,
         "splines": ["true", "false", "none", "line", "polyline", "ortho", "curved", "spline"],
-        "style": ["dashed", "dotted", "solid", "invis", "bold", "tapered", "filled", "striped", "wedged", "diagonals", "rounded", "radial"],
+        "style": [
+            "dashed", "dotted", "solid", "invis", "bold", "tapered", "filled", "striped", "wedged", "diagonals", 
+            "rounded", "radial"
+        ],
         # "viewport": None,
+        # "xlabel": None,
     }
 
     # Boolean Checks
-    # _boolean_field_checks = ["compound", "concentrate", "forcelabels", "landscape", "newrank", "nojustify", "pack", "remincross", ]
+    # _boolean_field_checks = ["compound", "concentrate", "forcelabels", "imagescale", "landscape", "newrank", "nojustify", "pack", "regular", "remincross", ]
 
     # Float Checks
     _float_field_checks = {
+        "distortion": {"min": -100.0, "max": None},
         "fontsize": {"min": 1.0, "max": None},
+        "height": {"min": 0.02, "max": None},
         "margin": {"min": 0.0, "max": None},
         "mclimit": {"min": 1.0, "max": None},
         "nodesep": {"min": 0.02, "max": None},
         "orientation": {"min":0.0, "max": 360.0},
         "pad": {"min": 0.0, "max": None},
+        "penwidth": {"min": 0.0, "max": None},
         "quantum": {"min": 0.0, "max": None},
         "ranksep": {"min": 0.02, "max": None},
         "size": {"min": 0.0, "max": None},
+        "skew": {"min": -100.0, "max": 100},
+        "width": {"min": 0.02, "max": None},
     }
 
     # Integer Checks
     _integer_field_checks = {
         "gradientangle": {"min": 0, "max": None},
+        "peripheries": {"min": 0, "max": None},
         "rotate": {"min": 0, "max": 360},
         "searchsize": {"min": 0, "max": None},
         "showboxes": {"min": 0, "max": 2},
+        "sides": {"min": 0, "max": None},
         "sortv": {"min": 0, "max": None},
     }
 

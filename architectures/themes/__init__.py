@@ -105,8 +105,8 @@ class LightMode(_Theme):
             margin = 30
         ))
         self.node_attrs = dict(NodeSettings(
-            shape = "invis",
-            style = "rounded,filled",
+            shape = "rectangle",
+            style = "filled",
             fixedsize = True,
             width = 1.0,
             height = 1.0,
@@ -128,7 +128,6 @@ class LightMode(_Theme):
         _default_settings = Default()
 
         if graph_settings:
-            print(graph_settings)
             custom_attrs = self.get_delta_dict(_default_settings.graph_attrs, dict(graph_settings))
             self.graph_attrs.update(custom_attrs)
 
@@ -186,8 +185,8 @@ class DarkMode(_Theme):
             margin = 30
         ))
         self.node_attrs = dict(NodeSettings(
-            shape = "invis",
-            style = "rounded,filled",
+            shape = "rectangle",
+            style = "filled",
             fixedsize = "true",
             width = 1.0,
             height = 1.0,
