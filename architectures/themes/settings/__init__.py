@@ -98,6 +98,7 @@ class _Settings():
     def __iter__(self):
         return iter(self.__dict__.items())
 
+    # TODO: ADD DOCSTRINGS
     def _check_string_settings(self):
         for field, checks in self._string_field_checks.items():
             if field in dict(self):
@@ -108,6 +109,7 @@ class _Settings():
                 if not valid_value and value is not "":
                     raise ValueError(f"The {field} attribute is set to a value of {value} but expects {', '.join(checks)}.")
 
+    # TODO: ADD _check_float_settings, _check_integer_settings, and _check_boolean_settings functions
 
 class GraphSettings(_Settings):
     
