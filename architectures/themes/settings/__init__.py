@@ -41,7 +41,7 @@ class _Settings():
             "cylinder", "note", "tab", "folder", "box3d", "component", "promoter", "cds", "terminator", 
             "utr", "primersite", "restrictionsite", "fivepoverhang", "threepoverhang", "noverhang", "assembly", 
             "signature", "insulator", "ribosite", "rnastab", "proteasesite", "proteinstab", "rpromoter", 
-            "rarror", "larrow", "lpromoter", "invis"
+            "rarror", "larrow", "lpromoter"
         ],
         # "shapefile": None,
         "splines": ["true", "false", "none", "line", "polyline", "ortho", "curved", "spline"],
