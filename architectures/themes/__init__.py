@@ -1,4 +1,4 @@
-from architectures.themes.settings import GraphSettings, ClusterSettings, NodeSettings, EdgeSettings
+from architectures.themes.settings import GraphSettings, ClusterSettings, NodeSettings, EdgeSettings, _Settings
 
 class _Theme():
 
@@ -39,30 +39,34 @@ class Default(_Theme):
 
     def __init__(
         self, 
-        graph_settings=None,
-        cluster_settings=None,
-        node_settings=None,
-        edge_settings=None,
+        graph_settings=GraphSettings(),
+        cluster_settings=ClusterSettings(),
+        node_settings=NodeSettings(),
+        edge_settings=EdgeSettings(),
         color_settings=None
     ):
-        self.graph_attrs = dict(GraphSettings())
-        self.cluster_attrs = dict(ClusterSettings())
-        self.node_attrs = dict(NodeSettings())
-        self.edge_attrs = dict(EdgeSettings())
+        theme_graph_settings = GraphSettings().get_attributes()
+        theme_cluster_settings = ClusterSettings().get_attributes()
+        theme_node_settings = NodeSettings().get_attributes()
+        theme_edge_settings = EdgeSettings().get_attributes()
         self.colors = []
 
-        if graph_settings is not None:
-            self.graph_attrs.update(dict(graph_settings))
+        if isinstance(graph_settings, _Settings):
+            graph_settings = graph_settings.get_attributes()
 
-        if cluster_settings is not None:
-            self.cluster_attrs.update(dict(cluster_settings))
+        if isinstance(cluster_settings, _Settings):
+            cluster_settings = cluster_settings.get_attributes()
 
-        if node_settings is not None:
-            self.node_attrs.update(dict(node_settings))
+        if isinstance(node_settings, _Settings):
+            node_settings = node_settings.get_attributes()
 
-        if edge_settings is not None:
-            self.edge_attrs.update(dict(edge_settings))
+        if isinstance(edge_settings, _Settings):
+            edge_settings = edge_settings.get_attributes()
 
+        self.graph_attrs = theme_graph_settings | graph_settings
+        self.cluster_attrs = theme_cluster_settings | cluster_settings
+        self.node_attrs = theme_node_settings | node_settings
+        self.edge_attrs = theme_edge_settings | edge_settings
         if color_settings:
             self.colors = color_settings
 
@@ -74,154 +78,154 @@ class LightMode(_Theme):
 
     def __init__(
         self, 
-        graph_settings=None,
-        cluster_settings=None,
-        node_settings=None,
-        edge_settings=None,
-        color_settings=[]
+        graph_settings=GraphSettings(),
+        cluster_settings=ClusterSettings(),
+        node_settings=NodeSettings(),
+        edge_settings=EdgeSettings(),
+        color_settings=None
     ):
 
-        self.graph_attrs = dict(GraphSettings(
-            bgcolor = "white",
-            compound = True, 
-            pad = 1.0,
-            splines = "ortho",
-            nodesep = 1.0,
-            ranksep = 1.0,
-            fontname = "calibri",
-            fontsize = 24,
+        theme_graph_settings = GraphSettings(
+            bgcolor = "#FFFFFF",
+            compound = True,
             fontcolor = "#2D3436",
-            style = "rounded",
-            rankdir = "LR",
+            fontname = "calibri",
+            fontsize = 24.0,
             labeljust = "l",
             labelloc = 't',
-        ))
-        self.cluster_attrs = dict(ClusterSettings(
+            nodesep = 1.0,
+            pad = 1.0,
+            rankdir = "LR",
+            ranksep = 1.0,
+            splines = "ortho",
             style = "rounded",
+        ).get_attributes()
+        theme_cluster_settings = ClusterSettings(
+            fontname = "calibri",
+            fontsize = 12.0,
             labeljust = "l",
+            margin = 30.0,
             pencolor = "#AEB6BE",
-            fontname = "calibri",
-            fontsize = 12,
-            margin = 30
-        ))
-        self.node_attrs = dict(NodeSettings(
-            shape = "invis",
-            style = "rounded,filled",
-            fixedsize = True,
-            width = 1.0,
-            height = 1.0,
-            labelloc = "b",
-            imagescale = "true",
-            fontname = "calibri",
-            fontsize = 13,
-            fontcolor = "#2D3436",
+            style = "rounded",
+        ).get_attributes()
+        theme_node_settings = NodeSettings(
             color = "invis",
-            fillcolor = "invis"
-        ))
-        self.edge_attrs = dict(EdgeSettings(
-            penwidth = 2,
+            fillcolor = "invis",
+            fixedsize = True,
+            fontcolor = "#2D3436",
+            fontname = "calibri",
+            fontsize = 13.0,
+            height = 1.0,
+            imagepos = "tc",
+            imagescale = True,
+            labelloc = "b",
+            shape = "rectangle",
+            style = "filled",
+            width = 1.0,
+        ).get_attributes()
+        theme_edge_settings = EdgeSettings(
+            fontname = "calibri",
             minlen = 2.0,
-            fontname = "calibri"
-        ))
+            penwidth = 2.0,
+        ).get_attributes()
         self.colors = ["#FBFBFB", "#EDEDED", "#E0E0E0", "#D3D3D3"]
 
-        _default_settings = Default()
+        if isinstance(graph_settings, _Settings):
+            graph_settings = graph_settings.get_attributes()
 
-        if graph_settings:
-            custom_attrs = self.get_delta_dict(_default_settings.graph_attrs, dict(graph_settings))
-            self.graph_attrs.update(custom_attrs)
+        if isinstance(cluster_settings, _Settings):
+            cluster_settings = cluster_settings.get_attributes()
 
-        if cluster_settings:
-            custom_attrs = self.get_delta_dict(_default_settings.cluster_attrs, dict(cluster_settings))
-            self.cluster_attrs.update(custom_attrs)
+        if isinstance(node_settings, _Settings):
+            node_settings = node_settings.get_attributes()
 
-        if node_settings:
-            custom_attrs = self.get_delta_dict(_default_settings.node_attrs, dict(node_settings))
-            self.node_attrs.update(custom_attrs)
+        if isinstance(edge_settings, _Settings):
+            edge_settings = edge_settings.get_attributes()
 
-        if edge_settings:
-            custom_attrs = self.get_delta_dict(_default_settings.edge_attrs, dict(edge_settings))
-            self.edge_attrs.update(custom_attrs)
-
+        self.graph_attrs = theme_graph_settings | graph_settings
+        self.cluster_attrs = theme_cluster_settings | cluster_settings
+        self.node_attrs = theme_node_settings | node_settings
+        self.edge_attrs = theme_edge_settings | edge_settings
         if color_settings:
             self.colors = color_settings
 
 class DarkMode(_Theme):
     """
-    A dark mode version of lightmode
+    Lightmode, but cooler.
     """
 
     def __init__(
         self, 
-        graph_settings=None,
-        cluster_settings=None,
-        node_settings=None,
-        edge_settings=None,
+        graph_settings=GraphSettings(),
+        cluster_settings=ClusterSettings(),
+        node_settings=NodeSettings(),
+        edge_settings=EdgeSettings(),
         color_settings=None
     ):
 
-        self.graph_attrs = dict(GraphSettings(
+        theme_graph_settings = GraphSettings(
             bgcolor = "#17202A",
-            compound = True, 
-            pad = 1.0,
-            splines = "ortho",
-            nodesep = 1.0,
-            ranksep = 1.0,
-            fontname = "calibri",
-            fontsize = 24,
+            compound = True,
             fontcolor = "#EEEEEE",
-            style = "rounded",
-            rankdir = "LR",
+            fontname = "calibri",
+            fontsize = 24.0,
             labeljust = "l",
             labelloc = 't',
-        ))
-        self.cluster_attrs = dict(ClusterSettings(
-            style = "rounded,dotted",
+            nodesep = 1.0,
+            pad = 1.0,
+            splines = "ortho",
+            style = "rounded",
+            rankdir = "LR",
+            ranksep = 1.0,
+        ).get_attributes()
+        theme_cluster_settings = ClusterSettings(
+            fontcolor = "#EEEEEE",
+            fontname = "calibri",
+            fontsize = 12.0,
             labeljust = "l",
+            margin = 30.0,
             pencolor = "#AEB6BE",
-            fontname = "calibri",
-            fontsize = 12,
-            fontcolor = "#EEEEEE",
-            margin = 30
-        ))
-        self.node_attrs = dict(NodeSettings(
-            shape = "invis",
-            style = "rounded,filled",
-            fixedsize = "true",
-            width = 1.0,
-            height = 1.0,
-            labelloc = "b",
-            imagescale = True,
-            fontname = "calibri",
-            fontsize = 13,
-            fontcolor = "#EEEEEE",
+            style = "rounded",
+        ).get_attributes()
+        theme_node_settings = NodeSettings(
             color = "invis",
-            fillcolor = "invis"
-        ))
-        self.edge_attrs = dict(EdgeSettings(
-            penwidth = 2,
+            fillcolor = "invis",
+            fixedsize = True,
+            fontcolor = "#EEEEEE",
+            fontname = "calibri",
+            fontsize = 13.0,
+            height = 1.0,
+            imagepos = "tc",
+            imagescale = True,
+            labelloc = "b",
+            shape = "rectangle",
+            style = "filled",
+            width = 1.0,
+        ).get_attributes()
+        theme_edge_settings = EdgeSettings(
+            color = "#EEEEEE",
+            fontname = "calibri",
             minlen = 2.0,
-            color = "#EEEEEE"
-        ))
+            penwidth = 2.0,
+        ).get_attributes()
         self.colors = ["#1C2833", "#212F3D", "#273746", "#2C3E50", "#566573"]
 
-        _default_settings = Default()
+        if isinstance(graph_settings, _Settings):
+            graph_settings = graph_settings.get_attributes()
 
-        if graph_settings:
-            custom_attrs = self.get_delta_dict(_default_settings.graph_attrs, dict(graph_settings))
-            self.graph_attrs.update(custom_attrs)
+        if isinstance(cluster_settings, _Settings):
+            cluster_settings = cluster_settings.get_attributes()
 
-        if cluster_settings:
-            custom_attrs = self.get_delta_dict(_default_settings.cluster_attrs, dict(cluster_settings))
-            self.cluster_attrs.update(custom_attrs)
+        if isinstance(node_settings, _Settings):
+            node_settings = node_settings.get_attributes()
 
-        if node_settings:
-            custom_attrs = self.get_delta_dict(_default_settings.node_attrs, dict(node_settings))
-            self.node_attrs.update(custom_attrs)
+        if isinstance(edge_settings, _Settings):
+            edge_settings = edge_settings.get_attributes()
 
-        if edge_settings:
-            custom_attrs = self.get_delta_dict(_default_settings.edge_attrs, dict(edge_settings))
-            self.edge_attrs.update(custom_attrs)
+        self.graph_attrs = theme_graph_settings | graph_settings
+        self.cluster_attrs = theme_cluster_settings | cluster_settings
+        self.node_attrs = theme_node_settings | node_settings
+        self.edge_attrs = theme_edge_settings | edge_settings
 
         if color_settings:
             self.colors = color_settings
