@@ -151,7 +151,7 @@ class LightMode(_Theme):
 
 class DarkMode(_Theme):
     """
-    A clean, light theme for general diagram creation.
+    Lightmode, but cooler.
     """
 
     def __init__(
