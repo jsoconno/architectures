@@ -1,0 +1,5 @@
+digraph "My Architecture" {
+	graph [label="My Architecture"]
+	node
+	edge
+}

@@ -1,0 +1,6 @@
+digraph test_ext {
+	graph [label=test_ext]
+	node
+	edge
+	node_4427590960 [label=A]
+}

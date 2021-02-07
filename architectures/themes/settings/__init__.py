@@ -31,7 +31,7 @@ class _Settings():
         "pagedir": ["bl", "br", "tl", "tr", "rb", "rt", "lb", "lt"],
         # "pencolor": None,
         # "pos": None,
-        "rankdir": ["tb", "lr", "bt", "rl"],
+        "rankdir": ["TB", "LR", "BT", "RL"],
         "ratio": ["fill", "compress", "expand", "auto"],
         "shape": [
             "box", "polygon", "ellipse", "oval", "circle", "point", "egg", "triangle", "plaintext", "plain", 
@@ -54,7 +54,7 @@ class _Settings():
     }
 
     # Boolean Checks
-    # _boolean_field_checks = ["compound", "concentrate", "forcelabels", "imagescale", "landscape", "newrank", "nojustify", "pack", "regular", "remincross", ]
+    _boolean_field_checks = ["compound", "concentrate", "forcelabels", "imagescale", "landscape", "newrank", "nojustify", "pack", "regular", "remincross", ]
 
     # Float Checks
     _float_field_checks = {
@@ -102,66 +102,135 @@ class _Settings():
     def _check_string_settings(self):
         for field, checks in self._string_field_checks.items():
             if field in dict(self):
-                value = dict(self)[field].lower()
+                value = dict(self)[field] # .lower()
                 valid_value = value in checks
-                if not isinstance(value, str): 
-                    raise TypeError(f"The {field} attribute expects a string.")
-                if not valid_value and value is not "":
-                    raise ValueError(f"The {field} attribute is set to a value of {value} but expects {', '.join(checks)}.")
+                if value != None:
+                    if not isinstance(value, str): 
+                        raise TypeError(f"The {field} attribute expects a string.")
+                    if not valid_value and value != "":
+                        raise ValueError(f"The {field} attribute is set to a value of {value} but expects {', '.join(checks)}.")
 
-    # TODO: ADD _check_float_settings, _check_integer_settings, and _check_boolean_settings functions
+    def _check_boolean_settings(self):
+        for field in self._boolean_field_checks:
+            if field in dict(self):
+                value = dict(self)[field]
+                if value != None:
+                    if not isinstance(value, bool): 
+                        raise TypeError(f"The {field} attribute expects a boolean.")
+
+    def _check_float_settings(self):
+        for field, checks in self._float_field_checks.items():
+            if field in dict(self):
+                value = dict(self)[field]
+                minimum = checks["min"]
+                maximum = checks["max"]
+                if value != None:
+                    if maximum:
+                        valid_value = value >= minimum and value <= maximum
+                    else:
+                        valid_value = value >= minimum
+                    if not isinstance(value, float): 
+                        raise TypeError(f"The {field} attribute expects a float.")
+                    if not valid_value:
+                        raise ValueError(f"The {field} attribute is set to a value of {value} but expects a value between {minimum} and {maximum}.")
+
+    def _check_integer_settings(self):
+        for field, checks in self._integer_field_checks.items():
+            if field in dict(self):
+                value = dict(self)[field]
+                minimum = checks["min"]
+                maximum = checks["max"]
+                if value != None:
+                    if maximum:
+                        valid_value = value >= minimum and value <= maximum
+                    else:
+                        valid_value = value >= minimum
+                    if not isinstance(value, int): 
+                        raise TypeError(f"The {field} attribute expects a integer.")
+                    if not valid_value:
+                        raise ValueError(f"The {field} attribute is set to a value of {value} but expects a value between {minimum} and {maximum}.")
+
+    def _check_settings(self):
+        # Check string settings
+        self._check_string_settings()
+        # Check boolean settings
+        self._check_boolean_settings()
+        # Check float settings
+        self._check_float_settings()
+        # Check integer settings
+        self._check_integer_settings()
+
+
+    def get_attributes(self):
+        return {k: v for (k, v) in dict(self).items() if v != None}
+
+    def set_attributes(self, **kwargs):
+        for k, v in kwargs.items():
+            self[k] = str(v)
+
+        self._check_settings()
+
+        return dict(self)
+
+    def get_attribute(self, attribute: str):
+        return dict(self)[attribute]
+
+    def set_attribute(self, attribute: str, attribute_value: any):
+        self[attribute] = str(attribute_value)
+        return dict(self)
+
 
 class GraphSettings(_Settings):
     
     def __init__(
         self,
-        bgcolor = "white",
-        center = False,
-        charset = "utf-8",
-        clusterrank = "local",
-        colorscheme = "",
-        comment = "",
-        compound = True,
-        concentrate = False,
-        fontcolor = "black",
-        fontname = "times-roman",
-        fontpath = "system-dependent",
-        fontsize = 14,
-        forcelabels = True,
-        gradientangle = 0,
-        imagepath = "",
-        label = "",
-        labeljust = "c",
-        labelloc = "b",
-        landscape = False,
-        layout = "dot",
-        margin = 0.0,
-        mclimit = 1.0,
-        newrank = False,
-        nodesep = 0.25,
-        nojustify = False,
+        bgcolor: str = None,
+        center: bool = None,
+        charset: str = None,
+        clusterrank: str = None,
+        colorscheme: str = None,
+        comment: str = None,
+        compound: bool = None,
+        concentrate: bool = None,
+        fontcolor: str = None,
+        fontname: str = None,
+        fontpath: str = None,
+        fontsize: float = None,
+        forcelabels: bool = None,
+        gradientangle: int = None,
+        imagepath: str = None,
+        label: str = None,
+        labeljust: str = None,
+        labelloc: str = None,
+        landscape: bool = None,
+        layout: str = None,
+        margin: float = None,
+        mclimit: float = None,
+        newrank: bool = None,
+        nodesep: float = None,
+        nojustify: bool = None,
         # "nslimit = "",
         # "nslimit1 = "",
-        ordering = "",
-        orientation = 0.0,
-        outputorder = "breadthfirst",
-        pack = False,
+        ordering: str = None,
+        orientation: float = None,
+        outputorder: str = None,
+        pack: bool = None,
         # "packmode = "node",
-        pad = 0.0555,
-        pagedir = "bl",
-        quantum = 0.0,
-        rankdir = "tb",
-        ranksep = 0.5,
-        ratio = "auto",
-        remincross = True,
-        rotate = 0,
-        searchsize = 30,
-        showboxes = 0,
-        size = 100.0,
-        sortv = 0,
-        splines = "line",
-        style = "",
-        viewport = "",
+        pad: float = None,
+        pagedir: str = None,
+        quantum: float = None,
+        rankdir: str = None,
+        ranksep: float = None,
+        ratio: str = None,
+        remincross: bool = None,
+        rotate: int = None,
+        searchsize: int = None,
+        showboxes: int = None,
+        size: float = None,
+        sortv: int = None,
+        splines: str = None,
+        style: str = None,
+        viewport: str = None,
         **kwargs
     ):
         self.bgcolor = bgcolor
@@ -215,37 +284,37 @@ class GraphSettings(_Settings):
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
 
-        # Check string settings
-        self._check_string_settings()
+        # Check all field settings
+        self._check_settings()
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
-            if not isinstance(v, str):
-                self.__dict__[k] = str(v).lower().lower()
+            if not isinstance(v, str) and v != None:
+                self.__dict__[k] = str(v)
 
 
 class ClusterSettings(_Settings):
     def __init__(
         self,
-        bgcolor = "transparent",
-        color = "black",
-        colorscheme = "",
-        fillcolor = "black",
-        fontcolor = "black",
-        fontname = "times-roman",
-        fontsize = 14,
-        gradientangle = 0,
-        label = "",
-        labeljust = "c",
-        labelloc = "t",
-        layer = "",
-        margin = 8,
-        nojustify = False,
-        pencolor = "black",
-        penwidth = 1,
-        peripheries = 1,
-        sortv = 0,
-        style = "",
+        bgcolor: str = None,
+        color: str = None,
+        colorscheme: str = None,
+        fillcolor: str = None,
+        fontcolor: str = None,
+        fontname: str = None,
+        fontsize: float = None,
+        gradientangle: int = None,
+        label: str = None,
+        labeljust: str = None,
+        labelloc: str = None,
+        layer: str = None,
+        margin: float = None,
+        nojustify: bool = None,
+        pencolor: str = None,
+        penwidth: float = None,
+        peripheries: int = None,
+        sortv: int = None,
+        style: str = None,
         **kwargs
     ):
         self.bgcolor = bgcolor
@@ -271,52 +340,52 @@ class ClusterSettings(_Settings):
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
 
-        # Check string settings
-        self._check_string_settings()
+        # Check all field settings
+        self._check_settings()
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
-            if not isinstance(v, str):
-                self.__dict__[k] = str(v).lower()
+            if not isinstance(v, str) and v != None:
+                self.__dict__[k] = str(v)
 
 
 class NodeSettings(_Settings):
     def __init__(
         self,
-        color = "black",
-        colorscheme = "",
-        comment = "",
-        distortion = 0,
-        fillcolor = "lightgrey",
-        fixedsize = False,
-        fontcolor = "black",
-        fontname = "times-roman",
-        fontsize = 14,
-        gradientangle = 0,
-        group = "",
-        height = 0.5,
+        color: str = None,
+        colorscheme: str = None,
+        comment: str = None,
+        distortion: float = None,
+        fillcolor: str = None,
+        fixedsize: bool = None,
+        fontcolor: str = None,
+        fontname: str = None,
+        fontsize: float = None,
+        gradientangle: int = None,
+        group: str = None,
+        height: float = None,
         # image = "",
-        imagepos = "tc",
-        imagescale = False,
+        imagepos: str = None,
+        imagescale: bool = None,
         # label = "",
-        labelloc = "c",
-        layer = "",
-        margin = "0.11,0.055",
-        nojustify = False,
-        ordering = "",
-        orientation = 0,
-        penwidth = 1,
-        peripheries = 1,
-        pos = "",
-        regular = False,
-        shape = "ellipse",
-        shapefile = "",
-        showboxes = 0,
-        sides = 4,
-        skew = 0,
-        sortv = 0,
-        style = "",
-        width = 0.75,
+        labelloc: str = None,
+        layer: str = None,
+        margin: float = None, # 0.11,0.055",
+        nojustify: bool = None,
+        ordering: str = None,
+        orientation: float = None,
+        penwidth: float = None,
+        peripheries: int = None,
+        pos: str = None,
+        regular: bool = None,
+        shape: str = None,
+        shapefile: str = None,
+        showboxes: int = None,
+        sides: int = None,
+        skew: float = None,
+        sortv: int = None,
+        style: str = None,
+        width: float = None,
         # xlabel = "",
         **kwargs
     ):
@@ -359,57 +428,57 @@ class NodeSettings(_Settings):
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
 
-        # Check string settings
-        self._check_string_settings()
+        # Check all field settings
+        self._check_settings()
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
-            if not isinstance(v, str):
-                self.__dict__[k] = str(v).lower()
+            if not isinstance(v, str) and v != None:
+                self.__dict__[k] = str(v)
 
 
 class EdgeSettings(_Settings):
     def __init__(
         self,
-        arrowhead = "normal",
-        arrowsize = 1,
-        arrowtail = "normal",
-        color = "black",
-        colorscheme = "",
-        comment = "",
-        constraint = True,
-        decorate = False,
-        dir = "forward",
-        fillcolor = "black",
-        fontcolor = "black",
-        fontname = "times-roman",
-        fontsize = 14,
-        headclip = True,
-        headlabel = "",
-        headport = "center",
-        label = "",
-        labelangle = -25,
-        labeldistance = 1,
-        labelfloat = False,
-        labelfontcolor = "black",
-        labelfontname = "times-roman",
-        labelfontsize = 14,
-        layer = "",
-        lhead = "",
-        ltail = "",
-        minlen = 1,
-        nojustify = False,
-        penwidth = 1,
-        pos = "",
-        samehead = "",
-        sametail = "",
-        showboxes = 0,
-        style = "",
-        tailclip = True,
-        taillabel = "",
-        tailport = "center",
-        weight = 1,
-        xlabel = "",
+        arrowhead: str = None,
+        arrowsize: int = None,
+        arrowtail: str = None,
+        color: str = None,
+        colorscheme: str = None,
+        comment: str = None,
+        constraint: bool = None,
+        decorate: bool = None,
+        dir: str = None,
+        fillcolor: str = None,
+        fontcolor: str = None,
+        fontname: str = None,
+        fontsize: float = None,
+        headclip: bool = None,
+        headlabel: str = None,
+        headport: str = None,
+        label: str = None,
+        labelangle: float = None,
+        labeldistance: float = None,
+        labelfloat: bool = None,
+        labelfontcolor: str = None,
+        labelfontname: str = None,
+        labelfontsize: float = None,
+        layer: str = None,
+        lhead: str = None,
+        ltail: str = None,
+        minlen: int = None,
+        nojustify: bool = None,
+        penwidth: float = None,
+        pos: str = None,
+        samehead: str = None,
+        sametail: str = None,
+        showboxes: int = None,
+        style: str = None,
+        tailclip: bool = None,
+        taillabel: str = None,
+        tailport: str = None,
+        weight: int = None,
+        xlabel: str = None,
         **kwargs
     ):
         self.arrowhead = arrowhead
@@ -455,10 +524,10 @@ class EdgeSettings(_Settings):
         # Add any additional keyword arguments
         self.__dict__.update(kwargs)
 
-        # Check string settings
-        self._check_string_settings()
+        # Check all field settings
+        self._check_settings()
 
         # Ensure that all values for attributes are strings
         for k, v in self.__dict__.items():
-            if not isinstance(v, str):
-                self.__dict__[k] = str(v).lower()
+            if not isinstance(v, str) and v != None:
+                self.__dict__[k] = str(v)

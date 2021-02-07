@@ -1,0 +1,6 @@
+digraph test_theme {
+	graph [label=test_theme]
+	node
+	edge
+	node_4426429056 [label=A]
+}
