@@ -55,7 +55,6 @@ class Default(_Theme):
         self.cluster_attrs = theme_cluster_settings.get_attributes() | cluster_settings.get_attributes()
         self.node_attrs = theme_node_settings.get_attributes() | node_settings.get_attributes()
         self.edge_attrs = theme_edge_settings.get_attributes() | edge_settings.get_attributes()
-
         if color_settings:
             self.colors = color_settings
 
@@ -75,46 +74,47 @@ class LightMode(_Theme):
     ):
 
         theme_graph_settings = GraphSettings(
+            bgcolor = "#FFFFFF",
             compound = True,
-            pad = 1.0,
-            splines = "ortho",
-            nodesep = 1.0,
-            ranksep = 1.0,
+            fontcolor = "#2D3436",
             fontname = "calibri",
             fontsize = 24.0,
-            fontcolor = "#2D3436",
-            style = "rounded",
-            rankdir = "LR",
             labeljust = "l",
             labelloc = 't',
+            nodesep = 1.0,
+            pad = 1.0,
+            rankdir = "LR",
+            ranksep = 1.0,
+            splines = "ortho",
+            style = "rounded",
         )
         theme_cluster_settings = ClusterSettings(
-            style = "rounded",
-            labeljust = "l",
-            pencolor = "#AEB6BE",
             fontname = "calibri",
             fontsize = 12.0,
-            margin = 30.0
+            labeljust = "l",
+            margin = 30.0,
+            pencolor = "#AEB6BE",
+            style = "rounded",
         )
         theme_node_settings = NodeSettings(
-            shape = "rectangle",
-            style = "filled",
+            color = "invis",
+            fillcolor = "invis",
             fixedsize = True,
-            width = 1.0,
-            height = 1.0,
-            labelloc = "b",
-            imagepos = "tc",
-            imagescale = True,
+            fontcolor = "#2D3436",
             fontname = "calibri",
             fontsize = 13.0,
-            fontcolor = "#2D3436",
-            color = "invis",
-            fillcolor = "invis"
+            height = 1.0,
+            imagepos = "tc",
+            imagescale = True,
+            labelloc = "b",
+            shape = "rectangle",
+            style = "filled",
+            width = 1.0,
         )
         theme_edge_settings = EdgeSettings(
-            penwidth = 2.0,
+            fontname = "calibri",
             minlen = 2.0,
-            fontname = "calibri"
+            penwidth = 2.0,
         )
         self.colors = ["#FBFBFB", "#EDEDED", "#E0E0E0", "#D3D3D3"]
 
@@ -122,7 +122,6 @@ class LightMode(_Theme):
         self.cluster_attrs = theme_cluster_settings.get_attributes() | cluster_settings.get_attributes()
         self.node_attrs = theme_node_settings.get_attributes() | node_settings.get_attributes()
         self.edge_attrs = theme_edge_settings.get_attributes() | edge_settings.get_attributes()
-
         if color_settings:
             self.colors = color_settings
 
@@ -143,47 +142,47 @@ class DarkMode(_Theme):
         theme_graph_settings = GraphSettings(
             bgcolor = "#17202A",
             compound = True,
-            pad = 1.0,
-            splines = "ortho",
-            nodesep = 1.0,
-            ranksep = 1.0,
+            fontcolor = "#EEEEEE",
             fontname = "calibri",
             fontsize = 24.0,
-            fontcolor = "#EEEEEE",
-            style = "rounded",
-            rankdir = "LR",
             labeljust = "l",
             labelloc = 't',
+            nodesep = 1.0,
+            pad = 1.0,
+            splines = "ortho",
+            style = "rounded",
+            rankdir = "LR",
+            ranksep = 1.0,
         )
         theme_cluster_settings = ClusterSettings(
-            style = "rounded",
-            labeljust = "l",
-            pencolor = "#AEB6BE",
+            fontcolor = "#EEEEEE",
             fontname = "calibri",
             fontsize = 12.0,
-            fontcolor = "#EEEEEE",
-            margin = 30.0
+            labeljust = "l",
+            margin = 30.0,
+            pencolor = "#AEB6BE",
+            style = "rounded",
         )
         theme_node_settings = NodeSettings(
-            shape = "rectangle",
-            style = "filled",
+            color = "invis",
+            fillcolor = "invis",
             fixedsize = True,
-            width = 1.0,
-            height = 1.0,
-            labelloc = "b",
-            imagepos = "tc",
-            imagescale = True,
+            fontcolor = "#EEEEEE",
             fontname = "calibri",
             fontsize = 13.0,
-            fontcolor = "#EEEEEE",
-            color = "invis",
-            fillcolor = "invis"
+            height = 1.0,
+            imagepos = "tc",
+            imagescale = True,
+            labelloc = "b",
+            shape = "rectangle",
+            style = "filled",
+            width = 1.0,
         )
         theme_edge_settings = EdgeSettings(
-            penwidth = 2.0,
-            minlen = 2.0,
+            color = "#EEEEEE",
             fontname = "calibri",
-            color = "#EEEEEE"
+            minlen = 2.0,
+            penwidth = 2.0,
         )
         self.colors = ["#1C2833", "#212F3D", "#273746", "#2C3E50", "#566573"]
 
