@@ -75,6 +75,7 @@ class LightMode(_Theme):
     ):
 
         theme_graph_settings = GraphSettings(
+            compound = True,
             pad = 1.0,
             splines = "ortho",
             nodesep = 1.0,
@@ -141,6 +142,7 @@ class DarkMode(_Theme):
 
         theme_graph_settings = GraphSettings(
             bgcolor = "#17202A",
+            compound = True,
             pad = 1.0,
             splines = "ortho",
             nodesep = 1.0,
