@@ -271,22 +271,22 @@ class TestFlow:
 
 # Consider if we want to move testing providers to another file and
 # auto-generate tests for each provider.
-class TestProviders:
-    @classmethod
-    def setup_class(cls):
-        cls.default_graphname = "my-architecture"
-        cls.default_ext = ".png"
-        cls.default_filename = cls.default_graphname + cls.default_ext
+# class TestProviders:
+#     @classmethod
+#     def setup_class(cls):
+#         cls.default_graphname = "my-architecture"
+#         cls.default_ext = ".png"
+#         cls.default_filename = cls.default_graphname + cls.default_ext
         
-    @classmethod
-    def teardown_class(cls):
-        for graph_image in glob.glob(f"*{cls.default_ext}"):
-            os.remove(graph_image)
+#     @classmethod
+#     def teardown_class(cls):
+#         for graph_image in glob.glob(f"*{cls.default_ext}"):
+#             os.remove(graph_image)
 
-    def test_provider_services(self):
-        with Graph():
-            Analytics()
-            BatchAi()
-            Bigquery()
-            Blank()
-            ChaosMesh()
+#     def test_provider_services(self, show=False):
+#         with Graph():
+#             Analytics()
+#             BatchAi()
+#             Bigquery()
+#             Blank()
+#             ChaosMesh()

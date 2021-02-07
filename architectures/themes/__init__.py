@@ -1,4 +1,4 @@
-from architectures.themes.settings import GraphSettings, ClusterSettings, NodeSettings, EdgeSettings
+from architectures.themes.settings import GraphSettings, ClusterSettings, NodeSettings, EdgeSettings, _Settings
 
 class _Theme():
 
@@ -45,16 +45,28 @@ class Default(_Theme):
         edge_settings=EdgeSettings(),
         color_settings=None
     ):
-        theme_graph_settings = GraphSettings()
-        theme_cluster_settings = ClusterSettings()
-        theme_node_settings = NodeSettings()
-        theme_edge_settings = EdgeSettings()
+        theme_graph_settings = GraphSettings().get_attributes()
+        theme_cluster_settings = ClusterSettings().get_attributes()
+        theme_node_settings = NodeSettings().get_attributes()
+        theme_edge_settings = EdgeSettings().get_attributes()
         self.colors = []
 
-        self.graph_attrs = theme_graph_settings.get_attributes() | graph_settings.get_attributes()
-        self.cluster_attrs = theme_cluster_settings.get_attributes() | cluster_settings.get_attributes()
-        self.node_attrs = theme_node_settings.get_attributes() | node_settings.get_attributes()
-        self.edge_attrs = theme_edge_settings.get_attributes() | edge_settings.get_attributes()
+        if isinstance(graph_settings, _Settings):
+            graph_settings = graph_settings.get_attributes()
+
+        if isinstance(cluster_settings, _Settings):
+            cluster_settings = cluster_settings.get_attributes()
+
+        if isinstance(node_settings, _Settings):
+            node_settings = node_settings.get_attributes()
+
+        if isinstance(edge_settings, _Settings):
+            edge_settings = edge_settings.get_attributes()
+
+        self.graph_attrs = theme_graph_settings | graph_settings
+        self.cluster_attrs = theme_cluster_settings | cluster_settings
+        self.node_attrs = theme_node_settings | node_settings
+        self.edge_attrs = theme_edge_settings | edge_settings
         if color_settings:
             self.colors = color_settings
 
@@ -87,7 +99,7 @@ class LightMode(_Theme):
             ranksep = 1.0,
             splines = "ortho",
             style = "rounded",
-        )
+        ).get_attributes()
         theme_cluster_settings = ClusterSettings(
             fontname = "calibri",
             fontsize = 12.0,
@@ -95,7 +107,7 @@ class LightMode(_Theme):
             margin = 30.0,
             pencolor = "#AEB6BE",
             style = "rounded",
-        )
+        ).get_attributes()
         theme_node_settings = NodeSettings(
             color = "invis",
             fillcolor = "invis",
@@ -110,18 +122,30 @@ class LightMode(_Theme):
             shape = "rectangle",
             style = "filled",
             width = 1.0,
-        )
+        ).get_attributes()
         theme_edge_settings = EdgeSettings(
             fontname = "calibri",
             minlen = 2.0,
             penwidth = 2.0,
-        )
+        ).get_attributes()
         self.colors = ["#FBFBFB", "#EDEDED", "#E0E0E0", "#D3D3D3"]
 
-        self.graph_attrs = theme_graph_settings.get_attributes() | graph_settings.get_attributes()
-        self.cluster_attrs = theme_cluster_settings.get_attributes() | cluster_settings.get_attributes()
-        self.node_attrs = theme_node_settings.get_attributes() | node_settings.get_attributes()
-        self.edge_attrs = theme_edge_settings.get_attributes() | edge_settings.get_attributes()
+        if isinstance(graph_settings, _Settings):
+            graph_settings = graph_settings.get_attributes()
+
+        if isinstance(cluster_settings, _Settings):
+            cluster_settings = cluster_settings.get_attributes()
+
+        if isinstance(node_settings, _Settings):
+            node_settings = node_settings.get_attributes()
+
+        if isinstance(edge_settings, _Settings):
+            edge_settings = edge_settings.get_attributes()
+
+        self.graph_attrs = theme_graph_settings | graph_settings
+        self.cluster_attrs = theme_cluster_settings | cluster_settings
+        self.node_attrs = theme_node_settings | node_settings
+        self.edge_attrs = theme_edge_settings | edge_settings
         if color_settings:
             self.colors = color_settings
 
@@ -153,7 +177,7 @@ class DarkMode(_Theme):
             style = "rounded",
             rankdir = "LR",
             ranksep = 1.0,
-        )
+        ).get_attributes()
         theme_cluster_settings = ClusterSettings(
             fontcolor = "#EEEEEE",
             fontname = "calibri",
@@ -162,7 +186,7 @@ class DarkMode(_Theme):
             margin = 30.0,
             pencolor = "#AEB6BE",
             style = "rounded",
-        )
+        ).get_attributes()
         theme_node_settings = NodeSettings(
             color = "invis",
             fillcolor = "invis",
@@ -177,19 +201,31 @@ class DarkMode(_Theme):
             shape = "rectangle",
             style = "filled",
             width = 1.0,
-        )
+        ).get_attributes()
         theme_edge_settings = EdgeSettings(
             color = "#EEEEEE",
             fontname = "calibri",
             minlen = 2.0,
             penwidth = 2.0,
-        )
+        ).get_attributes()
         self.colors = ["#1C2833", "#212F3D", "#273746", "#2C3E50", "#566573"]
 
-        self.graph_attrs = theme_graph_settings.get_attributes() | graph_settings.get_attributes()
-        self.cluster_attrs = theme_cluster_settings.get_attributes() | cluster_settings.get_attributes()
-        self.node_attrs = theme_node_settings.get_attributes() | node_settings.get_attributes()
-        self.edge_attrs = theme_edge_settings.get_attributes() | edge_settings.get_attributes()
+        if isinstance(graph_settings, _Settings):
+            graph_settings = graph_settings.get_attributes()
+
+        if isinstance(cluster_settings, _Settings):
+            cluster_settings = cluster_settings.get_attributes()
+
+        if isinstance(node_settings, _Settings):
+            node_settings = node_settings.get_attributes()
+
+        if isinstance(edge_settings, _Settings):
+            edge_settings = edge_settings.get_attributes()
+
+        self.graph_attrs = theme_graph_settings | graph_settings
+        self.cluster_attrs = theme_cluster_settings | cluster_settings
+        self.node_attrs = theme_node_settings | node_settings
+        self.edge_attrs = theme_edge_settings | edge_settings
 
         if color_settings:
             self.colors = color_settings
