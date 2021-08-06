@@ -36,7 +36,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/jsoconno/architectures",
     # packages=setuptools.find_packages(),
-    packages=['architectures.core', 'architectures.themes', 'architectures.providers', 'architectures.providers.aws', 'architectures.providers.azure', 'architectures.providers.gcp', 'architectures.providers.general', 'architectures.providers.kubernetes'],
+    packages=['architectures', 'architectures.core', 'architectures.themes', 'architectures.providers', 'architectures.providers.aws', 'architectures.providers.azure', 'architectures.providers.gcp', 'architectures.providers.general', 'architectures.providers.kubernetes'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
