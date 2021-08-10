@@ -28,7 +28,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="architectures",
-    version='0.2.6',
+    version=version,
     author="Justin O'Connor",
     author_email="jsoconno@gmail.com",
     description="Tools for creating architecture as code using Python.",
