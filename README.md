@@ -56,22 +56,37 @@ Architectures works for all version of python greater than version `3.7.x`.
 
 It is recommended to use Graphviz version `2.41.x` or later.
 ### Install Mac OS Dependencies
-1) Install Python:
+1) Install Homebrew:
+
+[Directions for Install](https://brew.sh/) or...
+paste the following into the MacOS Terminal
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+2) Install Python:
 ```
 brew install python
 ```
-2) Install Graphviz:
+3) Install Graphviz:
 ```
 brew install graphviz
 ```
 ### Install Windows Dependencies
-1) Install Python:
+1) Install Chocolatey:
+
+[Directions for Install](https://chocolatey.org/install) or...
+paste the following into an administrative shell
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
+
+2) Install Python:
 
 [Manual Install](https://www.python.org/downloads/) or...
 ```
 choco install python
 ```
-2) Install Graphviz
+3) Install Graphviz
 
 [Manual Install](https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224) or...
 ```
