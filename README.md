@@ -374,7 +374,7 @@ with Graph("My Graph", theme=theme):
 This does not look great right now because themes were meant to be used with provider objects that represent services (e.g. Storage, Firewall, Database, etc.).  We will see how this works in section 8.
 
 ### Part 7 - Overriding Themes
-You now have a professional looking graph using DarkMode (hopefully). But let's say that you're not a fan of the default background color that DarkMode supplies and prefer to input your favorite dark mode background color #28282B. To override the default value for the background color in the code from the previous section input you just add the code underneath the comments:
+You now have a professional looking diagram (and if you're anything like us, you're using DarkMode). But let's say that you're not a fan of the default background color that DarkMode supplies and prefer to input your favorite background color: #28282B. To override the default value for the background color in the code from the previous section input you just add the following code underneath the comments:
 ```
 from architectures.core import Graph, Cluster, Node, Edge, Flow
 
