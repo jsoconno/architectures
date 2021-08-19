@@ -15,7 +15,7 @@
     - [Part 5 - Connecting Nodes and Clusters](#part-5---connecting-nodes-and-clusters)
     - [Part 6 - Using Themes](#part-6---using-themes)
     - [Part 7 - Overriding Themes](#part-7---overriding-themes)
-    - [Part 7 - Using Providers](#part-8---using-providers)
+    - [Part 8 - Using Providers](#part-8---using-providers)
   - [Tips and Tricks](#-tips-and-tricks)
     - [Using Colors](#-using-colors)
     - [Modifying Layout](#-modifying-layout)
