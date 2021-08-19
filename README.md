@@ -14,7 +14,8 @@
     - [Part 4 - Grouping Nodes on a Graph](#part-4---grouping-nodes-on-a-graph)
     - [Part 5 - Connecting Nodes and Clusters](#part-5---connecting-nodes-and-clusters)
     - [Part 6 - Using Themes](#part-6---using-themes)
-    - [Part 7 - Using Providers](#part-7---using-providers)
+    - [Part 7 - Overriding Themes](#part-7---overriding-themes)
+    - [Part 7 - Using Providers](#part-8---using-providers)
   - [Tips and Tricks](#-tips-and-tricks)
     - [Using Colors](#-using-colors)
     - [Modifying Layout](#-modifying-layout)
@@ -370,32 +371,44 @@ with Graph("My Graph", theme=theme):
 ```
 !["Architecture"](assets/part6-1.png "Architecture")
 
-This does not look great right now because themes were meant to be used with provider objects that represent services (e.g. Storage, Firewall, Database, etc.).  We will see how this works in the next section.
+This does not look great right now because themes were meant to be used with provider objects that represent services (e.g. Storage, Firewall, Database, etc.).  We will see how this works in section 8.
 
-Theme objects accept the following optional arguments:
-* `graph_attr_overrides (dict)` - overrides to theme defaulted graph attributes
-* `cluster_attr_overrides (dict)` - overrides to theme defaulted cluster attributes
-* `node_attr_overrides (dict)` - overrides to theme defaulted node attributes
-* `edge_attr_overrides (dict)` - overrides to theme defaulted edge attributes
-* `color_overrides (list)` - overrides to theme defaulted color attributes that are used to determine what the background color of a Cluster will be
+### Part 7 - Overriding Themes
+You now have a professional looking graph using DarkMode (hopefully). But let's say that you're not a fan of the default background color that DarkMode supplies and prefer to input your favorite dark mode background color #28282B. To override the default value for the background color in the code from the previous section input you just add the code underneath the comments:
+```
+from architectures.core import Graph, Cluster, Node, Edge, Flow
 
-Here is an example:
+from architectures.themes import DarkMode
+
+# We import GraphSettings to override the graph's properties
+from architectures.themes.settings import GraphSettings
+
+# Here we directly modify GraphSettings background-color property
+graph_override_settings = GraphSettings(bgcolor="#28282B")
+
+# Pass the variable from above as a parameter to the DarkMode function
+theme = DarkMode(graph_override_settings)
+
+with Graph("My Graph", theme=theme):
+    with Cluster("Cluster A") as cluster_a:
+        a = Node("A")
+        b = Node("B")
+        c = Node("C")
+
+    with Cluster("Cluster B") as cluster_b:
+        d = Node("D")
+        e = Node("E")
+
+    f = Node("F")
+
+    Flow([a, [b, c], cluster_b, f, d, e])
 ```
-...
-# Set the theme and add overrides
-theme = LightMode(
-    graph_attr_overrides={"labeljust":"c", "nodesep":"0.5"}, 
-    cluster_attr_overrides={"style":"dotted"},
-    node_attr_overrides={"fontcolor":"dimgrey"}, 
-    edge_attr_overrides={"color":"dimgrey"},
-    color_overrides=["#EBF4FA" "#D7E9F5", "#C3DEEF", "#AFD3EA"]
-)
-...
-```
+The result is:
+!["Architecture"](assets/part7-1.png "Architecture")
 
 For more information on available attributes, check out the [Graphviz Attributes Documentation](https://graphviz.org/doc/info/attrs.html).
 
-### Part 7 - Using Providers
+### Part 8 - Using Providers
 Now that you know how to use the available core objects to draw a diagram, you will want to start using the available providers to create a real architecture diagram.  Providers represent things like Amazon Web Services, Google Cloud Platform, and Azure Cloud.  
 
 Each service from these providers is represented by a class that inherits from the base Node class.  Architectures supports a variety of providers to allow you to create beautiful architecture diagrams across multiple platforms.  Each service object works exactly like the Node in the earlier examples.
